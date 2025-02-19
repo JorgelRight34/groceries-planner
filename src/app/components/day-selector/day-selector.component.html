@@ -1,0 +1,11 @@
+<div class="d-flex justify-content-center gap-5 p-3">
+    @for(day of days; track day) {
+        <button 
+            class="rounded-pill shadow-sm day-button border px-3"
+            [ngClass]="{'active' : selectedDay() === day}"
+            (click)="handleSelectDay(day)"
+        >
+            {{ day }}
+        </button>
+    }
+</div>

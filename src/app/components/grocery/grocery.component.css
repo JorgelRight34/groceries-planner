@@ -1,0 +1,14 @@
+img {
+    min-height: 8rem;
+    max-height: 8rem;
+    object-fit: contain;
+}
+
+.grocery {
+    width: 18rem;
+}
+
+.grocery button {
+    background: var(--accent-color);
+    color: #fff;
+}

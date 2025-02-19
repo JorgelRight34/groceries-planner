@@ -1,0 +1,15 @@
+<div class="card rounded-5 grocery shadow">
+    <img 
+        [src]="'https://supermercadosnacional.com/media/catalog/product/cache/afcac67a0d77755283578b677f040f2b/2/1/2102452-1.jpg'" 
+        class="card-img-top border-bottom" 
+        [alt]="grocery()?.name"
+    >
+    <div class="card-body">
+        <h5 class="card-title">{{ grocery()?.name }}</h5>
+        <p class="card-text">{{ grocery()?.description }}</p>
+        <div class="d-flex align-items-center">
+            <span>{{ grocery()?.cost | currency }}</span>
+            <button class="btn rounded-pill ms-auto">Check</button>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,14 @@
+<app-day-selector (selectDay)="selectDay($event)"></app-day-selector>
+<div class="row container">
+    <div class="col-lg-2">
+        <app-categories></app-categories>
+    </div>
+    
+    <div class="col-lg-10">
+        <div class="d-flex justify-content-center flex-wrap gap-5 py-5">
+            @for (grocery of groceries; track grocery.id) {
+                <app-grocery [grocery]="grocery"></app-grocery>
+            }
+        </div>
+    </div>
+</div>
