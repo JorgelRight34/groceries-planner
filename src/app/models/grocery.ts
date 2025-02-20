@@ -3,7 +3,11 @@ export type Grocery = {
     name: string,
     description: string,
     url: string,
-    imageUrl: string | undefined,
+    imageUrl?: string,
     cost: number,
+    category?: {
+        name: string,
+        id: number,
+    },
     days: Array<string>
 }

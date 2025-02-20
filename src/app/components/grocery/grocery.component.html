@@ -1,15 +1,30 @@
-<div class="card rounded-5 grocery shadow">
-    <img 
-        [src]="'https://supermercadosnacional.com/media/catalog/product/cache/afcac67a0d77755283578b677f040f2b/2/1/2102452-1.jpg'" 
-        class="card-img-top border-bottom" 
-        [alt]="grocery()?.name"
-    >
-    <div class="card-body">
-        <h5 class="card-title">{{ grocery()?.name }}</h5>
-        <p class="card-text">{{ grocery()?.description }}</p>
-        <div class="d-flex align-items-center">
-            <span>{{ grocery()?.cost | currency }}</span>
-            <button class="btn rounded-pill ms-auto">Check</button>
+<div class="row bg-white rounded grocery shadow mb-3">
+    <div class="col-lg-6">
+        <img 
+            loading="lazy"
+            [src]="grocery().imageUrl || 'https://supermercadosnacional.com/media/catalog/product/cache/afcac67a0d77755283578b677f040f2b/2/1/2102452-1.jpg'" 
+            class="card-img-top border-bottom" 
+            [alt]="grocery().name"
+        >
+    </div>
+    <div class="col-lg-6 border-start">     
+        <div class="row p-3" style="height: 70%">
+            <h5 class="card-title text-truncate">{{ grocery().name }}</h5>
+            <div class="d-flex align-items-center">
+                <span>{{ grocery().cost | currency }}</span>
+            </div>
+        </div>
+        <div class="row border-top" style="height: 30%;">
+            <div 
+                class="col-6 d-flex align-items-center justify-content-center border-end option" 
+                (click)="handleDeleteGrocery()"
+            >
+                <span class="mx-auto">Remove</span>
+            </div>
+            <div class="col-6 d-flex align-items-center justify-content-center option">
+                <span class="mx-auto">Check</span>
+            </div>
         </div>
     </div>
+
 </div>

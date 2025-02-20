@@ -1,6 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
 :root {
-    --accent-color: #32CD32;
+    --accent-color: #2e8b57;
+    --bg-color: #FAF9F6;
 }
 
 html {
@@ -9,4 +10,13 @@ html {
 
 .text-accent {
     color: var(--accent-color)
+}
+
+.bg-accent {
+    background: var(--accent-color);
+    color: #fff;
+}
+
+body {
+    background-color: var(--bg-color);
 }

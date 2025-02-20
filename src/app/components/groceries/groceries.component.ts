@@ -1,30 +1,42 @@
-import { Component, input, signal } from '@angular/core';
+import { Component, computed, input, signal } from '@angular/core';
 import { GroceriesService } from '../../services/groceries.service';
-import { Grocery } from '../../models/grocery';
 import { DaySelectorComponent } from '../day-selector/day-selector.component';
 import { CategoriesComponent } from '../categories/categories.component';
 import { GroceryComponent } from '../grocery/grocery.component';
-import { GroceryListComponent } from '../grocery-list/grocery-list.component';
+import { GroceriesListComponent } from '../groceries-list/groceries-list.component';
 
 @Component({
   selector: 'app-groceries',
   imports: [
-    DaySelectorComponent, 
-    CategoriesComponent, 
-    GroceryComponent, 
-    GroceryListComponent
+    DaySelectorComponent, CategoriesComponent, GroceryComponent, GroceriesListComponent
   ],
   templateUrl: './groceries.component.html',
   styleUrl: './groceries.component.css'
 })
 export class GroceriesComponent {
-  day = signal('monday');
-  groceries: Grocery[] = [];
+  day = signal('Monday');
+  currentCategory = signal<string>('');
+  groceries = computed(
+    () => this.groceriesService.getGroceriesByDay(this.day())
+  )
 
-  constructor(private groceriesService: GroceriesService) {}
+  constructor(private groceriesService: GroceriesService) { }
 
-  selectDay(day: string) {
+  selectDay(day: string): void {
     this.day.set(day);
-    this.groceries = this.groceriesService.getGroceriesByDay(this.day());
-  } 
+  }
+
+  getGroceriesForDay() {
+    let result = this.groceriesService.getGroceriesByDay(this.day());
+    if (this.currentCategory()) {
+      result = result.filter(
+        grocery => grocery.category?.name === this.currentCategory()
+      );
+    }
+    return result;
+  }
+
+  changeCategory(category: string): void {
+    this.currentCategory.set(category)
+  }
 }

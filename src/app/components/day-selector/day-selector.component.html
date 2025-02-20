@@ -1,7 +1,8 @@
-<div class="d-flex justify-content-center gap-5 p-3">
-    @for(day of days; track day) {
+<div class="d-flex justify-content-center gap-3">
+    <app-add-grocery-button [selectedDay]="selectedDay()" />
+    @for (day of days; track day) {
         <button 
-            class="rounded-pill shadow-sm day-button border px-3"
+            class="rounded-pill shadow-sm day-button border px-3 p-2"
             [ngClass]="{'active' : selectedDay() === day}"
             (click)="handleSelectDay(day)"
         >

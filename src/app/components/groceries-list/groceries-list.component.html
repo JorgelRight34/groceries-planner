@@ -1,0 +1,29 @@
+<div class="border groceries-list bg-white rounded p-3">
+    <h4 class="text-center mb-5">Grocery List for {{ day() }}</h4>
+    <div class="row">
+        <div class="col-lg-6">
+            @for (category of startCategories; track category) {
+                <div class="mb-5">
+                    <b class="text-center">{{ category.name }}</b>
+                    <ul>
+                        @for (grocery of getCategoryGroceries(category.id) ; track grocery.id) {
+                            <li>{{ grocery.name }}</li>
+                        }
+                    </ul>
+                </div>
+            }
+        </div>
+        <div class="col-lg-6">
+            @for (category of endCategories ; track category) {
+                <div class="mb-5">
+                    <b class="text-center">{{ category.name }}</b>
+                    <ul>
+                        @for (grocery of getCategoryGroceries(category.id) ; track grocery.id) {
+                            <li>{{ grocery.name }}</li>
+                        }
+                    </ul>
+                </div>
+            } 
+        </div>
+    </div>
+</div>

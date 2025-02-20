@@ -1,9 +1,11 @@
-<div class="d-flex flex-column gap-4 ps-lg-5 py-5 h-100">
+<div class="d-flex gap-3">
     @for (category of categories; track category) {
         <button 
-            class="rounded-pill shadow-sm border px-3"
+            class="rounded-pill shadow-sm border px-3 p-2"
+            (click)="handleChangeCategory(category.name)"
+            [ngClass]="{'active': currentCategory() === category.name}"
         >
-            {{ category }}
+            {{ category.name }}
         </button>
     }
 </div>

@@ -4,7 +4,7 @@ import { GroceriesComponent } from '../../components/groceries/groceries.compone
 
 @Component({
   selector: 'app-home',
-  imports: [DaySelectorComponent, GroceriesComponent],
+  imports: [GroceriesComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
