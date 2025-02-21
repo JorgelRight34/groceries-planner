@@ -1,20 +1,32 @@
-<form [formGroup]="addGroceryForm" (ngSubmit)="onSubmit()">
-    <label class="form-label" for="name">Name {{ addGroceryForm.value.name }}</label>
-    <input class="form-control mb-3" name="name" id="name" formControlName="name" />
-
-    <label class="form-label" for="description">Description {{ addGroceryForm.value.description }}</label>
-    <input class="form-control mb-3" name="description" id="description" formControlName="description" />
-
-    <label class="form-label" for="url">Url {{ addGroceryForm.value.url }}</label>
-    <input class="form-control mb-3" name="url" id="url" formControlName="url" />
-
-    <label class="form-label" for="imageUrl">Image URL {{ addGroceryForm.value.imageUrl }} </label>
-    <input class="form-control mb-3" name="imageUrl" id="imageUrl" formControlName="imageUrl" />
-
-    <label class="form-label" for="cost">Cost {{ addGroceryForm.value.cost }}</label>
-    <input class="form-control mb-3" name="cost" id="cost" type="number" formControlName="cost" />
-
-    Day: {{ selectedDay() }}
-    
-    <button class="btn bg-accent w-100" type="submit">Submit</button>
-</form>
+<div class="row mx-0">
+    <div class="col-lg-6">
+        <form [formGroup]="addGroceryForm" (ngSubmit)="onSubmit()">
+            <label class="form-label" for="name">Name {{ addGroceryForm.value.name }}</label>
+            <input class="form-control mb-3" name="name" id="name" formControlName="name" />
+        
+            <label class="form-label" for="description">Description {{ addGroceryForm.value.description }}</label>
+            <input class="form-control mb-3" name="description" id="description" formControlName="description" />
+        
+            <label class="form-label" for="url">Url {{ addGroceryForm.value.url }}</label>
+            <input class="form-control mb-3" name="url" id="url" formControlName="url" />
+        
+            <label class="form-label" for="imageUrl">Image URL {{ addGroceryForm.value.imageUrl }} </label>
+            <input class="form-control mb-3" name="imageUrl" id="imageUrl" formControlName="imageUrl" />
+        
+            <label class="form-label" for="cost">Cost {{ addGroceryForm.value.cost }}</label>
+            <input class="form-control mb-3" name="cost" id="cost" type="number" formControlName="cost" />
+        
+            <button class="btn bg-accent w-100" type="submit">Submit</button>
+        </form>
+    </div>
+    <div class="col-lg-6">
+        <div style="max-height: 5vh; height: 5vh;">
+            <h6>Choose existing grocery</h6>
+        </div>
+        <div class="border rounded p-3" style="max-height: 70vh; overflow-y: auto;">
+            @for (grocery of getGroceries() ; track grocery.id) {
+                <app-grocery [addButton]="true" [grocery]="grocery" />
+            } 
+        </div>
+    </div>
+</div>

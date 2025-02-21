@@ -10,7 +10,6 @@ import { Grocery } from '../../models/grocery';
   styleUrl: './groceries-list.component.css'
 })
 export class GroceriesListComponent {
-  day = input<string>('Monday');
   categories = [...categories];
   categoriesHalf = Math.round(this.categories.length / 2);
   startCategories = this.categories.slice(0, this.categoriesHalf);
@@ -19,7 +18,10 @@ export class GroceriesListComponent {
   constructor(private groceriesService: GroceriesService) { }
 
   getCategoryGroceries(category: number): Grocery[] {
-    return this.groceriesService.getGroceriesByDayAndCategory(this.day(), category);
+    return this.groceriesService.getGroceriesByDayAndCategory(category);
   }
 
+  getDay(): string {
+    return this.groceriesService.currentDay();
+  }
 }

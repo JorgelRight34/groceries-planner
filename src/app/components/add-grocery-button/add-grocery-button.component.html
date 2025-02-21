@@ -1,7 +1,7 @@
 <button (click)="toggleModalOpen()" class="rounded-pill border bg-accent w-100 p-2">
-    + Add {{ selectedDay() }}
+    + Add
 </button>
 
-<app-modal [isOpen]="isModalOpen()" (hideModal)="hideModal()" [title]="'+ Add grocery'" width="75%">
-    <app-add-grocery [selectedDay]="selectedDay()" />
+<app-modal [isOpen]="isModalOpen()" (hideModal)="hideModal()" [title]="getTitle()" width="75%">
+    <app-add-grocery />
 </app-modal>

@@ -10,9 +10,14 @@ import { GroceriesService } from '../../services/groceries.service';
   styleUrl: './grocery.component.css'
 })
 export class GroceryComponent {
-  grocery = input.required<Grocery>()
+  grocery = input.required<Grocery>();
+  addButton = input<boolean>(false);
 
   constructor(private groceriesService: GroceriesService) { }
+
+  addGrocery() {
+    this.groceriesService.addGrocery(this.grocery());
+  }
 
   handleDeleteGrocery() {
     this.groceriesService.deleteGrocery(this.grocery()?.id);

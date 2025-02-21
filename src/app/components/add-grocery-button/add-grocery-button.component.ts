@@ -12,11 +12,15 @@ export class AddGroceryButtonComponent {
   isModalOpen = signal<boolean>(false);
   selectedDay = input<string>('Monday');
 
-  toggleModalOpen() : void {
+  toggleModalOpen(): void {
     this.isModalOpen.update(prev => !prev);
   }
 
-  hideModal() : void {
+  hideModal(): void {
     this.isModalOpen.set(false);
+  }
+
+  getTitle(): string {
+    return `+ Add grocery for ${this.selectedDay()}`
   }
 }

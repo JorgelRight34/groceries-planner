@@ -19,4 +19,5 @@ html {
 
 body {
     background-color: var(--bg-color);
+    overflow-y: hidden;
 }
