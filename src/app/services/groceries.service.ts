@@ -66,8 +66,12 @@ export class GroceriesService {
 
   deleteGrocery(groceryId: number): void {
     // Delete grocery from history and localStorage
-    const filteredArray = this.groceries.filter(
-      grocery => grocery.id !== groceryId
+    const filteredArray = this.groceries.map((g) => {
+      if (g.id === groceryId) {
+        return { ...g, days: [...g.days.filter(day => day != this.currentDay())] }
+      }
+      return g
+    }
     );
 
     this.groceriesHistory = [...filteredArray]  // Save all what was once saved
