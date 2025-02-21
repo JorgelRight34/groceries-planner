@@ -1,6 +1,5 @@
 import { Injectable, signal } from '@angular/core';
 import { Grocery } from '../models/grocery';
-import { groceries } from '../../lib/constants';
 
 @Injectable({
   providedIn: 'root'
