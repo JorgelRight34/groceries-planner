@@ -15,12 +15,8 @@ export class CategoriesComponent {
   currentCategory = signal<string>('');
 
   handleChangeCategory(category: string) {
-    if (category === this.currentCategory()) {
-      this.currentCategory.set('');
-      this.changeCategory.emit('');
-    } else {
-      this.currentCategory.set(category);
-      this.changeCategory.emit(category);
-    }
+    const newCategory = category === this.currentCategory() ? '' : category;
+    this.currentCategory.set(newCategory);
+    this.changeCategory.emit(newCategory);
   }
 }

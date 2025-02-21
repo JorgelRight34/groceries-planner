@@ -25,12 +25,16 @@ export class AddGroceryComponent {
   onSubmit(): void {
     if (!this.addGroceryForm.valid) return
 
+    // Create Grocery object
     const data = {
       ...this.addGroceryForm.value,
+      // Initialize days having the currentDay because
+      // the form is for adding groceries to a certain day 
+      // which is the current day
       days: [this.groceriesService.currentDay()],
     } as Grocery;
 
-    this.groceriesService.addGrocery(data);
+    this.groceriesService.addGrocery(data); // Add grocery
   }
 
   getGroceries() {

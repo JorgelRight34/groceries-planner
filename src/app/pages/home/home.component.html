@@ -3,7 +3,7 @@
     <div class="mb-3" style="max-height: 20%; overflow-x: auto">
       <app-categories (changeCategory)="changeCategory($event)" />
     </div>
-    <div class="px-3 pb-3" style="height: 80%; overflow-y: auto;">
+    <div class="px-lg-3 pb-3" style="height: 73%; overflow-y: auto;">
       <app-groceries [currentCategory]="currentCategory()" />
     </div>
   </div>
@@ -12,7 +12,7 @@
     <div style="max-height: 20%; overflow-y: auto">
       <app-day-selector (selectDay)="selectDay($event)" />
     </div>
-    <div class="p-3 bg-light rounded" style="height: 80%; overflow-y: auto">
+    <div class="p-3 bg-light rounded" style="height: 75%; overflow-y: auto">
       <app-groceries-list />
     </div>
   </div>

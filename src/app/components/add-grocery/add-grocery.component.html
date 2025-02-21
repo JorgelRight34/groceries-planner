@@ -1,6 +1,6 @@
 <div class="row mx-0">
-    <div class="col-lg-6">
-        <form [formGroup]="addGroceryForm" (ngSubmit)="onSubmit()">
+    <div class="col-lg-6 d-flex align-items-center">
+        <form class="w-100" [formGroup]="addGroceryForm" (ngSubmit)="onSubmit()">
             <label class="form-label" for="name">Name {{ addGroceryForm.value.name }}</label>
             <input class="form-control mb-3" name="name" id="name" formControlName="name" />
         

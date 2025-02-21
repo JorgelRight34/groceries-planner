@@ -15,8 +15,6 @@ export class DaySelectorComponent {
   selectDay = output<string>();
   selectedDay = signal('Monday');
 
-  constructor() {}
-
   handleSelectDay(day: string) {
     this.selectDay.emit(day);
     this.selectedDay.set(day);

@@ -1,10 +1,10 @@
 .groceries-list {
     width: 50%;
-    border: 1px solid #000; /* Optional border for visibility */
     max-width: 210mm; /* Max width for A4 */
     aspect-ratio: 210 / 297; /* Keeps A4 aspect ratio */
     background: white;
     border: 1px solid #ccc;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     padding: 20px;
+    border: 2px solid var(--accent-color);
 }
