@@ -1,4 +1,4 @@
-<div class="d-flex justify-content-center gap-3">
+<div class="d-none d-lg-flex justify-content-center gap-3">
     <app-add-grocery-button [selectedDay]="selectedDay()" />
     @for (day of days; track day) {
         <button 
@@ -10,3 +10,8 @@
         </button>
     }
 </div>
+<select class="d-block d-lg-none form-select" (change)="handleOnChange($event)">
+    @for (day of days; track day) {
+        <option [value]="day">{{ day }}</option>
+    }
+</select>

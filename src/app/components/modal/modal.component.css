@@ -9,7 +9,17 @@
 }
 
 .modal-container {
-    background: #fff;
     position: relative;
     z-index: 101;
+}
+
+.modal-body {
+    border: none;
+}
+
+@media (max-width: 500px) {
+    .modal-container {
+        height: 95dvh !important;
+        width: 95dvw !important;
+    }
 }

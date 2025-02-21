@@ -20,4 +20,8 @@ export class DaySelectorComponent {
     this.selectedDay.set(day);
   }
 
+  handleOnChange(event: Event) {
+    const day = (event.target as HTMLSelectElement).value;
+    this.handleSelectDay(day);
+  }
 }

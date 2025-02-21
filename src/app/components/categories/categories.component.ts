@@ -14,7 +14,9 @@ export class CategoriesComponent {
   changeCategory = output<string>();
   currentCategory = signal<string>('');
 
-  handleChangeCategory(category: string) {
+  handleChangeCategory(event: Event) {
+    // If new category is the same as selected then unselect category
+    const category = (event.target as HTMLSelectElement).value;
     const newCategory = category === this.currentCategory() ? '' : category;
     this.currentCategory.set(newCategory);
     this.changeCategory.emit(newCategory);

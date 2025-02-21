@@ -8,3 +8,9 @@
     padding: 20px;
     border: 2px solid var(--accent-color);
 }
+
+@media (max-width: 500px) {
+    .groceries-list {
+        width: 100%;
+    }
+}

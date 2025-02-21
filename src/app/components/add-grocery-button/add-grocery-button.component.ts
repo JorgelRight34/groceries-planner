@@ -11,6 +11,8 @@ import { AddGroceryComponent } from '../add-grocery/add-grocery.component';
 export class AddGroceryButtonComponent {
   isModalOpen = signal<boolean>(false);
   selectedDay = input<string>('Monday');
+  text = input<string>('+ Add');
+
 
   toggleModalOpen(): void {
     this.isModalOpen.update(prev => !prev);

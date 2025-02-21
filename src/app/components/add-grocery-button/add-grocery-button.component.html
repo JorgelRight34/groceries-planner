@@ -1,5 +1,5 @@
-<button (click)="toggleModalOpen()" class="rounded-pill border bg-accent w-100 p-2">
-    + Add
+<button (click)="toggleModalOpen()" class="rounded-pill border bg-accent w-100 p-2 px-3">
+    {{ text() }}
 </button>
 
 <app-modal [isOpen]="isModalOpen()" (hideModal)="hideModal()" [title]="getTitle()" width="75%">

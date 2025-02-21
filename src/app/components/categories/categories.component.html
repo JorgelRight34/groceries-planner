@@ -1,11 +1,16 @@
-<div class="d-flex gap-3">
-    @for (category of categories; track category) {
-        <button 
-            class="rounded-pill shadow-sm border px-3 p-2 text-accent"
-            (click)="handleChangeCategory(category.name)"
-            [ngClass]="{'active': currentCategory() === category.name}"
-        >
-            {{ category.name }}
-        </button>
-    }
+<div class="d-flex justify-content-center">
+    <select 
+        class="form-select shadow-sm" 
+        (change)="handleChangeCategory($event)"
+    >
+        <option value="">Select category</option>
+        @for (category of categories; track category) {
+            <option
+                [value]="category.name"
+            >
+                {{ category.name }}
+            </option>
+        }
+    </select>
+    
 </div>
