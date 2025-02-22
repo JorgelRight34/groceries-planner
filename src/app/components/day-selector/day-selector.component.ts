@@ -1,12 +1,10 @@
-import { Component, EventEmitter, output, signal } from '@angular/core';
+import { Component, output, signal } from '@angular/core';
 import { days } from '../../../lib/constants';
 import { CommonModule } from '@angular/common';
-import { AddGroceryButtonComponent } from '../add-grocery-button/add-grocery-button.component';
-import { AddGroceryComponent } from "../add-grocery/add-grocery.component";
 
 @Component({
   selector: 'app-day-selector',
-  imports: [CommonModule, AddGroceryButtonComponent],
+  imports: [CommonModule],
   templateUrl: './day-selector.component.html',
   styleUrl: './day-selector.component.css'
 })
