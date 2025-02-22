@@ -6,10 +6,14 @@ import { GroceriesListComponent } from '../../components/groceries-list/grocerie
 import { GroceriesService } from '../../services/groceries.service';
 import { NavbarSmComponent } from '../../components/navbar-sm/navbar-sm.component';
 import { CommonModule } from '@angular/common';
+import { HeaderComponent } from '../../components/header/header.component';
+import { AddGroceryButtonComponent } from '../../components/add-grocery-button/add-grocery-button.component';
 
 @Component({
   selector: 'app-home',
   imports: [
+    AddGroceryButtonComponent,
+    HeaderComponent,
     CommonModule,
     GroceriesComponent,
     DaySelectorComponent,

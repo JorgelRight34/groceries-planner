@@ -1,5 +1,5 @@
 .body-row {
-    height: 75%;
+    height: 80%;
     overflow-y: auto;
 }
 
@@ -9,7 +9,7 @@
 }
 
 .home {
-    height: 92dvh;  /* Navbar is on top so less -8 */
+    height: 100dvh;  /* Navbar is on top so less -8 */
     overflow-y: hidden;
 }
 

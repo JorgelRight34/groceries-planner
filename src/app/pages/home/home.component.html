@@ -1,14 +1,39 @@
 <div class="home position-relative">
-  <div class="row mx-0">
+  <div class="row mx-0"> 
     <div 
-      class="col-lg-4 p-3 p-lg-5 py-lg-3"
+      class="col-lg-4 p-0 bg-white"
       [ngClass]="{'d-none d-lg-block': currentSection() !== 'GROCERIES'}"
     >
-      <div class="header-row mb-3">
-        <app-categories (changeCategory)="changeCategory($event)" />
-      </div>
-      <div class="body-row px-lg-3 pb-3">
-        <app-groceries [currentCategory]="currentCategory()" />
+      <app-header />
+      <div class="row border mx-0 h-100">
+        <div class="col-lg-2 p-0 border-end">
+          <div class="d-flex align-items-center justify-content-center p-3 border-bottom">
+            <span class="material-symbols-outlined">
+              download
+            </span>
+          </div>
+          <div class="d-flex align-items-center justify-content-center p-3 border-bottom">
+            <span class="material-symbols-outlined">
+              download
+            </span>
+          </div>
+          <div class="d-flex align-items-center justify-content-center p-3 border-bottom">
+            <app-add-grocery-button [text]="'+'"/>
+          </div>
+          <div class="d-flex align-items-center justify-content-center p-3 border-bottom">
+            <span class="material-symbols-outlined">
+              download
+            </span>
+          </div>
+        </div>
+        <div class="col-lg-10 p-3 p-lg-2 py-lg-3">
+          <div class="header-row mb-3">
+            <app-categories (changeCategory)="changeCategory($event)" />
+          </div>
+          <div class="body-row px-lg-3 pb-3">
+            <app-groceries [currentCategory]="currentCategory()" />
+          </div>
+        </div>
       </div>
     </div>
   
