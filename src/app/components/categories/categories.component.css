@@ -1,9 +1,0 @@
-button {
-    background-color: #fff;
-}
-
-.active {
-    background: var(--accent-color);
-    color: #fff;
-    border: 1px;
-}

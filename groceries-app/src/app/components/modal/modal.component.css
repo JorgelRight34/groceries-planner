@@ -1,0 +1,25 @@
+.modal-overlay {
+    background-color: rgb(0, 0, 0, 0.5);
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100dvw;
+    height: 100dvh;
+    z-index: 100;
+}
+
+.modal-container {
+    position: relative;
+    z-index: 101;
+}
+
+.modal-body {
+    border: none;
+}
+
+@media (max-width: 500px) {
+    .modal-container {
+        height: 95dvh !important;
+        width: 95dvw !important;
+    }
+}

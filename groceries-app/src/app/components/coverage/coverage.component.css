@@ -1,0 +1,12 @@
+.coverage {
+    background-color: #fff;
+    border-right: 10px solid #082464 !important;
+}
+
+.shining-point {
+    border-radius: 50%;
+    height: 0.25rem;
+    width: 0.25rem;
+    background-color: #082464;
+    content: ' ';
+}

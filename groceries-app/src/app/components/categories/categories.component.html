@@ -1,0 +1,16 @@
+<div class="d-flex justify-content-center">
+    <select 
+        class="form-select shadow-sm" 
+        (change)="handleChangeCategory($event)"
+    >
+        <option value="">Select category</option>
+        @for (category of categories; track category) {
+            <option
+                [value]="category.name"
+            >
+                {{ category.name }}
+            </option>
+        }
+    </select>
+    
+</div>

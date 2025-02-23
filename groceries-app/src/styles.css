@@ -1,0 +1,42 @@
+/* You can add global styles to this file, and also import other style files */
+:root {
+    --accent-color: #2e8b57;
+    --bg-color: #FAF9F6;
+}
+
+html {
+    font-family: Arial, Helvetica, sans-serif !important;
+}
+
+.text-accent {
+    color: var(--accent-color)
+}
+
+.bg-accent {
+    background: var(--accent-color);
+    color: #fff;
+}
+
+body {
+    background-color: var(--bg-color);
+}
+
+::-webkit-scrollbar {
+    width: 10px; /* Adjust scrollbar width */
+}
+  
+::-webkit-scrollbar-thumb {
+    background-color: var(--accent-color); /* Apply accent color */
+    border-radius: 5px; /* Rounded edges */
+}
+
+::-webkit-scrollbar-track {
+    background-color: #f0f0f0; /* Light background */
+}
+  
+
+@media (max-width: 500px) {
+    ::-webkit-scrollbar {
+        width: 0px;
+    }
+}

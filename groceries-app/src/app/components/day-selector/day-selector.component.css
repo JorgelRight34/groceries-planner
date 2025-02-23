@@ -1,0 +1,11 @@
+.day-button {
+    background: #fff;
+    color: var(--accent-color);
+    border: 1px;
+}
+
+.active {
+    background: var(--accent-color);
+    color: #fff;
+    border: 1px;
+}

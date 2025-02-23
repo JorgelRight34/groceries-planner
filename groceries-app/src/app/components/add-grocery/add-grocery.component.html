@@ -1,0 +1,52 @@
+<div class="d-flex d-lg-none align-items-center justify-content-center mb-3 mb-lg-0">
+    <button 
+        class="btn rounded-pill bg-accent me-3"
+        (click)="setCurrentSection('ADD')"
+    >
+        + Add new
+    </button>
+    <button 
+        class="btn rounded-pill bg-accent"
+        (click)="setCurrentSection('CHOOSE')"
+    >
+        Choose existing
+    </button>
+</div>
+<div class="row mx-0">
+    <div 
+        class="col-lg-6 d-flex align-items-center"
+        [ngClass]="{'d-none d-lg-block': currentSection() !== 'ADD'}"
+    >
+        <form class="w-100" [formGroup]="addGroceryForm" (ngSubmit)="onSubmit()">
+            <label class="form-label" for="name">Name {{ addGroceryForm.value.name }}</label>
+            <input class="form-control mb-3" name="name" id="name" formControlName="name" />
+        
+            <label class="form-label" for="description">Description {{ addGroceryForm.value.description }}</label>
+            <input class="form-control mb-3" name="description" id="description" formControlName="description" />
+        
+            <label class="form-label" for="url">Url {{ addGroceryForm.value.url }}</label>
+            <input class="form-control mb-3" name="url" id="url" formControlName="url" />
+        
+            <label class="form-label" for="imageUrl">Image URL {{ addGroceryForm.value.imageUrl }} </label>
+            <input class="form-control mb-3" name="imageUrl" id="imageUrl" formControlName="imageUrl" />
+        
+            <label class="form-label" for="cost">Cost {{ addGroceryForm.value.cost | currency }}</label>
+            <input class="form-control mb-3" name="cost" id="cost" type="number" formControlName="cost" />
+        
+            <button class="btn bg-accent w-100" type="submit">Submit</button>
+        </form>
+    </div>
+    <div 
+        class="d-none d-lg-block col-lg-6"
+        [ngClass]="{'d-none d-lg-block': currentSection() !== 'CHOOSE'}"
+    >
+        <div style="max-height: 5vh; height: 5vh;">
+            <h6>Choose existing grocery</h6>
+        </div>
+        <div class="groceries border rounded p-0 p-lg-3">
+            @for (grocery of getGroceries() ; track grocery.id) {
+                <app-grocery [addButton]="true" [grocery]="grocery" />
+            } 
+        </div>
+    </div>
+</div>
