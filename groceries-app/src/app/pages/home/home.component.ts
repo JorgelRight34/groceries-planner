@@ -8,6 +8,7 @@ import { NavbarSmComponent } from '../../components/navbar-sm/navbar-sm.componen
 import { CommonModule } from '@angular/common';
 import { HeaderComponent } from '../../components/header/header.component';
 import { AddGroceryButtonComponent } from '../../components/add-grocery-button/add-grocery-button.component';
+import { SavePlanComponent } from '../../components/save-plan/save-plan.component';
 
 @Component({
   selector: 'app-home',
@@ -19,6 +20,7 @@ import { AddGroceryButtonComponent } from '../../components/add-grocery-button/a
     DaySelectorComponent,
     CategoriesComponent,
     GroceriesListComponent,
+    SavePlanComponent,
     NavbarSmComponent
   ],
   templateUrl: './home.component.html',
@@ -32,10 +34,6 @@ export class HomeComponent {
   )
 
   constructor(private groceriesService: GroceriesService) { }
-
-  selectDay(day: string): void {
-    this.groceriesService.currentDay.set(day);
-  }
 
   getGroceriesForDay() {
     let result = this.groceriesService.getGroceriesByDay();

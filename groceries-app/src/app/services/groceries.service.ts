@@ -1,17 +1,17 @@
 import { inject, Injectable, signal } from '@angular/core';
 import { Grocery } from '../models/grocery';
 import { HttpClient } from '@angular/common/http';
-import { catchError } from 'rxjs';
+import { Day } from '../models/day';
 
 @Injectable({
   providedIn: 'root'
 })
 export class GroceriesService {
-  private url = `https://localhost:7240`;
+  private url = `https://localhost:7240/groceries`;
   private http = inject(HttpClient);
   groceries = signal<Array<Grocery>>([]);
   groceriesHistory: Grocery[] = []; // All groceries that have been created
-  currentDay = signal("Monday");  // Current selected day for grocery list
+  currentDay = signal<Day>("monday");  // Current selected day for grocery list
 
   constructor() {
     this.getAllGroceries();
@@ -21,18 +21,21 @@ export class GroceriesService {
     if (this.groceries.length) {
       return this.groceries;
     }
-    return this.http.get<Array<Grocery>>(`${this.url}/groceries`).
+    return this.http.get<Array<Grocery>>(`${this.url}`).
       subscribe((data) => {
+        console.log(data);
         this.groceries.set(data);
       });
   }
 
   getGroceriesByDay() {
     // Get all groceries of the selected day (currentDay)
-    if (!this.currentDay()) return this.groceries();
+    const day = this.currentDay();
+
+    if (!day) return this.groceries();
 
     return this.groceries().filter(
-      grocery => true //temporary
+      grocery => grocery[day] > 0
     ) || []
   }
 
@@ -45,52 +48,57 @@ export class GroceriesService {
   }
 
   addGrocery(grocery: Grocery): void {
-    // Add grocery to localStorage
+    // Add grocery t
     let day = this.currentDay();  // Current day
     // Check if a grocery with the same name already exists
     const existingGrocery = this.groceries().filter(
       g => g.name === grocery.name
     )[0];
 
-    // If already what exists is added to current day then return
-    if (existingGrocery.days.includes(day)) return
+    if (existingGrocery) {
+      // If existing grocery add one to the day it's being added
+      const copy = [...this.groceries()];
+      const index = copy.findIndex((g) => g.id === existingGrocery.id);
+      copy[index] = { ...grocery, [day]: grocery[day] + 1 };
+
+      this.groceries.set(copy);
+    } else {
+      // If there's not existing grocery create it from scratch
+      this.http.post<Grocery>(`${this.url}`, {
+        ...grocery,
+        [day]: 1,
+      }).
+        subscribe((data) => {
+          // Add new grocery to the groceries array
+          this.groceries.update(prev => [...prev, data])
+        });
+    }
+  }
+
+  substractOneGrocery(grocery: Grocery): void {
+    // Add grocery t
+    let day = this.currentDay();  // Current day
+    // Check if a grocery with the same name already exists
+    const existingGrocery = this.groceries().filter(
+      g => g.id === grocery.id
+    )[0];
 
     if (existingGrocery) {
-      // If existing grocery but doesn't include day then include it
-      this.groceries.set(this.groceries().map((g) => {
-        if (g.id === existingGrocery.id) {
-          return {
-            ...existingGrocery,
-            days: [...existingGrocery.days, day]
-          }
-        }
-        return g
-      }));
-    } else {
-      // If there's not existin grocery create it from scratch
-      this.groceries.update(prev => [...prev, {
-        ...grocery,
-        days: [this.currentDay()],
-        id: Math.random()
-      }]);
+      // If existing grocery add one to the day it's being added
+      const copy = [...this.groceries()];
+      const index = copy.findIndex((g) => g.id === existingGrocery.id);
+      const substraction = grocery[day] - 1;
+      copy[index] = { ...grocery, [day]: substraction < 0 ? 0 : substraction };
+      this.groceries.set(copy);
+      return
     }
+  }
 
-    // Save on localStorage the state of the app
-    localStorage.setItem("groceries", JSON.stringify(this.groceries))
+  saveGroceryList(): void {
+    this.http.post<Grocery[]>(`${this.url}/save-groceries-list`, this.groceries()).subscribe(data => console.log(data));
   }
 
   deleteGrocery(groceryId: number): void {
-    // Delete grocery from history and localStorage
-    const filteredArray = this.groceries().map((g) => {
-      if (g.id === groceryId) {
-        return { ...g, days: [...g.days.filter(day => day != this.currentDay())] }
-      }
-      return g
-    }
-    );
-
-
-    this.groceries.set(filteredArray); // Delete from the current list
-    localStorage.setItem("groceries", JSON.stringify(this.groceries)) // Delete from local
+    // 
   }
 }

@@ -1,5 +1,6 @@
 import { Component, input } from '@angular/core';
 import { Grocery } from '../../models/grocery';
+import { Day } from '../../models/day';
 import { CommonModule } from '@angular/common';
 import { GroceriesService } from '../../services/groceries.service';
 
@@ -19,7 +20,11 @@ export class GroceryComponent {
     this.groceriesService.addGrocery(this.grocery());
   }
 
-  handleDeleteGrocery() {
-    this.groceriesService.deleteGrocery(this.grocery()?.id);
+  handleSubstractOneGrocery() {
+    this.groceriesService.substractOneGrocery(this.grocery());
+  }
+
+  getGroceryQuantity(grocery: Grocery) {
+    return grocery[this.groceriesService.currentDay()];
   }
 }

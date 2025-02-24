@@ -65,6 +65,15 @@ namespace api.Repositories
             grocery.ImageUrl = groceryDto.ImageUrl;
             grocery.Url = groceryDto.Url;
 
+            // Days
+            grocery.Monday = groceryDto.Monday;
+            grocery.Tuesday = groceryDto.Tuesday;
+            grocery.Wednesday = groceryDto.Wednesday;
+            grocery.Thursday = groceryDto.Thursday;
+            grocery.Friday = groceryDto.Friday;
+            grocery.Saturday = groceryDto.Saturday;
+            grocery.Sunday = groceryDto.Sunday;
+
             await _context.SaveChangesAsync();
 
             return grocery;

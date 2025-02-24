@@ -1,0 +1,50 @@
+# See https://docs.github.com/get-started/getting-started-with-git/ignoring-files for more about ignoring files.
+
+# Compiled output
+/groceries-app/dist
+/groceries-app/tmp
+/groceries-app/out-tsc
+/groceries-app/bazel-out
+
+# Node
+/groceries-app/node_modules
+/groceries-app/npm-debug.log
+/groceries-app/yarn-error.log
+
+# IDEs and editors
+/groceries-app/idea/
+/groceries-app/project
+/groceries-app/classpath
+/groceries-app/c9/
+/groceries-app/*launch
+/groceries-app/settings/
+/groceries-app/sublime-workspace
+
+# Visual Studio Code
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+.history/*
+
+# Miscellaneous
+/groceries-app/angular/cache
+/groceries-app/sass-cache/
+/groceries-app/connect.lock
+/groceries-app/coverage
+/groceries-app/libpeerconnection.log
+/groceries-app/testem.log
+/groceries-app/typings
+
+# System files
+/groceries-app/.DS_Store
+/groceries-app/Thumbs.db
+
+# Personal files
+/groceries-app/app/pages/dev
+/groceries-app/app/components/coverage
+
+# API
+/api/.vs
+/api/bin/

@@ -10,6 +10,7 @@ namespace api.Data
             
         }
 
+        public DbSet<Category> Categories { get; set; }
         public DbSet<Grocery> Groceries { get; set; }
     }
 }

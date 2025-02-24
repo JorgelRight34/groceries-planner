@@ -25,6 +25,25 @@ namespace api.Mappers
                 Sunday = grocery.Sunday
             };
         }
+        public static UpdateGroceryDto ToUpdateGroceryDto(this Grocery grocery)
+        {
+            return new UpdateGroceryDto
+            {
+                Name = grocery.Name,
+                Description = grocery.Description,
+                Cost = grocery.Cost,
+                ImageUrl = grocery.ImageUrl,
+                Url = grocery.Url,
+                // Days
+                Monday = grocery.Monday,
+                Tuesday = grocery.Tuesday,
+                Wednesday = grocery.Wednesday,
+                Thursday = grocery.Thursday,
+                Friday = grocery.Friday,
+                Saturday = grocery.Saturday,
+                Sunday = grocery.Sunday
+            };
+        }
         public static Grocery ToGroceryFromCreateDto(this CreateGroceryDto grocery)
         {
             return new Grocery
@@ -34,6 +53,14 @@ namespace api.Mappers
                 Cost = grocery.Cost,
                 ImageUrl = grocery.ImageUrl,
                 Url = grocery.Url,
+                // Days
+                Monday = grocery.Monday,
+                Tuesday = grocery.Tuesday,
+                Wednesday = grocery.Wednesday,
+                Thursday = grocery.Thursday,
+                Friday = grocery.Friday,
+                Saturday = grocery.Saturday,
+                Sunday = grocery.Sunday
             };
         }
     }

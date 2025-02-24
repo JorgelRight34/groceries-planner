@@ -26,9 +26,7 @@
             </span>
           </div>
           <div class="d-flex align-items-center justify-content-center p-3 mt-5">
-            <span class="material-symbols-outlined">
-              save
-            </span>
+            <app-save-plan />
           </div>
           <div class="d-flex align-items-center justify-content-center p-3 mt-5">
             <span class="material-symbols-outlined">
@@ -52,7 +50,7 @@
       [ngClass]="{'d-none d-lg-block': currentSection() !== 'LIST'}"
     >
       <div class="header-row mb-3">
-        <app-day-selector (selectDay)="selectDay($event)" />
+        <app-day-selector />
       </div>
       <div class="body-row">
         <app-groceries-list />

@@ -23,7 +23,7 @@ namespace api.Controllers
             return Ok(data);
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("{id:int}")]
         public async Task<IActionResult> GetById([FromRoute] int id)
         {
             var data = await _groceryRepository.GetByIdAsync(id);
@@ -48,7 +48,7 @@ namespace api.Controllers
             );
         }
 
-        [HttpPut("{id}")]
+        [HttpPut("{id:int}")]
         public async Task<IActionResult> Put(
             [FromRoute] int id,
             [FromBody] UpdateGroceryDto groceryDto
@@ -64,7 +64,7 @@ namespace api.Controllers
             return Ok(grocery);
         }
 
-        [HttpDelete("{id}")]
+        [HttpDelete("{id:int}")]
         public async Task<IActionResult> Delete([FromRoute] int id)
         {
             var grocery = await _groceryRepository.DeleteAsync(id);
@@ -72,6 +72,25 @@ namespace api.Controllers
             if (grocery == null)
             {
                 return NotFound();
+            }
+
+            return NoContent();
+        }
+
+        [HttpPost]
+        [Route("save-groceries-list")]
+        public async Task<IActionResult> SaveGroceriesList([FromBody] Grocery[] groceries)
+        {
+            foreach (var grocery in groceries)
+            {
+                var groceryDto = grocery.ToUpdateGroceryDto();
+                var updatedGrocery = await _groceryRepository.UpdateAsync(grocery.Id, groceryDto);
+
+                if (updatedGrocery == null)
+                {
+                    return NotFound();
+                } 
+               
             }
 
             return NoContent();

@@ -1,6 +1,15 @@
-.coverage {
+.coverage-container {
+    position: relative;
+    background: linear-gradient(to right, white 50%, #082464 50%);
+    height: 5rem;
+    padding: 0;
+}
+
+.coverage-content {
+    position: absolute;
+    width: 99%;
+    height: 100%;
     background-color: #fff;
-    border-right: 10px solid #082464 !important;
 }
 
 .shining-point {

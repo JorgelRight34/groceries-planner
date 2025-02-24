@@ -18,16 +18,16 @@
         [ngClass]="{'d-none d-lg-block': currentSection() !== 'ADD'}"
     >
         <form class="w-100" [formGroup]="addGroceryForm" (ngSubmit)="onSubmit()">
-            <label class="form-label" for="name">Name {{ addGroceryForm.value.name }}</label>
+            <label class="form-label" for="name">Name</label>
             <input class="form-control mb-3" name="name" id="name" formControlName="name" />
         
-            <label class="form-label" for="description">Description {{ addGroceryForm.value.description }}</label>
+            <label class="form-label" for="description">Description</label>
             <input class="form-control mb-3" name="description" id="description" formControlName="description" />
         
-            <label class="form-label" for="url">Url {{ addGroceryForm.value.url }}</label>
+            <label class="form-label" for="url">Url</label>
             <input class="form-control mb-3" name="url" id="url" formControlName="url" />
         
-            <label class="form-label" for="imageUrl">Image URL {{ addGroceryForm.value.imageUrl }} </label>
+            <label class="form-label" for="imageUrl">Image URL</label>
             <input class="form-control mb-3" name="imageUrl" id="imageUrl" formControlName="imageUrl" />
         
             <label class="form-label" for="cost">Cost {{ addGroceryForm.value.cost | currency }}</label>

@@ -1,6 +1,8 @@
-import { Component, output, signal } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { days } from '../../../lib/constants';
 import { CommonModule } from '@angular/common';
+import { Day } from '../../models/day';
+import { GroceriesService } from '../../services/groceries.service';
 
 @Component({
   selector: 'app-day-selector',
@@ -10,12 +12,18 @@ import { CommonModule } from '@angular/common';
 })
 export class DaySelectorComponent {
   days: string[] = [...days]
-  selectDay = output<string>();
-  selectedDay = signal('Monday');
+  currentDay = signal<string>('');
+
+  constructor(private groceriesService: GroceriesService) { }
+
+  ngOnInit() {
+    this.currentDay.set(this.groceriesService.currentDay());
+  };
 
   handleSelectDay(day: string) {
-    this.selectDay.emit(day);
-    this.selectedDay.set(day);
+    const dayToDayType = day.toLocaleLowerCase() as Day;
+    this.groceriesService.currentDay.set(dayToDayType);
+    this.currentDay.set(dayToDayType);
   }
 
   handleOnChange(event: Event) {

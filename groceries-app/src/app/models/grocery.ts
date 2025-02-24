@@ -9,5 +9,11 @@ export type Grocery = {
         name: string,
         id: number,
     },
-    days: Array<string>
+    monday: number,
+    tuesday: number,
+    wednesday: number,
+    thursday: number,
+    friday: number,
+    saturday: number,
+    sunday: number
 }

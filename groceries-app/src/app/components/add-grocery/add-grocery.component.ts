@@ -29,10 +29,7 @@ export class AddGroceryComponent {
     // Create Grocery object
     const data = {
       ...this.addGroceryForm.value,
-      // Initialize days having the currentDay because
-      // the form is for adding groceries to a certain day 
-      // which is the current day
-      days: [this.groceriesService.currentDay()],
+      [this.groceriesService.currentDay()]: 1,
     } as Grocery;
 
     this.groceriesService.addGrocery(data); // Add grocery
