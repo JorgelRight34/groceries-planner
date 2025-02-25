@@ -1,3 +1,3 @@
-@for (grocery of getGroceriesForDay(); track grocery.id) {
+@for (grocery of groceries(); track grocery.id) {
     <app-grocery [grocery]="grocery" />
 }

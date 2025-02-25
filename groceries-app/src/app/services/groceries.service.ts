@@ -2,41 +2,61 @@ import { inject, Injectable, signal } from '@angular/core';
 import { Grocery } from '../models/grocery';
 import { HttpClient } from '@angular/common/http';
 import { Day } from '../models/day';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
+import { CategoriesService } from './categories.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class GroceriesService {
   private url = `https://localhost:7240/groceries`;
-  private http = inject(HttpClient);
   groceries = signal<Array<Grocery>>([]);
+  hasAlreadyFetched = signal<boolean>(false);
   groceriesHistory: Grocery[] = []; // All groceries that have been created
   currentDay = signal<Day>("monday");  // Current selected day for grocery list
 
-  constructor() {
-    this.getAllGroceries();
+  constructor(private http: HttpClient, private categoriesService: CategoriesService) {
+    this.loadAllGroceries()
+  }
+
+  loadAllGroceries() {
+    if (this.hasAlreadyFetched()) return
+    this.http.get<Grocery[]>(`${this.url}`).subscribe({
+      next: (data) => {
+        this.groceries.set(data)
+        this.hasAlreadyFetched.set(true);
+      },
+      error: (error) => console.error(error)
+    })
   }
 
   getAllGroceries() {
-    if (this.groceries.length) {
-      return this.groceries;
+    if (this.groceries.length === 0) {
+      this.loadAllGroceries();
     }
 
-    return this.http.get<Array<Grocery>>(`${this.url}`).
-      subscribe((data) => {
-        this.groceries.set(data);
-      });
+    return this.groceries();
   }
 
   getGroceriesByDay() {
-    // Get all groceries of the selected day (currentDay)
+    // Get all groceries of the selected day (currentDay
     const day = this.currentDay();
+    const currentCategory = this.categoriesService.currentCategory();
 
     if (!day) return this.groceries();
 
+    if (currentCategory) {
+      return this.groceries().filter(
+        grocery => (
+          grocery[day] > 0 && grocery.category?.id === currentCategory?.id
+        )
+      ) || []
+    }
+
     return this.groceries().filter(
-      grocery => grocery[day] > 0
+      grocery => (
+        grocery[day] > 0
+      )
     ) || []
   }
 
@@ -65,13 +85,19 @@ export class GroceriesService {
       this.groceries.set(copy);
     } else {
       // If there's not existing grocery create it from scratch
-      this.http.post<Grocery>(`${this.url}`, {
+      const data: any = {
         ...grocery,
         [day]: 1,
-      }).
+      }
+
+      if (grocery.category?.id) {
+        data.categoryId = grocery.category?.id;
+      }
+
+      this.http.post<Grocery>(`${this.url}`, data).
         subscribe((data) => {
           // Add new grocery to the groceries array
-          this.groceries.update(prev => [...prev, data])
+          this.groceries.update(prev => [data, ...prev])
         });
     }
   }

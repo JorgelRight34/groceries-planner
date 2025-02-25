@@ -1,4 +1,4 @@
-import { Component, input, signal } from '@angular/core';
+import { Component, computed, input, signal } from '@angular/core';
 import { ModalComponent } from '../modal/modal.component';
 import { AddGroceryComponent } from '../add-grocery/add-grocery.component';
 import { GroceriesService } from '../../services/groceries.service';
@@ -11,7 +11,7 @@ import { GroceriesService } from '../../services/groceries.service';
 })
 export class AddGroceryButtonComponent {
   isModalOpen = signal<boolean>(false);
-  selectedDay = input<string>('Monday');
+  selectedDay = computed(() => this.groceriesService.currentDay());
   text = input<string>('+ Add');
 
   constructor(private groceriesService: GroceriesService) { }

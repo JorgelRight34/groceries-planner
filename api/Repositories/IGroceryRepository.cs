@@ -5,7 +5,7 @@ namespace api.Repositories
 {
     public interface IGroceryRepository
     {
-        Task<IEnumerable<Grocery>> GetAllAsync();
+        Task<IEnumerable<GroceryDto>> GetAllAsync();
         Task<Grocery> CreateAsync(Grocery grocery);
         Task<Grocery?> GetByIdAsync(int id);
         Task<Grocery?> DeleteAsync(int id);

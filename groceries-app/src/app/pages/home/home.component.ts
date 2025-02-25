@@ -35,6 +35,7 @@ export class HomeComponent {
   constructor(private groceriesService: GroceriesService) { }
 
   changeCurrentSection(section: string): void {
+    // For mobile users to navigate between sections
     this.currentSection.set(section);
   }
 }

@@ -1,8 +1,9 @@
 <div class="groceries-list bg-white rounded p-lg-3 mx-auto">
-    <h4 class="text-center text-accent mb-5">Grocery List for {{ getDay() }}</h4>
+    <h4 class="text-center text-accent mb-5">Grocery List for {{ getDay() | titlecase }}</h4>
     <div class="row">
         <div class="col-lg-6">
-            @for (category of startCategories; track category) {
+            <!-- Groceries that appear at the left column of the list -->
+            @for (category of startCategories(); track category.id) {
                 <div class="mb-5">
                     <b class="text-center">{{ category.name }}</b>
                     <ul>
@@ -14,7 +15,8 @@
             }
         </div>
         <div class="col-lg-6">
-            @for (category of endCategories ; track category) {
+            <!-- Groceries that appear at the right column of the list -->
+            @for (category of endCategories() ; track category.id) {
                 <div class="mb-5">
                     <b class="text-center">{{ category.name }}</b>
                     <ul>

@@ -7,17 +7,21 @@ import { Category } from '../models/category';
 })
 export class CategoriesService {
   private url = 'https://localhost:7240/categories'
+  hasFetched = signal<boolean>(false);
   currentCategory = signal<Category | null>(null);
   categories = signal<Category[]>([]);
 
   constructor(private http: HttpClient) { }
 
   getAllCategories(): Category[] {
-    if (this.categories.length > 0) {
+    if (this.categories.length > 0 || this.hasFetched()) {
       return this.categories();
     }
 
-    this.http.get<Category[]>(`${this.url}`).subscribe((data) => this.categories.set(data));
+    this.http.get<Category[]>(`${this.url}`).subscribe({
+      next: (data) => { this.categories.set(data); this.hasFetched.set(true) },
+      error: (err) => console.error(err)
+    });
 
     return this.categories();
   }
@@ -26,8 +30,8 @@ export class CategoriesService {
     return this.categories().find(category => category.id === id);
   }
 
-  setCategory(category: Category): void {
-    if (category.id === this.currentCategory()?.id) return
+  setCategory(category: Category | null): void {
+    if (category?.id === this.currentCategory()?.id) return
     this.currentCategory.set(category);
   }
 }

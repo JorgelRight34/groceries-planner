@@ -14,10 +14,11 @@ namespace api.Repositories
             _context = context;
         }
 
-        public async Task<IEnumerable<Grocery>> GetAllAsync()
+        public async Task<IEnumerable<GroceryDto>> GetAllAsync()
         {
             var data = await _context.Groceries.
                 Include(grocery => grocery.Category).
+                Select(grocery => grocery.ToGroceryDto()).
                 ToListAsync();
 
             return data;

@@ -3,10 +3,10 @@
         class="form-select shadow-sm" 
         (change)="handleChangeCategory($event)"
     >
-        <option value="">Select category</option>
-        @for (category of getGroceries(); track category) {
+        <option [value]="null">Select category</option>
+        @for (category of categories(); track category.id) {
             <option
-                [value]="category.name"
+                [value]="category.id"
             >
                 {{ category.name }}
             </option>

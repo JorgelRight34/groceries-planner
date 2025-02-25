@@ -16,6 +16,7 @@ namespace api.Mappers
                 ImageUrl = grocery.ImageUrl,
                 Url = grocery.Url,
                 CategoryId = grocery.CategoryId,
+                Category = grocery?.Category?.ToCategoryDto(),
                 // Days
                 Monday = grocery.Monday,
                 Tuesday = grocery.Tuesday,
