@@ -11,6 +11,6 @@ export class SavePlanComponent {
   constructor(private groceriesService: GroceriesService) { }
 
   handleSavePlan() {
-    this.groceriesService.saveGroceryList();
+    this.groceriesService.saveGroceryList().subscribe();
   }
 }

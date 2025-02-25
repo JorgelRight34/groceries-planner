@@ -4,7 +4,7 @@
         (change)="handleChangeCategory($event)"
     >
         <option value="">Select category</option>
-        @for (category of categories; track category) {
+        @for (category of getGroceries(); track category) {
             <option
                 [value]="category.name"
             >

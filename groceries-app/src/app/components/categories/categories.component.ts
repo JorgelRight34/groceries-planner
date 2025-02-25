@@ -1,6 +1,7 @@
-import { Component, output, signal } from '@angular/core';
-import { categories } from '../../../lib/constants';
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { CategoriesService } from '../../services/categories.service';
+import { Category } from '../../models/category';
 
 @Component({
   selector: 'app-categories',
@@ -9,15 +10,19 @@ import { CommonModule } from '@angular/common';
   styleUrl: './categories.component.css'
 })
 export class CategoriesComponent {
-  categories = [...categories];
-  changeCategory = output<string>();
-  currentCategory = signal<string>('');
+
+  constructor(private categoriesService: CategoriesService) { }
 
   handleChangeCategory(event: Event) {
     // If new category is the same as selected then unselect category
-    const category = (event.target as HTMLSelectElement).value;
-    const newCategory = category === this.currentCategory() ? '' : category;
-    this.currentCategory.set(newCategory);
-    this.changeCategory.emit(newCategory);
+    const categoryId = (event.target as HTMLSelectElement).value;
+    const newCategory = this.categoriesService.findCategoryById(Number(categoryId));
+    if (newCategory) {
+      this.categoriesService.setCategory(newCategory);
+    }
+  }
+
+  getGroceries(): Category[] {
+    return this.categoriesService.getAllCategories();
   }
 }

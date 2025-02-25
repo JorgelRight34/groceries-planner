@@ -21,5 +21,7 @@ namespace api.Models
         public int Friday { get; set; } = 0;
         public int Saturday { get; set; } = 0;
         public int Sunday { get; set; } = 0;
+        public int? CategoryId { get; set; }
+        public Category? Category { get; set; }
      }
 }

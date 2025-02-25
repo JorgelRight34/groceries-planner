@@ -15,6 +15,7 @@ namespace api.Mappers
                 Cost = grocery.Cost,
                 ImageUrl = grocery.ImageUrl,
                 Url = grocery.Url,
+                CategoryId = grocery.CategoryId,
                 // Days
                 Monday = grocery.Monday,
                 Tuesday = grocery.Tuesday,
@@ -34,6 +35,7 @@ namespace api.Mappers
                 Cost = grocery.Cost,
                 ImageUrl = grocery.ImageUrl,
                 Url = grocery.Url,
+                CategoryId = grocery.CategoryId,
                 // Days
                 Monday = grocery.Monday,
                 Tuesday = grocery.Tuesday,
@@ -53,6 +55,7 @@ namespace api.Mappers
                 Cost = grocery.Cost,
                 ImageUrl = grocery.ImageUrl,
                 Url = grocery.Url,
+                CategoryId = grocery.CategoryId,
                 // Days
                 Monday = grocery.Monday,
                 Tuesday = grocery.Tuesday,

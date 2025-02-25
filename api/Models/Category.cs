@@ -9,5 +9,7 @@ namespace api.Models
         public int Id { get; set; }
         [Required]
         public string Name { get; set; } = String.Empty;
+
+        public IEnumerable<Grocery> Groceries { get; set; } = new List<Grocery>();  
     }
 }

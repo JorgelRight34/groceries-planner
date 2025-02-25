@@ -1,3 +1,5 @@
+import { Category } from "./category"
+
 export type Grocery = {
     id: number,
     name: string,
@@ -5,10 +7,7 @@ export type Grocery = {
     url: string,
     imageUrl?: string,
     cost: number,
-    category?: {
-        name: string,
-        id: number,
-    },
+    category?: Category,
     monday: number,
     tuesday: number,
     wednesday: number,

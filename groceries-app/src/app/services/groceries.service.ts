@@ -2,6 +2,7 @@ import { inject, Injectable, signal } from '@angular/core';
 import { Grocery } from '../models/grocery';
 import { HttpClient } from '@angular/common/http';
 import { Day } from '../models/day';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -21,9 +22,9 @@ export class GroceriesService {
     if (this.groceries.length) {
       return this.groceries;
     }
+
     return this.http.get<Array<Grocery>>(`${this.url}`).
       subscribe((data) => {
-        console.log(data);
         this.groceries.set(data);
       });
   }
@@ -94,8 +95,8 @@ export class GroceriesService {
     }
   }
 
-  saveGroceryList(): void {
-    this.http.post<Grocery[]>(`${this.url}/save-groceries-list`, this.groceries()).subscribe(data => console.log(data));
+  saveGroceryList(): Observable<Grocery[]> {
+    return this.http.post<Grocery[]>(`${this.url}/save-groceries-list`, this.groceries());
   }
 
   deleteGrocery(groceryId: number): void {

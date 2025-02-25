@@ -27,27 +27,12 @@ import { SavePlanComponent } from '../../components/save-plan/save-plan.componen
   styleUrl: './home.component.css'
 })
 export class HomeComponent {
-  currentCategory = signal<string>('');
   currentSection = signal<string>('LIST');  // For mobile users to navigate
   groceries = computed(
     () => this.groceriesService.getGroceriesByDay()
   )
 
   constructor(private groceriesService: GroceriesService) { }
-
-  getGroceriesForDay() {
-    let result = this.groceriesService.getGroceriesByDay();
-    if (this.currentCategory()) {
-      result = result.filter(
-        grocery => grocery.category?.name === this.currentCategory()
-      );
-    }
-    return result;
-  }
-
-  changeCategory(category: string): void {
-    this.currentCategory.set(category)
-  }
 
   changeCurrentSection(section: string): void {
     this.currentSection.set(section);
