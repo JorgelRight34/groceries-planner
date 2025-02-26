@@ -22,7 +22,7 @@ export class CategoriesComponent {
     if (categoryId) { // If the default option was not selected
       const newCategory = this.categoriesService.findCategoryById(Number(categoryId));
       if (newCategory) {
-        // If the selected category indeed e
+        // If the selected category indeed exists then set new category
         this.categoriesService.setCategory(newCategory);
         return
       }
