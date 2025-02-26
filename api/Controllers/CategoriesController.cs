@@ -40,6 +40,11 @@ namespace api.Controllers
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] CreateCategoryDto categoryDto)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+
             var category = await _categoryRepository.CreateAsync(categoryDto.ToCategoryFromCreateCategoryDto());
             return CreatedAtAction(nameof(GetById), new { id = category.Id }, category.ToCategoryDto());
         }
@@ -47,6 +52,11 @@ namespace api.Controllers
         [HttpPut("{id:int}")]
         public async Task<IActionResult> Put([FromRoute] int id, [FromBody] UpdateCategoryDto categoryDto)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+
             var category = await _categoryRepository.UpdateAsync(id, categoryDto);
 
             if (category == null)

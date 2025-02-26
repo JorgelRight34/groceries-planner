@@ -41,6 +41,11 @@ namespace api.Controllers
             [FromBody] CreateGroceryDto groceryDto
         )
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
             var grocery = groceryDto.ToGroceryFromCreateDto();
             var data = await _groceryRepository.CreateAsync(grocery);
             return CreatedAtAction(
@@ -54,6 +59,11 @@ namespace api.Controllers
             [FromBody] UpdateGroceryDto groceryDto
         )
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
             var grocery = await _groceryRepository.UpdateAsync(id, groceryDto);
             
             if (grocery == null)
@@ -81,6 +91,11 @@ namespace api.Controllers
         [Route("save-groceries-list")]
         public async Task<IActionResult> SaveGroceriesList([FromBody] Grocery[] groceries)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
             foreach (var grocery in groceries)
             {
                 var groceryDto = grocery.ToUpdateGroceryDto();

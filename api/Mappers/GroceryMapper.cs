@@ -16,7 +16,6 @@ namespace api.Mappers
                 ImageUrl = grocery.ImageUrl,
                 Url = grocery.Url,
                 CategoryId = grocery.CategoryId,
-                Category = grocery?.Category?.ToCategoryDto(),
                 // Days
                 Monday = grocery.Monday,
                 Tuesday = grocery.Tuesday,
@@ -24,7 +23,8 @@ namespace api.Mappers
                 Thursday = grocery.Thursday,
                 Friday = grocery.Friday,
                 Saturday = grocery.Saturday,
-                Sunday = grocery.Sunday
+                Sunday = grocery.Sunday,
+                Category = grocery?.Category?.ToCategoryDto(),
             };
         }
         public static UpdateGroceryDto ToUpdateGroceryDto(this Grocery grocery)

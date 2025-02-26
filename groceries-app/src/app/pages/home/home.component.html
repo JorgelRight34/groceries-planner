@@ -39,7 +39,9 @@
             <app-categories />
           </div>
           <div class="body-row px-lg-3 pb-3">
-            <app-groceries />
+            @for (grocery of groceries() ; track grocery.id) {
+              <app-grocery [grocery]="grocery" />
+            }
           </div>
         </div>
       </div>

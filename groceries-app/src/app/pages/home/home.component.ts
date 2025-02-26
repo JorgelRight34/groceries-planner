@@ -1,6 +1,5 @@
 import { Component, computed, signal } from '@angular/core';
 import { DaySelectorComponent } from '../../components/day-selector/day-selector.component';
-import { GroceriesComponent } from '../../components/groceries/groceries.component';
 import { CategoriesComponent } from '../../components/categories/categories.component';
 import { GroceriesListComponent } from '../../components/groceries-list/groceries-list.component';
 import { GroceriesService } from '../../services/groceries.service';
@@ -9,17 +8,18 @@ import { CommonModule } from '@angular/common';
 import { HeaderComponent } from '../../components/header/header.component';
 import { AddGroceryButtonComponent } from '../../components/add-grocery-button/add-grocery-button.component';
 import { SavePlanComponent } from '../../components/save-plan/save-plan.component';
+import { GroceryComponent } from '../../components/grocery/grocery.component';
 
 @Component({
   selector: 'app-home',
   imports: [
     AddGroceryButtonComponent,
+    GroceriesListComponent,
+    GroceryComponent,
     HeaderComponent,
     CommonModule,
-    GroceriesComponent,
     DaySelectorComponent,
     CategoriesComponent,
-    GroceriesListComponent,
     SavePlanComponent,
     NavbarSmComponent
   ],
