@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace api.Models
 {
@@ -22,6 +23,10 @@ namespace api.Models
         public int Saturday { get; set; } = 0;
         public int Sunday { get; set; } = 0;
         public int? CategoryId { get; set; }
+        [Required]
+        public int GroceryListId { get; set; }
+        [ForeignKey("CategoryId")]
         public Category? Category { get; set; }
+        public GroceryList? GroceryList { get; set; }
      }
 }

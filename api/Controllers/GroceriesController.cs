@@ -86,30 +86,5 @@ namespace api.Controllers
 
             return NoContent();
         }
-
-        [HttpPost]
-        [Route("save-groceries-list")]
-        public async Task<IActionResult> SaveGroceriesList([FromBody] Grocery[] groceries)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            foreach (var grocery in groceries)
-            {
-                var groceryDto = grocery.ToUpdateGroceryDto();
-                var updatedGrocery = await _groceryRepository.UpdateAsync(grocery.Id, groceryDto);
-
-                if (updatedGrocery == null)
-                {
-                    return NotFound();
-                } 
-               
-            }
-
-            return NoContent();
-        }
- 
     }
 }

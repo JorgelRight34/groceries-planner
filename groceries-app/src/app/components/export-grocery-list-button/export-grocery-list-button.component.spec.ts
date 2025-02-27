@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ExportGroceryListComponent } from './export-grocery-list.component';
+import { ExportGroceryListComponent } from './export-grocery-list-button.component';
 
 describe('ExportGroceryListComponent', () => {
   let component: ExportGroceryListComponent;
@@ -10,7 +10,7 @@ describe('ExportGroceryListComponent', () => {
     await TestBed.configureTestingModule({
       imports: [ExportGroceryListComponent]
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(ExportGroceryListComponent);
     component = fixture.componentInstance;

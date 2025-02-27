@@ -2,9 +2,11 @@
 using api.Mappers;
 using api.Models;
 using api.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
 
 namespace api.Controllers
 {
@@ -25,6 +27,26 @@ namespace api.Controllers
             _userManager = userManager;
             _tokenService = tokenService;
             _signInManager = signInManager; 
+        }
+
+        [HttpGet]
+        [Authorize]
+        public async Task<IActionResult> Get()
+        {
+            var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+            if (String.IsNullOrEmpty(userId))
+            {
+                return Unauthorized("No user id provided on the token.");
+            }
+
+            var user = await _userManager.Users.FirstOrDefaultAsync(x => x.Id == userId);
+            if (user == null)
+            {
+                return Unauthorized("Didn't find user");
+            }
+
+            return Ok(user.ToUserDto());
         }
 
         [HttpPost("register")]

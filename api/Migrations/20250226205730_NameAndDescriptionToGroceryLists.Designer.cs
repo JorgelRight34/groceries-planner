@@ -12,8 +12,8 @@ using api.Data;
 namespace api.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250226132609_Roles")]
-    partial class Roles
+    [Migration("20250226205730_NameAndDescriptionToGroceryLists")]
+    partial class NameAndDescriptionToGroceryLists
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -275,6 +275,9 @@ namespace api.Migrations
                     b.Property<int>("Friday")
                         .HasColumnType("int");
 
+                    b.Property<int>("GroceryListId")
+                        .HasColumnType("int");
+
                     b.Property<string>("ImageUrl")
                         .HasColumnType("nvarchar(max)");
 
@@ -308,7 +311,34 @@ namespace api.Migrations
 
                     b.HasIndex("CategoryId");
 
+                    b.HasIndex("GroceryListId");
+
                     b.ToTable("Groceries");
+                });
+
+            modelBuilder.Entity("api.Models.GroceryList", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("GroceryLists");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -368,7 +398,29 @@ namespace api.Migrations
                         .WithMany()
                         .HasForeignKey("CategoryId");
 
+                    b.HasOne("api.Models.GroceryList", "GroceryList")
+                        .WithMany("Groceries")
+                        .HasForeignKey("GroceryListId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Category");
+
+                    b.Navigation("GroceryList");
+                });
+
+            modelBuilder.Entity("api.Models.GroceryList", b =>
+                {
+                    b.HasOne("api.Models.AppUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("api.Models.GroceryList", b =>
+                {
+                    b.Navigation("Groceries");
                 });
 #pragma warning restore 612, 618
         }
