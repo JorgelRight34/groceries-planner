@@ -8,6 +8,10 @@ html {
     font-family: Arial, Helvetica, sans-serif !important;
 }
 
+.hover:hover {
+    cursor: pointer;
+}
+
 .text-accent {
     color: var(--accent-color)
 }

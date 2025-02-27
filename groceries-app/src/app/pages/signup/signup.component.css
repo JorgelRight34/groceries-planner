@@ -1,0 +1,13 @@
+.background {
+    height: 100dvh !important;
+}
+
+.form-container {
+    background-color: #fff;
+}
+
+@media (max-width: 500px) {
+    .form-container {
+        width: 95dvw;
+    }
+}

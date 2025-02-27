@@ -9,18 +9,18 @@ import { HeaderComponent } from '../../components/header/header.component';
 import { AddGroceryButtonComponent } from '../../components/add-grocery-button/add-grocery-button.component';
 import { SavePlanComponent } from '../../components/save-plan/save-plan.component';
 import { GroceryComponent } from '../../components/grocery/grocery.component';
+import { NavbarComponent } from '../../components/navbar/navbar.component';
 
 @Component({
   selector: 'app-home',
   imports: [
-    AddGroceryButtonComponent,
     GroceriesListComponent,
     GroceryComponent,
     HeaderComponent,
     CommonModule,
     DaySelectorComponent,
     CategoriesComponent,
-    SavePlanComponent,
+    NavbarComponent,
     NavbarSmComponent
   ],
   templateUrl: './home.component.html',

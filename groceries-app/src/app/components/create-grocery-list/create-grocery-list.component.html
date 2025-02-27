@@ -1,0 +1,11 @@
+<button (click)="showModal()">Create</button>
+
+<app-modal [isOpen]="isModalShowing()" [height]="'95dvh'" [width]="'75dvw'" (hideModal)="hideModal()">
+    <div>
+        <form [formGroup]="form" (submit)="handleSubmit()">
+            <input placeholder="name" formControlName="name" required />
+            <input placeholder="description" formControlName="description" required />
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+</app-modal>

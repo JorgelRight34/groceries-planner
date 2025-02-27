@@ -27,7 +27,7 @@ export class GroceriesListComponent {
     private categoriesService: CategoriesService
   ) { }
 
-  getCategoryGroceries(category: number): Grocery[] {
+  getCategoryGroceries(category: number): Grocery[] | undefined {
     return this.groceriesService.getGroceriesByDayAndCategory(category);
   }
 

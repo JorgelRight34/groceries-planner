@@ -1,0 +1,45 @@
+<div class="background d-flex align-items-center justify-content-center h-100">
+    <div class="form-container rounded-4 w-50 p-5 shadow-lg">
+        <!-- Form -->
+        <form [formGroup]="form" (submit)="handleSubmit()">
+            <!-- Username -->
+            <div class="mb-3">
+                <label id="username">Username</label>
+                <input 
+                    class="form-control" 
+                    id="username" 
+                    placeholder="Username" 
+                    formControlName="username" 
+                />
+            </div>
+            <!-- Email -->
+            <div class="mb-3">
+                <label id="email">Email</label>
+                <input 
+                    class="form-control" 
+                    id="email" 
+                    type="email" 
+                    placeholder="example@email.com" 
+                    formControlName="email" 
+                />
+            </div>
+            <!-- Password -->
+            <div class="mb-3">
+                <label id="password">Password</label>
+                <input 
+                    class="form-control" 
+                    id="password" 
+                    type="password" 
+                    formControlName="password" 
+                />
+            </div>
+            <!-- Submit and more info -->
+            <div>
+                <span>Already have an account yet?</span>&nbsp;<a routerLink="login">login here!</a>
+                <button class="btn btn-success w-100" type="submit">
+                    Submit
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

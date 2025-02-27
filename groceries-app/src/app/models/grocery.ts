@@ -8,6 +8,7 @@ export type Grocery = {
     imageUrl?: string,
     cost: number,
     category?: Category,
+    categoryId?: number,
     monday: number,
     tuesday: number,
     wednesday: number,

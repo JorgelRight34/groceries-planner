@@ -1,38 +1,10 @@
 <div class="home position-relative">
-  <div class="row mx-0"> 
-    <div 
-      class="col-lg-4 p-0 bg-white"
-      [ngClass]="{'d-none d-lg-block': currentSection() !== 'GROCERIES'}"
-    >
+  <div class="row mx-0">
+    <div class="col-lg-4 p-0 bg-white" [ngClass]="{'d-none d-lg-block': currentSection() !== 'GROCERIES'}">
       <app-header />
       <div class="row border mx-0 h-100">
         <div class="col-lg-2 p-0 border-end">
-          <div class="d-flex align-items-center justify-content-center p-3 mt-5">
-            <span class="material-symbols-outlined">
-              receipt_long
-            </span>
-          </div>
-          <div class="d-flex align-items-center justify-content-center p-3 mt-5">
-            <span class="material-symbols-outlined">
-              bar_chart
-            </span>
-          </div>
-          <div class="d-flex align-items-center justify-content-center p-3 mt-5">
-            <app-add-grocery-button [text]="'+'"/>
-          </div>
-          <div class="d-flex align-items-center justify-content-center p-3 mt-5">
-            <span class="material-symbols-outlined">
-              download
-            </span>
-          </div>
-          <div class="d-flex align-items-center justify-content-center p-3 mt-5">
-            <app-save-plan />
-          </div>
-          <div class="d-flex align-items-center justify-content-center p-3 mt-5">
-            <span class="material-symbols-outlined">
-              logout
-            </span>
-          </div>
+          <app-navbar />
         </div>
         <div class="col-lg-10 p-3 p-lg-2 py-lg-3">
           <div class="header-row mb-3">
@@ -40,17 +12,14 @@
           </div>
           <div class="body-row px-lg-3 pb-3">
             @for (grocery of groceries() ; track grocery.id) {
-              <app-grocery [grocery]="grocery" />
+            <app-grocery [grocery]="grocery" />
             }
           </div>
         </div>
       </div>
     </div>
-  
-    <div 
-      class="col-lg-8 p-3"
-      [ngClass]="{'d-none d-lg-block': currentSection() !== 'LIST'}"
-    >
+
+    <div class="col-lg-8 p-3" [ngClass]="{'d-none d-lg-block': currentSection() !== 'LIST'}">
       <div class="header-row mb-3">
         <app-day-selector />
       </div>
