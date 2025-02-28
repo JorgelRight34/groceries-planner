@@ -14,6 +14,7 @@ export class ExportGroceryListComponent {
     const groceryList = this.groceriesService.currentGroceryList();
 
     if (groceryList) {
+      console.log(groceryList);
       this.groceriesService.downloadPdf(groceryList).subscribe((data) => {
         const url = window.URL.createObjectURL(new Blob([data]));
         const a = document.createElement('a');

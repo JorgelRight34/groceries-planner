@@ -1,0 +1,24 @@
+<span class="position-absolute top-0 end-0 material-symbols-outlined hover" (click)="showModal()">
+    settings
+</span>
+
+<app-modal title="Edit grocery list" [isOpen]="isModalShowing()" (hideModal)="hideModal()" width="50dvw">
+    <div>
+        <form [formGroup]="form" (submit)="handleSubmit()">
+            <input class="form-control mb-3" placeholder="Name" formControlName="name" required />
+            <input class="form-control mb-3" placeholder="Description" formControlName="description" required />
+            <div class="row mx-0">
+                <div class="col-lg-6">
+                    <button class="btn rounded-pill bg-accent w-100" type="submit">
+                        Submit
+                    </button>
+                </div>
+                <div class="col-lg-6">
+                    <button class="btn rounded-pill btn-outline-danger w-100" (click)="deleteGroceryList()">
+                        Delete
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</app-modal>

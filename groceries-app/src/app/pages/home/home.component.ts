@@ -29,7 +29,7 @@ import { NavbarComponent } from '../../components/navbar/navbar.component';
 export class HomeComponent {
   currentSection = signal<string>('LIST');  // For mobile users to navigate
   groceries = computed(
-    () => this.groceriesService.getGroceriesByDay()
+    () => this.groceriesService.getGroceriesByDayAndCategory()
   )
 
   constructor(private groceriesService: GroceriesService) { }

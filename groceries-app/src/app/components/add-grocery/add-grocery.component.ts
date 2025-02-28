@@ -1,11 +1,9 @@
 import { Component, computed, signal } from '@angular/core';
-import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 import { GroceriesService } from '../../services/groceries.service';
-import { Grocery } from '../../models/grocery';
 import { GroceryComponent } from '../grocery/grocery.component';
 import { CommonModule } from '@angular/common';
-import { CategoriesService } from '../../services/categories.service';
-import { Category } from '../../models/category';
+
 import { GroceryFormComponent } from '../grocery-form/grocery-form.component';
 
 @Component({
@@ -20,7 +18,6 @@ export class AddGroceryComponent {
 
   constructor(
     private groceriesService: GroceriesService,
-    private categoriesService: CategoriesService
   ) { }
 
   setCurrentSection(section: string) {

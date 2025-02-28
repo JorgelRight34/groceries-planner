@@ -13,6 +13,10 @@
     overflow-y: hidden;
 }
 
+.info-column {
+    background-color: #fff;
+}
+
 @media (max-width: 500px) {
     .body-row {
         /* navbar-sm is on bottom and has a different z-index so it will cover some things */
@@ -22,5 +26,9 @@
 
     .home {
         height: 100dvh;  /* Navbar is on top so less -8 */
+    }
+
+    .info-column {
+        background-color: var(--bg-color);
     }
 }

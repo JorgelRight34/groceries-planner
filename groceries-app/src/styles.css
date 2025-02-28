@@ -12,6 +12,11 @@ html {
     cursor: pointer;
 }
 
+.hover-accent:hover {
+    cursor: pointer;
+    color: var(--accent-color);
+}
+
 .text-accent {
     color: var(--accent-color)
 }
@@ -42,5 +47,9 @@ body {
 @media (max-width: 500px) {
     ::-webkit-scrollbar {
         width: 0px;
+    }
+
+    .w-lg-100 {
+        width: 100% !important;
     }
 }

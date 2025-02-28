@@ -19,7 +19,11 @@ export class CategoriesService {
     }
 
     this.http.get<Category[]>(`${this.url}`).subscribe({
-      next: (data) => { this.categories.set(data); this.hasFetched.set(true) },
+      next: (data) => {
+        this.categories.set(data);
+        this.hasFetched.set(true)
+        return data;
+      },
       error: (err) => console.error(err)
     });
 

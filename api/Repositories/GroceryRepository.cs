@@ -24,21 +24,47 @@ namespace api.Repositories
             return data;
         }
 
-        public async Task<Grocery> CreateAsync(Grocery grocery)
+        public async Task<Grocery?> CreateAsync(Grocery grocery)
         {
+            var groceryList = await _context.GroceryLists.FindAsync(grocery.GroceryListId);
+            if (groceryList == null)
+            {;
+                return null;
+            }
+
+            var category = await _context.Categories.FindAsync(grocery.CategoryId);
+            if (category == null)
+            {
+                return null;
+            }
+
             await _context.Groceries.AddAsync(grocery);
             await _context.SaveChangesAsync();
             return grocery;
         }
 
-        public async Task<Grocery?> GetByIdAsync(int id)
+        public async Task<Grocery?> GetByIdAsync(int id, string? userId)
         {
-            return await _context.Groceries.FindAsync(id);
+            if (userId == null)
+            {
+                return null;
+            }
+
+            var grocery = await _context.Groceries
+                .Include(x => x.GroceryList)
+                .FirstOrDefaultAsync(x => x.Id == id);
+
+            if (grocery == null || grocery?.GroceryList?.UserId != userId)
+            {
+                return null;
+            }
+
+            return grocery;
         }
 
-        public async Task<Grocery?> DeleteAsync(int id)
+        public async Task<Grocery?> DeleteAsync(int id, string? userId)
         {
-            var grocery = await _context.Groceries.FindAsync(id);
+            var grocery = await this.GetByIdAsync(id, userId);
 
             if (grocery == null)
             {
@@ -51,9 +77,9 @@ namespace api.Repositories
             return grocery;
         }
 
-        public async Task<Grocery?> UpdateAsync(int id, UpdateGroceryDto groceryDto)
+        public async Task<Grocery?> UpdateAsync(int id, string? userId, UpdateGroceryDto groceryDto)
         {
-            var grocery = await _context.Groceries.FindAsync(id);
+            var grocery = await this.GetByIdAsync(id, userId);
 
             if (grocery == null)
             {

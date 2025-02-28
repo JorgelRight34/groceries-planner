@@ -1,30 +1,32 @@
 <!-- Open modal button -->
-<span class="material-symbols-outlined hover" (click)="showModal()">
+<span class="material-symbols-outlined hover-accent open-button" (click)="showModal()">
     folder_open
 </span>
 
 <!-- Modal -->
-<app-modal 
-    [title]="'Your grocery lists'" 
-    [isOpen]="isModalOpen()" 
-    [width]="'75dvw'" [height]="'90dvh'"
-    (hideModal)="hideModal()" 
->
+<app-modal [title]="'Your grocery lists'" [isOpen]="isModalOpen()" [width]="'75dvw'" (hideModal)="hideModal()">
     <app-create-grocery-list />
-    <div class="d-flex align-items-center justify-content-center">
+    <div class="d-flex flex-wrap gap-5 align-items-center justify-content-center">
         @for (list of groceryLists() ; track list.id)
         {
-            <div class="border shadow-sm p-3 w-25">
-                <div class="mb-3 border-bottom">
-                    {{ list.name }}
-                </div>
-                <button class="btn bg-accent w-100" (click)="selectGroceryList(list)">
-                    Select
-                </button>
-                <button class="btn btn-danger w-100" (click)="deleteGroceryList(list)">
-                    Delete
-                </button>
+        <div class="border shadow-sm p-3 w-25 w-lg-100 mt-3">
+            <div class="position-relative mb-3 border-bottom">
+                <h6 class="text-truncate mb-2">{{ list.name }}</h6>
+                <p class="text-truncate mb-3">{{ list.description }}</p>
+                <app-edit-grocery-list-button [groceryList]="list" />
             </div>
+            <div class="d-flex flex-column border-bottom mb-3">
+                <span class="text-muted mb-2">
+                    Items: {{ list.groceries.length }}
+                </span>
+                <span class="text-muted mb-3">
+                    Total cost: {{ calculateTotalPrice(list) | currency }}
+                </span>
+            </div>
+            <button class="btn bg-accent w-100" (click)="selectGroceryList(list)">
+                Select
+            </button>
+        </div>
         }
     </div>
 </app-modal>

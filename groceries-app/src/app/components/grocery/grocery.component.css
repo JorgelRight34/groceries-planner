@@ -1,6 +1,6 @@
 img {
-    min-height: 8rem;
-    max-height: 8rem;
+    min-height: 10rem;
+    max-height: 10rem;
     object-fit: contain;
 }
 
@@ -11,4 +11,17 @@ img {
 
 .option {
     cursor: pointer;
+}
+
+.delete-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #fff;
+    height: 1.5rem;
+    width: 1.5rem;
+    color: var(--accent-color);
+    position: absolute;
+    top: -0.5rem;
+    right: -0.5rem;
 }

@@ -1,43 +1,39 @@
 ﻿using api.Dtos.GroceryList;
+using api.Extensions;
 using api.Mappers;
 using api.Models;
 using api.Repositories;
+using api.Services;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using System.Security.Claims;
+using OpenHtmlToPdf;
+
 
 namespace api.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class GroceryListController : Controller
+    public class GroceryListController : ControllerBase
     {
         private readonly IGroceryListRepository _groceryListRepository;
         private readonly IGroceryRepository _groceryRepository;
-        private readonly UserManager<AppUser> _userManager;
+        private readonly IViewRendererService _viewRendererService;
+
         public GroceryListController(
             IGroceryListRepository groceryListRepository, 
-            IGroceryRepository groceryRepository, 
-            UserManager<AppUser> userManager
+            IGroceryRepository groceryRepository,
+            IViewRendererService viewRendererService
         )
         {
             _groceryListRepository = groceryListRepository;
             _groceryRepository = groceryRepository;
-            _userManager = userManager;
+            _viewRendererService = viewRendererService;
         }
 
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-
-            if (userId == null)
-            {
-                return Unauthorized();
-            }
-
+            var userId = User.GetUsername();
             var lists = await _groceryListRepository.GetAllAsync(
                 userId
             );
@@ -54,8 +50,7 @@ namespace api.Controllers
                 return BadRequest();
             }
 
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-
+            var userId = User.GetUsername();
             if (userId == null)
             {
                 return Unauthorized();
@@ -69,17 +64,33 @@ namespace api.Controllers
             return Ok(groceryList);
         }
 
+        [HttpPut("{id}")]
+        [Authorize]
+        public async Task<IActionResult> Put([FromRoute] int id, [FromBody] UpdateGroceryListDto groceryListDto)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+
+            var userId = User.GetUsername();
+            var groceryList = await _groceryListRepository.UpdateAsync(
+                    id, userId, groceryListDto
+            );
+
+            if (groceryList == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(groceryList);
+        }
+
         [HttpDelete("{id}")]
         [Authorize]
         public async Task<IActionResult> Delete([FromRoute] int id)
         {
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-
-            if (userId == null)
-            {
-                return Unauthorized();
-            }
-
+            var userId = User.GetUsername();
             var groceryList = await _groceryListRepository.DeleteAsync(userId, id);
 
             if (groceryList == null)
@@ -90,8 +101,8 @@ namespace api.Controllers
             return NoContent();
         }
 
-        [HttpPost]
-        [Route("save-groceries-list")]
+        [HttpPost("save-groceries-list")]
+        [Authorize]
         public async Task<IActionResult> SaveGroceriesList([FromBody] Grocery[] groceries)
         {
             if (!ModelState.IsValid)
@@ -99,16 +110,19 @@ namespace api.Controllers
                 return BadRequest(ModelState);
             }
 
+            var userId = User.GetUsername();
+
             foreach (var grocery in groceries)
             {
                 var groceryDto = grocery.ToUpdateGroceryDto();
-                var updatedGrocery = await _groceryRepository.UpdateAsync(grocery.Id, groceryDto);
+                var updatedGrocery = await _groceryRepository.UpdateAsync(
+                    grocery.Id, userId, groceryDto
+                );
 
                 if (updatedGrocery == null)
                 {
                     return NotFound();
                 }
-
             }
 
             return NoContent();
@@ -116,19 +130,29 @@ namespace api.Controllers
 
         [HttpPost("export-pdf")]
         [Authorize]
-        public async Task<IActionResult> ExportToPdf([FromBody] GroceryList groceryList)
+        public async Task<IActionResult> ExportToPdf([FromBody] ExportGroceryListDto groceryList)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest();
             }
 
-            var renderer = new ChromePdfRenderer();
-            var pdf = renderer.RenderHtmlAsPdf("<h1>Excellent</h1>");
+            string htmlContent = "";
+            try
+            {
+                htmlContent = await _viewRendererService.RenderAsync(
+                    "/Views/Templates/GroceryList.cshtml", groceryList
+                );
+            } catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+                return StatusCode(500);
+            }
+          
 
-            var pdfBytes = pdf.BinaryData;
+            byte[] pdfBytes = Pdf.From(htmlContent).Content();
 
-            return File(pdfBytes, "application/pdf", $"{groceryList.Name}.pdf");
+            return File(pdfBytes, "application/pdf", "document.pdf");
         }
     }
 }

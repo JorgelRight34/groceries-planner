@@ -2,7 +2,6 @@
 using api.Dtos.GroceryList;
 using api.Mappers;
 using api.Models;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace api.Repositories
@@ -10,15 +9,12 @@ namespace api.Repositories
     public class GroceryListRepository : IGroceryListRepository
     {
         private readonly ApplicationDbContext _context;
-        private readonly UserManager<AppUser> _userManager;
-        public GroceryListRepository(
-            ApplicationDbContext context, 
-            UserManager<AppUser> userManager
-        )
+ 
+        public GroceryListRepository(ApplicationDbContext context)
         {
             _context = context;
-            _userManager = userManager;
         }
+
         public async Task<GroceryList> CreateAsync(string userId, CreateGroceryListDto groceryListDto)
         {
             // Create grocery object
@@ -32,8 +28,13 @@ namespace api.Repositories
             return groceryList;
         }
 
-        public async Task<GroceryList?> DeleteAsync(string userId, int id)
+        public async Task<GroceryList?> DeleteAsync(string? userId, int id)
         {
+            if (userId == null)
+            {
+                return null;
+            }
+
             var groceryList = await _context.GroceryLists.FindAsync(id);
             if (groceryList == null || groceryList.UserId != userId)
             {
@@ -45,14 +46,43 @@ namespace api.Repositories
             return groceryList; 
         }
 
-        public async Task<IEnumerable<GroceryList>> GetAllAsync(string userId)
+        public async Task<IEnumerable<GroceryList>?> GetAllAsync(string? userId)
         {
+            if (userId == null)
+            {
+                return null;
+            }
+
             var lists = await _context.GroceryLists
                 .Where(x => x.UserId == userId)
                 .Include(x => x.Groceries)
                 .ToListAsync();
 
             return lists;
+        }
+
+        public async Task<GroceryList?> UpdateAsync(int id, string? userId, UpdateGroceryListDto groceryListDto)
+        {
+            if (userId == null)
+            {
+                return null;
+            }
+
+            var groceryList = await _context.GroceryLists
+                .Include(x => x.Groceries)
+                .FirstOrDefaultAsync(x => x.Id == id);
+            
+            if (groceryList == null || userId != groceryList.UserId)
+            {
+                return null;
+            }
+
+            groceryList.Name = groceryListDto.Name;
+            groceryList.Description = groceryListDto.Description;
+
+            await _context.SaveChangesAsync();
+
+            return groceryList;
         }
     }
 }

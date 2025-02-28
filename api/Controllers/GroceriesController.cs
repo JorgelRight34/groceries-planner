@@ -1,7 +1,9 @@
 ﻿using api.Dtos.Grocery;
+using api.Extensions;
 using api.Mappers;
 using api.Models;
 using api.Repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace api.Controllers
@@ -24,9 +26,11 @@ namespace api.Controllers
         }
 
         [HttpGet("{id:int}")]
+        [Authorize]
         public async Task<IActionResult> GetById([FromRoute] int id)
         {
-            var data = await _groceryRepository.GetByIdAsync(id);
+            var userId = User.GetUsername();
+            var data = await _groceryRepository.GetByIdAsync(id, userId);
 
             if (data == null)
             {
@@ -37,6 +41,7 @@ namespace api.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> Post(
             [FromBody] CreateGroceryDto groceryDto
         )
@@ -46,14 +51,22 @@ namespace api.Controllers
                 return BadRequest(ModelState);
             }
 
+            var userId = User.GetUsername();
             var grocery = groceryDto.ToGroceryFromCreateDto();
             var data = await _groceryRepository.CreateAsync(grocery);
+
+            if (data == null)
+            {
+                return NotFound();
+            }
+
             return CreatedAtAction(
                 nameof(Get), new { id = grocery.Id }, grocery
             );
         }
 
         [HttpPut("{id:int}")]
+        [Authorize]
         public async Task<IActionResult> Put(
             [FromRoute] int id,
             [FromBody] UpdateGroceryDto groceryDto
@@ -64,7 +77,10 @@ namespace api.Controllers
                 return BadRequest(ModelState);
             }
 
-            var grocery = await _groceryRepository.UpdateAsync(id, groceryDto);
+            var userId = User.GetUsername();
+            var grocery = await _groceryRepository.UpdateAsync(
+                id, userId, groceryDto
+            );
             
             if (grocery == null)
             {
@@ -75,9 +91,11 @@ namespace api.Controllers
         }
 
         [HttpDelete("{id:int}")]
+        [Authorize]
         public async Task<IActionResult> Delete([FromRoute] int id)
         {
-            var grocery = await _groceryRepository.DeleteAsync(id);
+            var userId = User.GetUsername();
+            var grocery = await _groceryRepository.DeleteAsync(id, userId);
             
             if (grocery == null)
             {

@@ -1,39 +1,31 @@
-<div class="row border mx-0 bg-white rounded grocery shadow-sm mb-3">
+<div class="row border mx-0 bg-white rounded grocery shadow-sm mt-3">
   <div class="col-lg-5">
-    <img
-      loading="lazy"
-      [src]="
+    <img loading="lazy" [src]="
         grocery().imageUrl ||
         'https://supermercadosnacional.com/media/catalog/product/cache/afcac67a0d77755283578b677f040f2b/2/1/2102452-1.jpg'
-      "
-      class="card-img-top border-bottom"
-      [alt]="grocery().name"
-    />
+      " class="card-img-top border-bottom" [alt]="grocery().name" />
   </div>
-  <div class="col-lg-7 border-start">
-    <div class="row p-3" style="height: 50%">
+  <div class="col-lg-7 border-start position-relative">
+    <span class="d-none d-lg-flex delete-button rounded-circle border hover" (click)="handleDelete()">
+      X
+    </span>
+    <div class="p-3" style="height: 50%">
       <h6 class="card-title text-truncate">{{ grocery().name }}</h6>
       <div class="d-flex align-items-center">
-        <span>{{ grocery().cost | currency }}</span>
+        <span class="text-muted">{{ grocery().cost | currency }}</span>
       </div>
     </div>
     <div class="row" style="height: 50%">
-      <div
-        class="col-lg-5 d-flex align-items-center justify-content-center option"
-        (click)="addGrocery()"
-      >
-        <button class="btn rounded-pill px-3 mx-auto bg-accent w-100">+</button>
+      <div class="col-5 d-flex align-items-center justify-content-center option" (click)="addGrocery()">
+        <button class="btn rounded-pill px-3 mx-auto bg-accent w-100 fw-bold">+</button>
       </div>
-      <div class="col-lg-2 d-flex align-items-center justify-content-center">
+      <div class="col-2 d-flex align-items-center justify-content-center">
         <span>
           {{ getGroceryQuantity(grocery()) }}
         </span>
       </div>
-      <div
-        class="col-lg-5 d-flex align-items-center justify-content-center option"
-        (click)="handleSubstractOneGrocery()"
-      >
-        <button class="btn rounded-pill px-3 mx-auto bg-accent w-100">-</button>
+      <div class="col-5 d-flex align-items-center justify-content-center option" (click)="handleSubstractOneGrocery()">
+        <button class="btn rounded-pill px-3 mx-auto bg-accent w-100 fw-bold">-</button>
       </div>
     </div>
   </div>

@@ -24,6 +24,10 @@ export class GroceryComponent {
     this.groceriesService.substractOneGrocery(this.grocery());
   }
 
+  handleDelete() {
+    this.groceriesService.deleteGrocery(this.grocery().id).subscribe(data => console.log(data))
+  }
+
   getGroceryQuantity(grocery: Grocery) {
     return grocery[this.groceriesService.currentDay()];
   }
