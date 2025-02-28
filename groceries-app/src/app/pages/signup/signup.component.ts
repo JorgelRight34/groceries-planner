@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
 import { Router, RouterModule } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-signup',
@@ -16,7 +17,11 @@ export class SignupComponent {
     password: new FormControl<string>('', Validators.required),
   });
 
-  constructor(private authService: AuthService, private router: Router) { }
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    private toastr: ToastrService
+  ) { }
 
   handleSubmit(): void {
     if (!this.form.valid) return;
@@ -25,9 +30,9 @@ export class SignupComponent {
 
     if (!username || !email || !password) return;
 
-    this.authService.signup(username, email, password).subscribe((data) => {
-      console.log(data);
-      this.router.navigate(['/']);
+    this.authService.signup(username, email, password).subscribe({
+      next: () => this.router.navigate(['']),
+      error: () => this.toastr.error("Invalid", "Invalid inputs")
     })
   }
 }

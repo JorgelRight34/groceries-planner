@@ -1,6 +1,13 @@
-<div class="hover-accent d-flex align-items-center justify-content-center p-3 mt-5">
-    <span class="material-symbols-outlined hover">
+<div class="hover-accent d-flex align-items-center justify-content-center p-3 mt-5"
+    (click)="handleChangeCurrentSection('RECEIPT')">
+    <span class="material-symbols-outlined hover" [class.text-accent]="currentSection() === 'RECEIPT'">
         receipt_long
+    </span>
+</div>
+<div class="hover-accent d-flex align-items-center justify-content-center p-3 mt-5"
+    (click)="handleChangeCurrentSection('LIST')">
+    <span class="material-symbols-outlined hover" [class.text-accent]="currentSection() === 'LIST'">
+        grocery
     </span>
 </div>
 <div class="hover-accent d-flex align-items-center justify-content-center p-3 mt-5">
@@ -8,7 +15,7 @@
         bar_chart
     </span>
 </div>
-<div class="hover-accent d-flex align-items-center justify-content-center p-3 mt-5">
+<div class="d-flex align-items-center justify-content-center p-3 mt-5">
     <app-add-grocery-button [text]="'+'" />
 </div>
 <div class="hover-accent d-flex align-items-center justify-content-center p-3 mt-5">

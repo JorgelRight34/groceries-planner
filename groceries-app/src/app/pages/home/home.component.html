@@ -4,7 +4,7 @@
       <app-header />
       <div class="row border mx-0 h-100">
         <div class="col-lg-2 d-none d-lg-block p-0 border-end">
-          <app-navbar />
+          <app-navbar [(currentSection)]="currentSecondSection" />
         </div>
         <div class="col-lg-10 p-3 p-lg-2 py-lg-3">
           <div class="header-row mb-3">
@@ -13,6 +13,12 @@
           <div class="body-row px-3 pb-3">
             @for (grocery of groceries() ; track grocery.id) {
             <app-grocery [grocery]="grocery" />
+            } @empty {
+            @if (hasFetched()) {
+            <div>
+              <h3>Select or create a grocery list to start</h3>
+            </div>
+            }
             }
           </div>
         </div>
@@ -24,7 +30,12 @@
         <app-day-selector />
       </div>
       <div class="body-row">
-        <app-groceries-list />
+        <div [class.d-none]="currentSecondSection() !== 'LIST'">
+          <app-groceries-list />
+        </div>
+        <div [class.d-none]="currentSecondSection() !== 'RECEIPT'">
+          <app-receipt />
+        </div>
       </div>
     </div>
   </div>

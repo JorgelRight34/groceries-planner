@@ -6,6 +6,7 @@ import { CategoriesService } from './categories.service';
 import { GroceryList } from '../models/groceryList';
 import { map, Observable } from 'rxjs';
 import { Category } from '../models/category';
+import { days } from '../../lib/constants';
 
 @Injectable({
   providedIn: 'root'
@@ -193,12 +194,12 @@ export class GroceriesService {
       });
   }
 
-  downloadPdf(groceryList: GroceryList) {
-    const days: Day[] = ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"]
-    const categories: Category[] = this.categoriesService.categories();
-
+  groupGroceriesByDayAndCategory() {
     // Construct data
     const data: any = {};
+    const categories: Category[] = this.categoriesService.categories();
+    let totalPrice = 0;
+    let totalGroceries = 0;
 
     // Create a key for every day and inside each day a list of
     // { name: <category name> : groceries: [the groceries of that category on <day>]}
@@ -206,12 +207,25 @@ export class GroceriesService {
       data[day] = []; // Initialize key
       categories.forEach(category => {
         // Insert each object
-        data[day].push({
-          name: category.name,
-          groceries: this.getGroceriesByDayAndCategory(category.id, day)
-        })
+        const groceries = this.getGroceriesByDayAndCategory(category.id, day);
+        if (groceries?.length && groceries?.length > 0) {
+          totalPrice += groceries.reduce((sum, grocery) => sum + grocery.cost, 0);
+          totalGroceries += groceries.reduce((sum, grocery) => sum + grocery[day], 0);
+          data[day].push({
+            name: category.name,
+            groceries
+          })
+        }
       });
     });
+
+    data.totalPrice = totalPrice;
+    data.totalGroceries = totalGroceries;
+    return data;
+  }
+
+  downloadPdf(groceryList: GroceryList) {
+    const data = this.groupGroceriesByDayAndCategory();
 
     return this.http.post(
       `${this.url}/grocerylist/export-pdf`, data, { responseType: 'blob' }

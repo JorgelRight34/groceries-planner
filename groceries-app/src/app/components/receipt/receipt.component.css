@@ -1,15 +1,27 @@
-.groceries-list {
+.receipt {
     width: 50%;
     max-width: 210mm; /* Max width for A4 */
     aspect-ratio: 210 / 297; /* Keeps A4 aspect ratio */
     background: white;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     padding: 20px;
-    border: 2px solid var(--accent-color);
+}
+
+.day {
+    background-color: #0a0a23;
+    color: #fff;
+}
+
+.day-header {
+    border-bottom: 2px solid var(--accent-color);
+}
+
+.receipt th, td {
+    text-align: left;
 }
 
 @media (max-width: 500px) {
-    .groceries-list {
+    .receipt {
         width: 100%;
     }
 }

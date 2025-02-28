@@ -5,6 +5,7 @@ import { GroceryList } from '../../models/groceryList';
 import { CreateGroceryListComponent } from '../create-grocery-list/create-grocery-list.component';
 import { EditGroceryListButtonComponent } from '../edit-grocery-list-button/edit-grocery-list-button.component';
 import { CommonModule } from '@angular/common';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-grocery-list-selector',
@@ -15,8 +16,9 @@ import { CommonModule } from '@angular/common';
 export class GroceryListSelectorComponent {
   isModalOpen = signal<boolean>(false);
   groceryLists = computed(() => this.groceriesService.groceriesLists());
+  hasFetched = computed(() => this.groceriesService.hasAlreadyFetched());
 
-  constructor(private groceriesService: GroceriesService) { }
+  constructor(private groceriesService: GroceriesService, private toastr: ToastrService) { }
 
   ngOnInit() {
     if (!this.groceriesService.currentGroceryList()) {
@@ -31,6 +33,10 @@ export class GroceryListSelectorComponent {
   hideModal() {
     if (this.groceriesService.currentGroceryList()) {
       this.isModalOpen.set(false);
+    } else {
+      this.toastr.error(
+        'Select or create a grocery list to continue.', 'No list selected'
+      );
     }
   }
 

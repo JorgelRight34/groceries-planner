@@ -10,6 +10,7 @@ import { AddGroceryButtonComponent } from '../../components/add-grocery-button/a
 import { SavePlanComponent } from '../../components/save-plan/save-plan.component';
 import { GroceryComponent } from '../../components/grocery/grocery.component';
 import { NavbarComponent } from '../../components/navbar/navbar.component';
+import { ReceiptComponent } from '../../components/receipt/receipt.component';
 
 @Component({
   selector: 'app-home',
@@ -20,6 +21,7 @@ import { NavbarComponent } from '../../components/navbar/navbar.component';
     CommonModule,
     DaySelectorComponent,
     CategoriesComponent,
+    ReceiptComponent,
     NavbarComponent,
     NavbarSmComponent
   ],
@@ -28,14 +30,20 @@ import { NavbarComponent } from '../../components/navbar/navbar.component';
 })
 export class HomeComponent {
   currentSection = signal<string>('LIST');  // For mobile users to navigate
+  currentSecondSection = signal<string>('LIST');
   groceries = computed(
     () => this.groceriesService.getGroceriesByDayAndCategory()
   )
+  hasFetched = computed(() => this.groceriesService.hasAlreadyFetched())
 
   constructor(private groceriesService: GroceriesService) { }
 
   changeCurrentSection(section: string): void {
     // For mobile users to navigate between sections
     this.currentSection.set(section);
+  }
+
+  changeSecondSection(section: string): void {
+    this.currentSecondSection.set(section);
   }
 }

@@ -1,12 +1,6 @@
-export const days: string[] = [
-  "Monday",
-  "Tuesday",
-  "Wednesday",
-  "Thursday",
-  "Friday",
-  "Saturday",
-  "Sunday"
-]
+import { Day } from "../app/models/day";
+
+export const days: Day[] = ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"]
 
 
 export const categories = [

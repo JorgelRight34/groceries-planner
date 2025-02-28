@@ -1,0 +1,46 @@
+<div class="receipt bg-white rounded p-lg-3 mx-auto">
+    <h4 class="text-start text-accent mb-5">
+        Receipt
+    </h4>
+    <table class="w-100 rounded-3">
+        <thead class="bg-accent">
+            <tr>
+                <th></th>
+                <th>Items</th>
+                <th>Cost</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (day of days ; track $index) {
+            @if (data()[day]?.[0]?.groceries?.length > 0) {
+            <tr class="day-header">
+                <td class="text-accent">
+                    <h5>
+                        {{ day | titlecase }}
+                    </h5>
+                </td>
+                <td></td>
+                <td></td>
+            </tr>
+            }
+
+            @for (category of data()[day] ; track category.name; let lastx = $last) {
+            @for (grocery of category.groceries ; track grocery.id) {
+            <tr>
+                <td class="text-truncate" [class.pb-5]="$last && lastx">{{ grocery.name }}</td>
+                <td class="text-truncate" [class.pb-5]="$last && lastx">{{ grocery[day] }}</td>
+                <td class="text-truncate" [class.pb-5]="$last && lastx"><b>{{ grocery.cost | currency }}</b></td>
+            </tr>
+            }
+            }
+            }
+        </tbody>
+        <tfoot>
+            <tr>
+                <th>Total</th>
+                <th>{{ data().totalGroceries }}</th>
+                <th>{{ data().totalPrice | currency }}</th>
+            </tr>
+        </tfoot>
+    </table>
+</div>

@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
 import { Router, RouterModule } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-login',
@@ -15,7 +16,11 @@ export class LoginComponent {
     password: new FormControl<string>('', Validators.required),
   })
 
-  constructor(private authService: AuthService, private router: Router) { }
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    private toastr: ToastrService
+  ) { }
 
   handleSubmit(): void {
     if (!this.form.valid) return;
@@ -24,9 +29,9 @@ export class LoginComponent {
 
     if (!username || !password) return
 
-    this.authService.login(username, password).subscribe(data => {
-      console.log(data);
-      this.router.navigate(['/']);
+    this.authService.login(username, password).subscribe({
+      next: () => this.router.navigate(['']),
+      error: () => this.toastr.error("Invalid", "Invalid credentials")
     });
   }
 }
