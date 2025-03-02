@@ -1,10 +1,11 @@
 .receipt {
     width: 50%;
-    max-width: 210mm; /* Max width for A4 */
+    max-width: 113mm; /* Max width for A4 */
     aspect-ratio: 210 / 297; /* Keeps A4 aspect ratio */
     background: white;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     padding: 20px;
+    border: 2px solid var(--accent-color);
 }
 
 .day {

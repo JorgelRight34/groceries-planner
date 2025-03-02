@@ -1,4 +1,4 @@
-import { Component, computed, signal } from '@angular/core';
+import { Component, computed, model, signal } from '@angular/core';
 import { DaySelectorComponent } from '../../components/day-selector/day-selector.component';
 import { CategoriesComponent } from '../../components/categories/categories.component';
 import { GroceriesListComponent } from '../../components/groceries-list/groceries-list.component';
@@ -29,8 +29,8 @@ import { ReceiptComponent } from '../../components/receipt/receipt.component';
   styleUrl: './home.component.css'
 })
 export class HomeComponent {
-  currentSection = signal<string>('LIST');  // For mobile users to navigate
-  currentSecondSection = signal<string>('LIST');
+  currentSection = model<string>('LIST');  // For mobile users to navigate
+  currentSecondSection = model<string>('LIST');
   groceries = computed(
     () => this.groceriesService.getGroceriesByDayAndCategory()
   )

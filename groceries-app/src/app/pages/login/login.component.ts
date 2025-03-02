@@ -30,7 +30,7 @@ export class LoginComponent {
     if (!username || !password) return
 
     this.authService.login(username, password).subscribe({
-      next: () => this.router.navigate(['']),
+      next: () => this.router.navigate(['/planner']),
       error: () => this.toastr.error("Invalid", "Invalid credentials")
     });
   }

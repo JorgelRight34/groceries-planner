@@ -5,7 +5,6 @@ namespace api.Dtos.Grocery
     public class CreateGroceryDto
     {
         [Required]
-        [MinLength(5, ErrorMessage = "Name must be at least 5 characters")]
         [MaxLength(255, ErrorMessage = "Name is too long (255 characters max)")]
         public string Name { get; set; } = string.Empty;
         public string Description { get; set; } = string.Empty;

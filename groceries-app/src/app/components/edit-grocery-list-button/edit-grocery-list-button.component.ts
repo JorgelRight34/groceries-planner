@@ -3,6 +3,7 @@ import { GroceriesService } from '../../services/groceries.service';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ModalComponent } from '../modal/modal.component';
 import { GroceryList } from '../../models/groceryList';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-edit-grocery-list-button',
@@ -16,7 +17,7 @@ export class EditGroceryListButtonComponent {
 
   form!: FormGroup;
 
-  constructor(private groceriesService: GroceriesService) { }
+  constructor(private groceriesService: GroceriesService, private toastr: ToastrService) { }
 
   ngOnInit() {
     this.form = new FormGroup({
@@ -45,7 +46,13 @@ export class EditGroceryListButtonComponent {
         description
       }
 
-      this.groceriesService.updateGroceryList(data)?.subscribe(data => console.log(data));
+      this.groceriesService.updateGroceryList(data)?.subscribe({
+        next: () => {
+          this.toastr.success("Updated!", "Updated sucessfully.");
+          this.hideModal();
+        },
+        error: () => this.toastr.error("Oops!", "An error has occured.")
+      });
     }
   }
 

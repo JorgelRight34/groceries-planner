@@ -13,12 +13,6 @@
           <div class="body-row px-3 pb-3">
             @for (grocery of groceries() ; track grocery.id) {
             <app-grocery [grocery]="grocery" />
-            } @empty {
-            @if (hasFetched()) {
-            <div>
-              <h3>Select or create a grocery list to start</h3>
-            </div>
-            }
             }
           </div>
         </div>
@@ -26,7 +20,23 @@
     </div>
 
     <div class="col-lg-8 p-3" [ngClass]="{'d-none d-lg-block': currentSection() !== 'LIST'}">
-      <div class="header-row mb-3">
+      <div class="header-row d-flex d-lg-block align-items-center mb-3">
+        <div class="d-flex align-items-center d-lg-none  me-auto">
+          <span class="d-flex align-items-center" [ngClass]="{'d-none': currentSecondSection() === 'RECEIPT'}">
+            <span class="d-block d-lg-none material-symbols-outlined me-1" (click)="changeSecondSection('RECEIPT')"
+              [ngClass]="{'d-none': currentSecondSection() === 'RECEIPT'}">
+              receipt_long
+            </span>
+            See receipt
+          </span>
+          <span class="d-flex align-items-center" [ngClass]="{'d-none': currentSecondSection() === 'LIST'}">
+            <span class="d-block d-lg-none material-symbols-outlined me-1" (click)="changeSecondSection('LIST')">
+              edit_calendar
+            </span>
+            See grocery list
+          </span>
+
+        </div>
         <app-day-selector />
       </div>
       <div class="body-row">
@@ -39,5 +49,5 @@
       </div>
     </div>
   </div>
-  <app-navbar-sm (changeCurrentSection)="changeCurrentSection($event)" />
+  <app-navbar-sm [(currentSection)]="currentSection" />
 </div>

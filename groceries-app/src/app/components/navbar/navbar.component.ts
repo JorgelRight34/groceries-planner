@@ -1,4 +1,4 @@
-import { Component, input, output } from '@angular/core';
+import { Component, model } from '@angular/core';
 import { SavePlanComponent } from '../save-plan/save-plan.component';
 import { AddGroceryButtonComponent } from '../add-grocery-button/add-grocery-button.component';
 import { AuthService } from '../../services/auth.service';
@@ -12,8 +12,7 @@ import { ExportGroceryListComponent } from '../export-grocery-list-button/export
   styleUrl: './navbar.component.css'
 })
 export class NavbarComponent {
-  currentSection = input<string>('');
-  currentSectionChange = output<string>();
+  currentSection = model<string>();
 
   constructor(private authService: AuthService, private router: Router) { }
 
@@ -23,6 +22,6 @@ export class NavbarComponent {
   }
 
   handleChangeCurrentSection(section: string) {
-    this.currentSectionChange.emit(section);
+    this.currentSection.set(section);
   }
 }

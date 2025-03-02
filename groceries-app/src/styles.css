@@ -1,6 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
 :root {
     --accent-color: #2e8b57;
+    --accent-color-transparent: rgba(46, 139, 87, 0.5);
     --bg-color: #FAF9F6;
 }
 
@@ -26,6 +27,34 @@ html {
     color: #fff;
 }
 
+.active, .active-link {
+    position: relative;
+}
+
+.active::before {
+    content: "";
+    position: absolute;
+    background: var(--accent-color-transparent); /* Background color */
+    z-index: 3; /* Keep it behind */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); /* Center it */
+    border-radius: 10px; /* Optional rounded corners */
+}
+
+.active-link::before {
+    content: "";
+    position: absolute;
+    background: var(--accent-color-transparent); /* Background color */
+    z-index: 3; /* Keep it behind */
+    top: 50%;
+    left: 50%;
+    width: 150%;
+    height: 150%;
+    transform: translate(-50%, -50%); /* Center it */
+    border-radius: 10px; /* Optional rounded corners */
+}
+
 body {
     background-color: var(--bg-color);
 }
@@ -33,6 +62,10 @@ body {
 input.ng-invalid.ng-touched {
     border: 2px solid red;
     background-color: #ffe6e6; /* Light red background */
+}
+
+.highlighted-input > label {
+    text-decoration: line-through;
 }
 
 ::-webkit-scrollbar {

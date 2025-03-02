@@ -4,12 +4,12 @@
 </span>
 
 <!-- Modal -->
-<app-modal [title]="'Your grocery lists'" [isOpen]="isModalOpen()" [width]="'75dvw'" (hideModal)="hideModal()">
+<app-modal [title]="'Your grocery lists'" [isOpen]="isModalOpen()" [width]="'50dvw'" (hideModal)="hideModal()">
     <app-create-grocery-list />
     <div class="d-flex flex-wrap gap-5 align-items-center justify-content-center">
         @for (list of groceryLists() ; track list.id)
         {
-        <div class="border shadow-sm p-3 w-25 w-lg-100 mt-3">
+        <div class="grocery-list border shadow-sm rounded-3 p-3 w-lg-100 mt-3">
             <div class="position-relative mb-3 border-bottom">
                 <h6 class="text-truncate mb-2">{{ list.name }}</h6>
                 <p class="text-truncate mb-3">{{ list.description }}</p>
@@ -23,7 +23,7 @@
                     Total cost: {{ calculateTotalPrice(list) | currency }}
                 </span>
             </div>
-            <button class="btn bg-accent w-100" (click)="selectGroceryList(list)">
+            <button class="btn bg-accent rounded-pill w-100" (click)="selectGroceryList(list)">
                 Select
             </button>
         </div>

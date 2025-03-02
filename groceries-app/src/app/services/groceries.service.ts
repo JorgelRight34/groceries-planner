@@ -4,7 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { Day } from '../models/day';
 import { CategoriesService } from './categories.service';
 import { GroceryList } from '../models/groceryList';
-import { map, Observable } from 'rxjs';
+import { map, Observable, of } from 'rxjs';
 import { Category } from '../models/category';
 import { days } from '../../lib/constants';
 
@@ -82,7 +82,7 @@ export class GroceriesService {
     ) || []
   }
 
-  addGrocery(grocery: Grocery): void {
+  addGrocery(grocery: Grocery): Observable<Grocery> | void {
     // Add grocery t
     let day = this.currentDay();  // Current day
     const groceryList: Grocery[] | undefined = this.currentGroceryList()?.groceries;
@@ -101,6 +101,7 @@ export class GroceriesService {
       const index = copy.findIndex((g) => g.id === existingGrocery.id);
       copy[index] = { ...grocery, [day]: grocery[day] + 1 };
       this.setCurrentGroceryList(copy);
+      return of(existingGrocery);
     }
     else {
       // If there's not existing grocery create it from scratch
@@ -112,15 +113,18 @@ export class GroceriesService {
       }
       const { category, ...newData } = data;
 
-      this.http.post<Grocery>(`${this.url}/groceries`, newData).
-        subscribe((data) => {
-          // Add new grocery to the groceries array
-          if (groceryList) {
-            this.setCurrentGroceryList([data, ...groceryList])
-          } else {
-            this.setCurrentGroceryList([data]);
-          }
-        });
+      return this.http.post<Grocery>(`${this.url}/groceries`, newData)
+        .pipe(
+          map(data => {
+            // Add new grocery to the groceries array
+            if (groceryList) {
+              this.setCurrentGroceryList([data, ...groceryList])
+            } else {
+              this.setCurrentGroceryList([data]);
+            }
+            return data
+          })
+        )
     }
   }
 
@@ -160,9 +164,7 @@ export class GroceriesService {
     this.currentGroceryList.update(prev => {
       if (prev) {
         return {
-          id: prev.id,
-          name: prev.name,
-          description: prev.description,
+          ...prev,
           groceries: [...data]
         }
       }
@@ -171,7 +173,21 @@ export class GroceriesService {
   }
 
   deleteGrocery(groceryId: number) {
-    return this.http.delete(`${this.url}/groceries/${groceryId}`)
+    return this.http.delete(`${this.url}/groceries/${groceryId}`).pipe(
+      map(data => {
+        this.currentGroceryList.update(prev => {
+          if (prev) {
+            return {
+              ...prev,
+              groceries: prev.groceries.filter(g => g.id != groceryId)
+            }
+          }
+          return prev
+        })
+
+        return data;
+      })
+    )
   }
 
   createGroceryList(groceryList: GroceryList): Observable<GroceryList> {
@@ -239,7 +255,10 @@ export class GroceriesService {
       .pipe(
         map(data => {
           // Update grocery lists
-          this.groceriesLists.update(prev => [...prev.filter(x => x.id != data.id), data]);
+          const copy = [...this.groceriesLists()]
+          const index = copy.findIndex(g => g.id === groceryList.id);
+          copy[index] = data;
+          this.groceriesLists.set(copy);
           return data;
         })
       )

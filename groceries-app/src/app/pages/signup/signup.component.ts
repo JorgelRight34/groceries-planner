@@ -31,7 +31,7 @@ export class SignupComponent {
     if (!username || !email || !password) return;
 
     this.authService.signup(username, email, password).subscribe({
-      next: () => this.router.navigate(['']),
+      next: () => this.router.navigate(['/planner']),
       error: () => this.toastr.error("Invalid", "Invalid inputs")
     })
   }

@@ -2,22 +2,25 @@
     class="d-block d-lg-none navbar-sm position-absolute bottom-0 left-0 bg-white border-top d-flex align-items-center w-100">
     <div class="row mx-0 w-100">
         <div class="col d-flex align-items-center justify-content-center p-3">
-            <span (click)="handleChangeCurrentSection('GROCERIES')">
+            <span (click)="handleChangeCurrentSection('GROCERIES')"
+                [class.active-link]="currentSection() === 'GROCERIES'">
                 <span class="material-symbols-outlined text-accent">
                     grocery
                 </span>
             </span>
         </div>
-        <div class="col d-flex align-items-center justify-content-center p-3">
+        <div class=" col d-flex align-items-center justify-content-center p-3">
             <span>
                 <app-grocery-list-selector />
             </span>
         </div>
         <div class="col d-flex align-items-center justify-content-center p-3">
-            <app-add-grocery-button [text]="'+'" />
+            <span>
+                <app-add-grocery-button [text]="'+'" />
+            </span>
         </div>
         <div class="col d-flex align-items-center justify-content-center p-3">
-            <span (click)="handleChangeCurrentSection('LIST')">
+            <span (click)="handleChangeCurrentSection('LIST')" [class.active-link]="currentSection() === 'LIST'">
                 <span class="material-symbols-outlined text-accent">
                     edit_calendar
                 </span>

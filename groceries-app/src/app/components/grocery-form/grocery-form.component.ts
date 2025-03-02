@@ -5,6 +5,7 @@ import { GroceriesService } from '../../services/groceries.service';
 import { CategoriesService } from '../../services/categories.service';
 import { Grocery } from '../../models/grocery';
 import { CommonModule } from '@angular/common';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-grocery-form',
@@ -26,11 +27,15 @@ export class GroceryFormComponent {
 
   constructor(
     private groceriesService: GroceriesService,
-    private categoriesService: CategoriesService
+    private categoriesService: CategoriesService,
+    private toastr: ToastrService,
   ) { }
 
   onSubmit(): void {
-    if (!this.groceryForm.valid) return
+    if (!this.groceryForm.valid) {
+      this.toastr.error("Invalid form", "Please fill all the fields.");
+      return
+    }
 
     // Create Grocery object
     const data = {
@@ -39,7 +44,16 @@ export class GroceryFormComponent {
       [this.groceriesService.currentDay()]: 1,
     } as Grocery;
 
-    this.groceriesService.addGrocery(data); // Add grocery
+    this.groceriesService.addGrocery(data)?.subscribe({
+      next: () => {
+        this.groceryForm.reset();
+        this.toastr.success("Created", "Grocery succesfully added.");
+      },
+      error: (err) => {
+        console.error(err);
+        this.toastr.error("Error", "An error has ocurred.")
+      }
+    }); // Add grocery
   }
 
   handleChangeCategory(event: Event) {

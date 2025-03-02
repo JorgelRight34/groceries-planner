@@ -1,12 +1,14 @@
-import { Component, computed } from '@angular/core';
+import { Component, computed, signal } from '@angular/core';
 import { GroceriesService } from '../../services/groceries.service';
 import { Grocery } from '../../models/grocery';
 import { CategoriesService } from '../../services/categories.service';
 import { CommonModule } from '@angular/common';
+import { HighlightInputDirective } from '../../directives/highlight-input.directive';
+import { Day } from '../../models/day';
 
 @Component({
   selector: 'app-groceries-list',
-  imports: [CommonModule],
+  imports: [CommonModule, HighlightInputDirective],
   templateUrl: './groceries-list.component.html',
   styleUrl: './groceries-list.component.css'
 })
@@ -21,6 +23,9 @@ export class GroceriesListComponent {
   endCategories = computed( // Left half of categories
     () => this.categories().slice(this.categoriesHalf())
   );
+  checkedGroceries = signal<Record<number, boolean>>({});
+  totalCheckedPrice = signal<number>(0);
+  day = computed<Day>(() => this.groceriesService.currentDay())
 
   constructor(
     private groceriesService: GroceriesService,
@@ -31,7 +36,18 @@ export class GroceriesListComponent {
     return this.groceriesService.getGroceriesByDayAndCategory(category);
   }
 
-  getDay(): string {
-    return this.groceriesService.currentDay();
+  handleChange(grocery: Grocery) {
+    this.totalCheckedPrice.update(
+      prev => prev + grocery.cost * grocery[this.day()]
+    );
+    this.checkedGroceries.update(prev => {
+      if (prev) {
+        return {
+          ...prev,
+          [grocery.id]: true
+        }
+      }
+      return prev;
+    });
   }
 }

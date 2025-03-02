@@ -1,31 +1,48 @@
 <div class="groceries-list bg-white rounded p-lg-3 mx-auto">
-    <h4 class="text-center text-accent mb-5">Grocery List for {{ getDay() | titlecase }}</h4>
-    <div class="row">
+    <h4 class="text-center text-accent mb-5">Grocery List for {{ day() | titlecase }}</h4>
+    <div class="row mx-0">
         <div class="col-lg-6">
             <!-- Groceries that appear at the left column of the list -->
             @for (category of startCategories(); track category.id) {
-                <div class="mb-5">
-                    <b class="text-center">{{ category.name }}</b>
-                    <ul>
-                        @for (grocery of getCategoryGroceries(category.id) ; track grocery.id) {
-                            <li>{{ grocery.name }}</li>
-                        }
-                    </ul>
-                </div>
+            <div class="mb-5">
+                <b class="text-center">{{ category.name }}</b>
+                <ul>
+                    @for (grocery of getCategoryGroceries(category.id) ; track grocery.id) {
+                    <li appHighlightInput [highlight]="checkedGroceries()[grocery.id] || false">
+                        <input class="me-1" id="{{ grocery.id }}" type="checkbox" (change)="handleChange(grocery)" />
+                        <label for="{{ grocery.id }}">
+                            {{ grocery.name }}
+                        </label>
+                    </li>
+                    } @empty {
+                    <li>---</li>
+                    }
+                </ul>
+            </div>
             }
         </div>
         <div class="col-lg-6">
             <!-- Groceries that appear at the right column of the list -->
             @for (category of endCategories() ; track category.id) {
-                <div class="mb-5">
-                    <b class="text-center">{{ category.name }}</b>
-                    <ul>
-                        @for (grocery of getCategoryGroceries(category.id) ; track grocery.id) {
-                            <li>{{ grocery.name }}</li>
-                        }
-                    </ul>
-                </div>
-            } 
+            <div class="mb-5">
+                <b class="text-center">{{ category.name }}</b>
+                <ul class="list-unstyled">
+                    @for (grocery of getCategoryGroceries(category.id) ; track grocery.id) {
+                    <li class="ps-3" appHighlightInput [highlight]="checkedGroceries()[grocery.id] || false">
+                        <input class="me-1" id="{{ grocery.id }}" type="checkbox" (change)="handleChange(grocery)" />
+                        <label for="{{ grocery.id }}">
+                            {{ grocery.name }}
+                        </label>
+                    </li>
+                    } @empty {
+                    <li>---</li>
+                    }
+                </ul>
+            </div>
+            }
         </div>
+    </div>
+    <div class="row mx-0">
+        <b>Total checked price: {{ totalCheckedPrice() | currency }}</b>
     </div>
 </div>
