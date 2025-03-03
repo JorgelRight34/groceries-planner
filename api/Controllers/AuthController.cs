@@ -1,11 +1,14 @@
 ﻿using api.Dtos.User;
+using api.Extensions;
 using api.Mappers;
 using api.Models;
 using api.Services;
+using Google.Apis.Auth;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json.Linq;
 using System.Security.Claims;
 
 namespace api.Controllers
@@ -55,10 +58,7 @@ namespace api.Controllers
             try
             {
                 // Check if data is valid
-                if (!ModelState.IsValid) 
-                {
-                    return BadRequest(ModelState);
-                }
+                if (!ModelState.IsValid) return BadRequest(ModelState);
 
                 // Create new user
                 var user = new AppUser
@@ -81,24 +81,22 @@ namespace api.Controllers
                     if (roleResult.Succeeded) 
                     {
                         var token = _tokenService.CreateToken(user);
-                        var data = new
+             
+                        return Ok(new 
                         {
-                            User = new 
+                            User = new
                             {
                                 Username = user.UserName,
                                 Email = user.Email
                             },
                             Token = token
-                        };
-
-                        return Ok(data);
+                        });
                     }
                     return StatusCode(500, roleResult.Errors);
                 }
 
                 // Return errors related to user
                 return StatusCode(500, createdUser.Errors);
-
             } catch (Exception ex)
             {
                 return StatusCode(500, ex);
@@ -134,6 +132,65 @@ namespace api.Controllers
                 User = user.ToUserDto(),
                 Token = _tokenService.CreateToken(user)
             });
+        }
+
+        [HttpPost("google-login")]
+        public async Task<IActionResult> LoginWithGoogle([FromBody] GoogleLoginRequestDto request)
+        {
+            if (!ModelState.IsValid) return BadRequest();
+
+            try
+            {
+                // Extract payload from token
+                var payload = await GoogleJsonWebSignature.ValidateAsync(request.Token);
+
+                if (payload == null) return BadRequest("Invalid token");
+                
+                // Get username from token
+                var username = payload.Name?.ToUsernameFromGoogleToken();
+                if (username == null) return BadRequest();
+     
+
+                // Try to fetch an existing user to determine if user is signing up
+                // or logging in
+                var existingUser = await _userManager.FindByNameAsync(username);
+                if (existingUser != null)
+                {
+                    // If user is logging in generate token and return
+                    return Ok(new
+                    {
+                        User = existingUser.ToUserDto(),
+                        Token = _tokenService.CreateToken(existingUser)
+                    });
+                }
+
+                // User is trying to sign up so create an AppUser
+                var user = new AppUser
+                {
+                    UserName = username,
+                    Email = payload.Email,
+                };
+
+                var createdUser = await _userManager.CreateAsync(user);
+                if (!createdUser.Succeeded)
+                {
+                    return BadRequest($"User was not sucessfuly created {createdUser.Errors}");
+                }
+       
+                // Add role to user
+                var roleResult = await _userManager.AddToRoleAsync(user, "User");
+                if (!roleResult.Succeeded) return StatusCode(500);
+
+                return Ok(new
+                {
+                    User = user.ToUserDto(),
+                    Token = _tokenService.CreateToken(user)
+                });    
+            } 
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex);
+            }
         }
     }
 }

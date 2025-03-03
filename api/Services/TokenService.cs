@@ -19,17 +19,19 @@ namespace api.Services
         }
         public string CreateToken(AppUser appUser)
         {
-            // Create the claims
+            // Create the claims that represen the user
             var claims = new List<Claim>
             {
                 new Claim(JwtRegisteredClaimNames.Sub, appUser.Id),
                 new Claim(JwtRegisteredClaimNames.GivenName, appUser.UserName)
             };
 
+            // Create the credentials to sign the token
             var credentials = new SigningCredentials(
                 _signingKey, SecurityAlgorithms.HmacSha256
             );
 
+            // Create the token body
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(claims),

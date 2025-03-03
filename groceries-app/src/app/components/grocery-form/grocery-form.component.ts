@@ -20,6 +20,7 @@ export class GroceryFormComponent {
     url: new FormControl<string>(''),
     imageUrl: new FormControl<string>(''),
     cost: new FormControl<number>(0, Validators.required),
+    category: new FormControl<string>('', Validators.required),
   });
   categories = computed(() => this.categoriesService.getAllCategories());
   groceryCategory = signal<Category | null>(null);  // Category of the grocery to be posted
@@ -32,8 +33,10 @@ export class GroceryFormComponent {
   ) { }
 
   onSubmit(): void {
+    console.log("hey")
     if (!this.groceryForm.valid) {
       this.toastr.error("Invalid form", "Please fill all the fields.");
+      console.log("invalid")
       return
     }
 
@@ -43,6 +46,7 @@ export class GroceryFormComponent {
       category: this.groceryCategory(),
       [this.groceriesService.currentDay()]: 1,
     } as Grocery;
+    console.log("subscribing")
 
     this.groceriesService.addGrocery(data)?.subscribe({
       next: () => {
@@ -70,5 +74,9 @@ export class GroceryFormComponent {
 
     // By default not category is selected
     this.groceryCategory.set(null);
+  }
+
+  validateFormField(field: string): boolean {
+    return (this.groceryForm.get(field)?.invalid && this.groceryForm.get(field)?.touched) || false;
   }
 }

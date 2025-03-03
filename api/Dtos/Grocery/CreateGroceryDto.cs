@@ -15,7 +15,7 @@ namespace api.Dtos.Grocery
         [MaxLength(2048)]
         public string? Url { get; set; }
         public int? CategoryId { get; set; }
-        public int GroceryListId { get; set; }
+        public Guid GroceryListId { get; set; }
         public int Monday { get; set; } = 0;
         public int Tuesday { get; set; } = 0;
         public int Wednesday { get; set; } = 0;

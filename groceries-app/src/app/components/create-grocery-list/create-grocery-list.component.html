@@ -2,11 +2,35 @@
     + Add new
 </button>
 
-<app-modal title="+ Add new grocery list" [isOpen]="isModalShowing()" [width]="'50dvw'" (hideModal)="hideModal()">
+<app-modal title="+ Add new grocery list" [isOpen]="isModalShowing()" [width]="'43dvw'" (hideModal)="hideModal()">
     <div>
         <form class="p-lg-3" [formGroup]="form" (submit)="handleSubmit()">
-            <input class="form-control mb-3" placeholder="Name" formControlName="name" required />
-            <input class="form-control mb-3" placeholder="Description" formControlName="description" required />
+            <div class="mb-3">
+                <div class="d-flex align-items-center">
+                    <label class="form-label" for="name">
+                        Name
+                    </label>
+                    @if (isFormFieldValid('name')) {
+                    <span class="text-danger ms-auto">
+                        Name is required.
+                    </span>
+                    }
+                </div>
+                <input class="form-control mb-3" id="name" formControlName="name" required />
+            </div>
+            <div class="mb-5">
+                <div class="d-flex align-items-center">
+                    <label class="form-label" for="description">
+                        Description
+                    </label>
+                    @if (isFormFieldValid('description')) {
+                    <span class="text-danger ms-auto">
+                        Description is required.
+                    </span>
+                    }
+                </div>
+                <input class="form-control mb-3" placeholder="Description" formControlName="description" required />
+            </div>
             <button class="btn rounded-pill bg-accent w-100" type="submit">
                 Submit
             </button>

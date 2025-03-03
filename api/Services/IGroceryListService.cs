@@ -1,10 +1,9 @@
-﻿using api.Dtos.Grocery;
-using api.Models;
+﻿using api.Models;
 
-namespace api.Services
+namespace api.Repositories
 {
     public interface IGroceryListService
     {
-        Task<IEnumerable<GroceryDto>> GetGroceryList(int id);
+        public Task<GroceryList?> AddMemberAsync(string userId, Guid groceryListId);
     }
 }

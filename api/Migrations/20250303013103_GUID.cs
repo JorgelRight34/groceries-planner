@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace api.Migrations
 {
     /// <inheritdoc />
-    public partial class FirstMigration : Migration
+    public partial class GUID : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -175,9 +175,10 @@ namespace api.Migrations
                 name: "GroceryLists",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -186,8 +187,7 @@ namespace api.Migrations
                         name: "FK_GroceryLists_AspNetUsers_UserId",
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -209,7 +209,7 @@ namespace api.Migrations
                     Saturday = table.Column<int>(type: "int", nullable: false),
                     Sunday = table.Column<int>(type: "int", nullable: false),
                     CategoryId = table.Column<int>(type: "int", nullable: true),
-                    GroceryListId = table.Column<int>(type: "int", nullable: false)
+                    GroceryListId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -221,6 +221,30 @@ namespace api.Migrations
                         principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Groceries_GroceryLists_GroceryListId",
+                        column: x => x.GroceryListId,
+                        principalTable: "GroceryLists",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "GroceryListMembers",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    GroceryListId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_GroceryListMembers", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_GroceryListMembers_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_GroceryListMembers_GroceryLists_GroceryListId",
                         column: x => x.GroceryListId,
                         principalTable: "GroceryLists",
                         principalColumn: "Id",
@@ -286,6 +310,16 @@ namespace api.Migrations
                 column: "GroceryListId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_GroceryListMembers_GroceryListId",
+                table: "GroceryListMembers",
+                column: "GroceryListId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_GroceryListMembers_UserId",
+                table: "GroceryListMembers",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_GroceryLists_UserId",
                 table: "GroceryLists",
                 column: "UserId");
@@ -311,6 +345,9 @@ namespace api.Migrations
 
             migrationBuilder.DropTable(
                 name: "Groceries");
+
+            migrationBuilder.DropTable(
+                name: "GroceryListMembers");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");

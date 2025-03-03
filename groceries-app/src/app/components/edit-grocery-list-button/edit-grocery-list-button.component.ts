@@ -62,4 +62,8 @@ export class EditGroceryListButtonComponent {
       this.groceriesService.deleteGroceryList(id).subscribe();
     }
   }
+
+  isFormFieldValid(field: string) {
+    return this.form.get(field)?.errors && this.form.get(field)?.touched;
+  }
 }

@@ -1,29 +1,58 @@
 <div class="background d-flex align-items-center justify-content-center h-100">
-    <div class="form-container rounded-4 w-50 p-5 shadow-lg">
+    <div class="form-container rounded-4 p-3 p-lg-5 shadow-lg">
         <!-- Form -->
         <form [formGroup]="form" (submit)="handleSubmit()">
             <!-- Username -->
-            <div class="mb-3">
-                <label id="username">Username</label>
+            <div class="mb-5 mb-lg-3">
+                <div class="d-flex align-items-center">
+                    <label for="username">Username</label>
+                    @if (isFormFieldInvalid('username')) {
+                    <span class="text-danger ms-auto">Username is required.</span>
+                    }
+                </div>
                 <input class="form-control" id="username" placeholder="Username" formControlName="username" />
             </div>
             <!-- Email -->
-            <div class="mb-3">
-                <label id="email">Email</label>
+            <div class="mb-5 mb-lg-3">
+                <div class="d-flex align-items-center">
+                    <label for="password">Email</label>
+                    @if (isFormFieldInvalid('email')) {
+                    <span class="text-danger ms-auto" *ngIf="form.controls.email.hasError('required')">Email is
+                        required.</span>
+                    <span class="text-danger ms-auto" *ngIf="form.controls.email.hasError('email')">Enter a valid
+                        email.</span>
+                    }
+                </div>
                 <input class="form-control" id="email" type="email" placeholder="example@email.com"
                     formControlName="email" />
             </div>
             <!-- Password -->
-            <div class="mb-3">
-                <label id="password">Password</label>
+            <div class="mb-5 mb-lg-3">
+                <div class="d-flex align-items-center">
+                    <label for="password">Password</label>
+                    @if (isFormFieldInvalid('password')) {
+                    <span class="text-danger ms-auto" *ngIf="form.controls.password.hasError('required')">Passoword is
+                        required.
+                    </span>
+                    <span class="text-danger ms-auto" *ngIf="form.controls.password.hasError('minLength')">Password is
+                        required.
+                    </span>
+                    <span class="text-danger ms-auto" *ngIf="form.controls.password.hasError('pattern')">Must contain
+                        uppercase, lowercase, number, and special character.
+                    </span>
+                    }
+                </div>
                 <input class="form-control" id="password" type="password" formControlName="password" />
             </div>
             <!-- Submit and more info -->
             <div>
                 <span>Already have an account yet?</span>&nbsp;<a routerLink="/login">login here!</a>
-                <button class="btn btn-success w-100" type="submit">
+                <button class="btn btn-success w-100 mt-3 mb-3" type="submit">
                     Submit
                 </button>
+                <div>
+                    <app-google-login-button />
+                </div>
             </div>
         </form>
     </div>

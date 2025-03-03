@@ -179,3 +179,8 @@ C:\Users\pablo\Desktop\angular-app\api\bin\Debug\net8.0\Microsoft.Extensions.Ide
 C:\Users\pablo\Desktop\angular-app\api\bin\Debug\net8.0\OpenHtmlToPdf.dll
 C:\Users\pablo\Desktop\angular-app\api\obj\Debug\net8.0\api.RazorAssemblyInfo.cache
 C:\Users\pablo\Desktop\angular-app\api\obj\Debug\net8.0\api.RazorAssemblyInfo.cs
+C:\Users\pablo\Desktop\angular-app\api\bin\Debug\net8.0\Google.Apis.dll
+C:\Users\pablo\Desktop\angular-app\api\bin\Debug\net8.0\Google.Apis.Auth.dll
+C:\Users\pablo\Desktop\angular-app\api\bin\Debug\net8.0\Google.Apis.Core.dll
+C:\Users\pablo\Desktop\angular-app\api\bin\Debug\net8.0\System.Management.dll
+C:\Users\pablo\Desktop\angular-app\api\bin\Debug\net8.0\runtimes\win\lib\net7.0\System.Management.dll

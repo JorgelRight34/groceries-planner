@@ -1,33 +1,63 @@
-<form class="w-100" [formGroup]="groceryForm" (ngSubmit)="onSubmit()">
-    <label class="form-label" for="name">Name</label>
-    <input class="form-control mb-3" name="name" id="name" formControlName="name" />
-
-    <label class="form-label" for="description">Description</label>
-    <input class="form-control mb-3" name="description" id="description" formControlName="description" />
-
-    <label class="form-label" for="url">Url</label>
-    <input class="form-control mb-3" name="url" id="url" formControlName="url" />
-
-    <label class="form-label" for="imageUrl">Image URL</label>
-    <input class="form-control mb-3" name="imageUrl" id="imageUrl" formControlName="imageUrl" />
-
-    <label class="form-label" for="cost">Cost {{ groceryForm.value.cost | currency }}</label>
-    <input class="form-control mb-3" name="cost" id="cost" type="number" formControlName="cost" />
-
-    <div class="d-flex justify-content-center mb-3">
-        <select 
-            class="form-select shadow-sm" 
-            (change)="handleChangeCategory($event)"
-        >
-            <option [value]="null">Select category</option>
-            @for (category of categories(); track category.id) {
-                <option
-                    [value]="category.id"
-                >
-                    {{ category.name }}
-                </option>
+<form class="w-100 needs-validation" [formGroup]="groceryForm" (ngSubmit)="onSubmit()">
+    <div class="mb-3">
+        <div class="d-flex align-items-center">
+            <label class="form-label mb-0" for="name">Name</label>
+            @if (validateFormField('name')) {
+            <span class="text-danger ms-auto">
+                Grocery name is required.
+            </span>
             }
-        </select>    
+        </div>
+        <input class="form-control" name="name" id="name" formControlName="name" required />
+    </div>
+
+    <div class="mb-3">
+        <div class="d-flex align-items-center">
+            <label class="form-label mb-0" for="description">
+                Description
+            </label>
+            @if (validateFormField('name')) {
+            <span class="text-danger ms-auto">
+                Description is required.
+            </span>
+            }
+        </div>
+        <input class="form-control" name="description" id="description" formControlName="description" />
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label" for="url">Url</label>
+        <input class="form-control" name="url" id="url" formControlName="url" />
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label" for="imageUrl">Image URL</label>
+        <input class="form-control" name="imageUrl" id="imageUrl" formControlName="imageUrl" />
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label" for="cost">Cost {{ groceryForm.value.cost | currency }}</label>
+        <input class="form-control" name="cost" id="cost" type="number" formControlName="cost" required />
+    </div>
+
+    <div class="form-floating mb-3">
+        <select name="category" id="category" formControlName="category" class="form-select shadow-sm"
+            (change)="handleChangeCategory($event)" required>
+            @for (category of categories(); track category.id) {
+            <option [value]="category.id">
+                {{ category.name }}
+            </option>
+            }
+        </select>
+        <label for="category">
+            @if (validateFormField('category')) {
+            <span class="text-danger">
+                Must select a category
+            </span>
+            } @else {
+            Select a category
+            }
+        </label>
     </div>
 
     <button class="btn bg-accent w-100" type="submit">Submit</button>

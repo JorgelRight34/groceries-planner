@@ -22,6 +22,16 @@ export class AuthService {
       );
   };
 
+  loginWithGoogle(token: string) {
+    return this.http.post<{ user: User, token: string }>(`${this.apiUrl}/google-login`, { token })
+      .pipe(
+        map(data => {
+          this.setUserAndToken(data);
+          return data;
+        })
+      )
+  }
+
   signup(userName: string, email: string, password: string) {
     const data = { userName, email, password };
 

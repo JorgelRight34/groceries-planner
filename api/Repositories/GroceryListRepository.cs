@@ -28,7 +28,7 @@ namespace api.Repositories
             return groceryList;
         }
 
-        public async Task<GroceryList?> DeleteAsync(string? userId, int id)
+        public async Task<GroceryList?> DeleteAsync(string? userId, Guid id)
         {
             if (userId == null)
             {
@@ -61,7 +61,12 @@ namespace api.Repositories
             return lists;
         }
 
-        public async Task<GroceryList?> UpdateAsync(int id, string? userId, UpdateGroceryListDto groceryListDto)
+        public async Task<GroceryList?> GetByIdAsync(Guid id)
+        {
+            return await _context.GroceryLists.FindAsync(id);
+        }
+
+        public async Task<GroceryList?> UpdateAsync(Guid id, string? userId, UpdateGroceryListDto groceryListDto)
         {
             if (userId == null)
             {

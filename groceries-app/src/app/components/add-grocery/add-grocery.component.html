@@ -1,35 +1,25 @@
 <div class="d-flex d-lg-none align-items-center justify-content-center mb-3 mb-lg-0">
-    <button 
-        class="btn rounded-pill bg-accent me-3"
-        (click)="setCurrentSection('ADD')"
-    >
+    <button class="btn rounded-pill bg-accent me-3" (click)="setCurrentSection('ADD')">
         + Add new
     </button>
-    <button 
-        class="btn rounded-pill bg-accent"
-        (click)="setCurrentSection('CHOOSE')"
-    >
+    <button class="btn rounded-pill bg-accent" (click)="setCurrentSection('CHOOSE')">
         Choose existing
     </button>
 </div>
 <div class="row mx-0">
-    <div 
-        class="col-lg-6 d-flex align-items-center"
-        [ngClass]="{'d-none d-lg-block': currentSection() !== 'ADD'}"
-    >
+    <div class="col-lg-6 d-flex align-items-center" [ngClass]="{'d-none d-lg-block': currentSection() !== 'ADD'}">
         <app-grocery-form />
     </div>
-    <div 
-        class="d-none d-lg-block col-lg-6"
-        [ngClass]="{'d-none d-lg-block': currentSection() !== 'CHOOSE'}"
-    >
+    <div class="d-none d-lg-block col-lg-6" [ngClass]="{'d-none d-lg-block': currentSection() !== 'CHOOSE'}">
         <div style="max-height: 5vh; height: 5vh;">
             <h6>Choose existing grocery</h6>
         </div>
         <div class="groceries border rounded p-0 p-lg-3">
             @for (grocery of groceries() ; track grocery.id) {
-                <app-grocery [addButton]="true" [grocery]="grocery" />
-            } 
+            <app-grocery [addButton]="true" [grocery]="grocery" />
+            } @empty {
+            <span>There's not groceries registered yet.</span>
+            }
         </div>
     </div>
 </div>

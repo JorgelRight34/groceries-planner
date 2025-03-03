@@ -4,6 +4,7 @@
 
 .form-container {
     background-color: #fff;
+    width: 50%;
 }
 
 @media (max-width: 500px) {

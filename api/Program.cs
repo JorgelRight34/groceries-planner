@@ -11,7 +11,7 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
-using Microsoft.AspNetCore.Authentication.Google;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -65,7 +65,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 
 builder.Services.AddIdentity<AppUser, IdentityRole>(options =>
 {
-    // Default
+    options.User.AllowedUserNameCharacters = null;
 })
 .AddEntityFrameworkStores<ApplicationDbContext>();
 
@@ -95,7 +95,8 @@ builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 builder.Services.AddScoped<IGroceryRepository, GroceryRepository>();
 builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddScoped<IGroceryListRepository, GroceryListRepository>();
-builder.Services.AddScoped<IViewRendererService, ViewRendererService>();
+builder.Services.AddScoped<IGroceryListService, GroceryListService>();
+builder.Services.AddSingleton<IViewRendererService, ViewRendererService>();
 
 // Singletons for Razor pages
 builder.Services.AddSingleton<ICompositeViewEngine, CompositeViewEngine>();

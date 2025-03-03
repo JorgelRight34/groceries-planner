@@ -18,15 +18,18 @@ namespace api.Controllers
         private readonly IGroceryListRepository _groceryListRepository;
         private readonly IGroceryRepository _groceryRepository;
         private readonly IViewRendererService _viewRendererService;
+        private readonly IGroceryListService _groceryListService;
 
         public GroceryListController(
             IGroceryListRepository groceryListRepository, 
             IGroceryRepository groceryRepository,
-            IViewRendererService viewRendererService
+            IViewRendererService viewRendererService,
+            IGroceryListService groceryListService
         )
         {
             _groceryListRepository = groceryListRepository;
             _groceryRepository = groceryRepository;
+            _groceryListService = groceryListService;
             _viewRendererService = viewRendererService;
         }
 
@@ -64,9 +67,9 @@ namespace api.Controllers
             return Ok(groceryList);
         }
 
-        [HttpPut("{id}")]
+        [HttpPut("{id:int}")]
         [Authorize]
-        public async Task<IActionResult> Put([FromRoute] int id, [FromBody] UpdateGroceryListDto groceryListDto)
+        public async Task<IActionResult> Put([FromRoute] Guid id, [FromBody] UpdateGroceryListDto groceryListDto)
         {
             if (!ModelState.IsValid)
             {
@@ -88,7 +91,7 @@ namespace api.Controllers
 
         [HttpDelete("{id}")]
         [Authorize]
-        public async Task<IActionResult> Delete([FromRoute] int id)
+        public async Task<IActionResult> Delete([FromRoute] Guid id)
         {
             var userId = User.GetUsername();
             var groceryList = await _groceryListRepository.DeleteAsync(userId, id);
@@ -153,6 +156,28 @@ namespace api.Controllers
             byte[] pdfBytes = Pdf.From(htmlContent).Content();
 
             return File(pdfBytes, "application/pdf", "document.pdf");
+        }
+
+        [HttpGet("add-member/{groceryListId:Guid}")]
+        [Authorize]
+        public async Task<IActionResult> AddMember([FromRoute] Guid groceryListId)
+        {
+            if (!ModelState.IsValid) return BadRequest();
+
+            var username = User.GetUsername();
+
+            if (username == null) return BadRequest();
+
+            var groceryList = await _groceryListService.AddMemberAsync(
+                username, groceryListId
+            );
+
+            if (groceryList == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(groceryList);
         }
     }
 }

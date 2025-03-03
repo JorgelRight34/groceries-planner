@@ -3,10 +3,11 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { AuthService } from '../../services/auth.service';
 import { Router, RouterModule } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { GoogleLoginButtonComponent } from '../../components/google-login-button/google-login-button.component';
 
 @Component({
   selector: 'app-login',
-  imports: [ReactiveFormsModule, RouterModule],
+  imports: [ReactiveFormsModule, RouterModule, GoogleLoginButtonComponent],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
@@ -33,5 +34,9 @@ export class LoginComponent {
       next: () => this.router.navigate(['/planner']),
       error: () => this.toastr.error("Invalid", "Invalid credentials")
     });
+  }
+
+  isFormFieldInvalid(field: string): boolean {
+    return (this.form.get(field)?.invalid && this.form.get(field)?.touched) || false;
   }
 }

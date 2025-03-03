@@ -12,8 +12,8 @@ using api.Data;
 namespace api.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250226205730_NameAndDescriptionToGroceryLists")]
-    partial class NameAndDescriptionToGroceryLists
+    [Migration("20250303013103_GUID")]
+    partial class GUID
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -275,8 +275,8 @@ namespace api.Migrations
                     b.Property<int>("Friday")
                         .HasColumnType("int");
 
-                    b.Property<int>("GroceryListId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("GroceryListId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("ImageUrl")
                         .HasColumnType("nvarchar(max)");
@@ -318,11 +318,9 @@ namespace api.Migrations
 
             modelBuilder.Entity("api.Models.GroceryList", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
@@ -339,6 +337,27 @@ namespace api.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("GroceryLists");
+                });
+
+            modelBuilder.Entity("api.Models.GroceryListMember", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("GroceryListId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("GroceryListId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("GroceryListMembers");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -414,6 +433,23 @@ namespace api.Migrations
                     b.HasOne("api.Models.AppUser", "User")
                         .WithMany()
                         .HasForeignKey("UserId");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("api.Models.GroceryListMember", b =>
+                {
+                    b.HasOne("api.Models.GroceryList", "GroceryList")
+                        .WithMany()
+                        .HasForeignKey("GroceryListId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("api.Models.AppUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("GroceryList");
 
                     b.Navigation("User");
                 });

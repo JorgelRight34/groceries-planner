@@ -7,9 +7,10 @@ namespace api.Repositories
     {
         Task<GroceryList> CreateAsync(string userId, CreateGroceryListDto groceryListDto);
         Task<IEnumerable<GroceryList>?> GetAllAsync(string? userId);
+        Task<GroceryList?> GetByIdAsync(Guid id);
         Task<GroceryList?> UpdateAsync(
-            int id, string userId, UpdateGroceryListDto groceryListDto
+            Guid id, string userId, UpdateGroceryListDto groceryListDto
         );
-        Task<GroceryList?> DeleteAsync(string? userId, int id);
+        Task<GroceryList?> DeleteAsync(string? userId, Guid id);
     }
 }

@@ -46,6 +46,6 @@ export class GroceryListSelectorComponent {
   }
 
   calculateTotalPrice(groceryList: GroceryList) {
-    return groceryList.groceries.reduce((sum, g) => sum + g.cost, 0);
+    return groceryList.groceries?.reduce((sum, g) => sum + g.cost, 0) || 0;
   }
 }

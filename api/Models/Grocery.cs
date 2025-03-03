@@ -24,7 +24,7 @@ namespace api.Models
         public int Sunday { get; set; } = 0;
         public int? CategoryId { get; set; }
         [Required]
-        public int GroceryListId { get; set; }
+        public Guid GroceryListId { get; set; }
         [ForeignKey("CategoryId")]
         public Category? Category { get; set; }
         public GroceryList? GroceryList { get; set; }

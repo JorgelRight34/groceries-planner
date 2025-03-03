@@ -8,10 +8,12 @@
                 <b class="text-center">{{ category.name }}</b>
                 <ul>
                     @for (grocery of getCategoryGroceries(category.id) ; track grocery.id) {
-                    <li appHighlightInput [highlight]="checkedGroceries()[grocery.id] || false">
-                        <input class="me-1" id="{{ grocery.id }}" type="checkbox" (change)="handleChange(grocery)" />
-                        <label for="{{ grocery.id }}">
-                            {{ grocery.name }}
+                    <li class="d-flex align-items-center" appHighlightInput
+                        [highlight]="checkedGroceries()[grocery.id] || false">
+                        <input class="me-1 mb-0" id="{{ grocery.id }}" type="checkbox"
+                            (change)="handleChange(grocery)" />
+                        <label class="mb-0" for="{{ grocery.id }}">
+                            {{ grocery.name }} ({{ grocery[day()] }})
                         </label>
                     </li>
                     } @empty {
@@ -31,7 +33,7 @@
                     <li class="ps-3" appHighlightInput [highlight]="checkedGroceries()[grocery.id] || false">
                         <input class="me-1" id="{{ grocery.id }}" type="checkbox" (change)="handleChange(grocery)" />
                         <label for="{{ grocery.id }}">
-                            {{ grocery.name }}
+                            {{ grocery.name }} ({{ grocery[day()] }})
                         </label>
                     </li>
                     } @empty {

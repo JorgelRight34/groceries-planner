@@ -85,8 +85,7 @@ export class GroceriesService {
   addGrocery(grocery: Grocery): Observable<Grocery> | void {
     // Add grocery t
     let day = this.currentDay();  // Current day
-    const groceryList: Grocery[] | undefined = this.currentGroceryList()?.groceries;
-    if (groceryList?.length === 0) return;
+    const groceryList: Grocery[] | undefined = this.currentGroceryList()?.groceries || [];
 
     // Check if a grocery with the same name already exists
     const existingGrocery = groceryList?.filter(

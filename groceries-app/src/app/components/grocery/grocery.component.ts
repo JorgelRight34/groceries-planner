@@ -25,7 +25,9 @@ export class GroceryComponent {
   }
 
   handleDelete() {
-    this.groceriesService.deleteGrocery(this.grocery().id).subscribe(data => console.log(data))
+    if (confirm("Are you sure you want to delete this grocery?, it won't can be recovered")) {
+      this.groceriesService.deleteGrocery(this.grocery().id).subscribe(data => console.log(data))
+    }
   }
 
   getGroceryQuantity(grocery: Grocery) {

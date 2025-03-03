@@ -43,4 +43,9 @@ export class CreateGroceryListComponent {
       this.groceriesService.createGroceryList(data).subscribe(data => console.log(data));
     }
   }
+
+
+  isFormFieldValid(field: string) {
+    return this.form.get(field)?.errors && this.form.get(field)?.touched;
+  }
 }

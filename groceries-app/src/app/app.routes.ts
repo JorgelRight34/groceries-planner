@@ -3,12 +3,17 @@ import { authGuard } from './guards/auth.guard';
 
 export const routes: Routes = [
     {
+        path: "",
+        redirectTo: "planner",
+        pathMatch: "full"
+    },
+    {
         path: "planner",
         loadComponent: () => import('./pages/home/home.component').then(m => m.HomeComponent),
         canActivate: [authGuard],
     },
     {
-        path: "",
+        path: "hero",
         loadComponent: () => import('./pages/hero/hero.component').then(m => m.HeroComponent)
     },
     {

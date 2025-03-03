@@ -14,8 +14,8 @@ namespace api.Data
 
         public DbSet<Category> Categories { get; set; }
         public DbSet<Grocery> Groceries { get; set; }
-
         public DbSet<GroceryList> GroceryLists { get; set; }
+        public DbSet<GroceryListMember> GroceryListMembers { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
