@@ -4,10 +4,11 @@ import { AddGroceryButtonComponent } from '../add-grocery-button/add-grocery-but
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
 import { ExportGroceryListComponent } from '../export-grocery-list-button/export-grocery-list-button.component';
+import { ShareLinkComponent } from '../share-link/share-link.component';
 
 @Component({
   selector: 'app-navbar',
-  imports: [AddGroceryButtonComponent, SavePlanComponent, ExportGroceryListComponent],
+  imports: [AddGroceryButtonComponent, SavePlanComponent, ExportGroceryListComponent, ShareLinkComponent],
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.css'
 })

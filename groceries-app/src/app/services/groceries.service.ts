@@ -7,6 +7,8 @@ import { GroceryList } from '../models/groceryList';
 import { map, Observable, of } from 'rxjs';
 import { Category } from '../models/category';
 import { days } from '../../lib/constants';
+import { ToastrService } from 'ngx-toastr';
+import { ActivatedRoute } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -19,9 +21,31 @@ export class GroceriesService {
   currentGroceryList = signal<GroceryList | null>(null); // Selected grocery list
   currentCategory = computed(() => this.categoriesService.currentCategory());
   currentDay = signal<Day>("monday");  // Current selected day for grocery list
+  shared = false;
+  groceryListId: String = '';
 
-  constructor(private http: HttpClient, private categoriesService: CategoriesService) {
+
+  constructor(
+    private http: HttpClient,
+    private categoriesService: CategoriesService,
+    private route: ActivatedRoute,
+    private toastr: ToastrService
+  ) {
     this.loadAllGroceriesLists()
+  }
+
+  ngOnInit() {
+    this.route.queryParamMap.subscribe((params) => {
+      const paramShared = params.get('shared');
+      const paramGroceryListId = params.get('groceryListId');
+
+      if (paramShared && paramGroceryListId) {
+        this.shared = true;
+        this.groceryListId = paramGroceryListId;
+
+
+      }
+    })
   }
 
   loadAllGroceriesLists() {
@@ -34,7 +58,9 @@ export class GroceriesService {
         this.groceriesLists.set(data)
         this.hasAlreadyFetched.set(true);
       },
-      error: (error) => console.error(error)
+      error: (error) => {
+        if (error.status === 0) this.toastr.error('Network error', 'An error has ocurred.')
+      }
     })
   }
 
