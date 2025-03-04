@@ -1,21 +1,17 @@
 @if (isOpen()) {
-    <div class="modal modal-overlay d-flex align-items-center justify-content-center">
-        <div class="modal-container" [ngStyle]="{'width': width(), 'height': height() }">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">{{ title() }}</h5>
-                    <button 
-                        type="button" 
-                        class="btn-close" 
-                        data-bs-dismiss="modal" 
-                        aria-label="Close" 
-                        (click)="handleHideModal()">
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <ng-content></ng-content>
-                </div>
+<div class="modal modal-overlay d-flex align-items-center justify-content-center">
+    <div class="modal-container fade-in-animation" [ngStyle]="{'width': width(), 'height': height() }">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">{{ title() }}</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                    (click)="handleHideModal()">
+                </button>
+            </div>
+            <div class="modal-body">
+                <ng-content></ng-content>
             </div>
         </div>
     </div>
+</div>
 }

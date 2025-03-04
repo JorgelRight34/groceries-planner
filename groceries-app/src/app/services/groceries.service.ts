@@ -24,29 +24,11 @@ export class GroceriesService {
   shared = false;
   groceryListId: String = '';
 
-
   constructor(
     private http: HttpClient,
     private categoriesService: CategoriesService,
-    private route: ActivatedRoute,
     private toastr: ToastrService
-  ) {
-    this.loadAllGroceriesLists()
-  }
-
-  ngOnInit() {
-    this.route.queryParamMap.subscribe((params) => {
-      const paramShared = params.get('shared');
-      const paramGroceryListId = params.get('groceryListId');
-
-      if (paramShared && paramGroceryListId) {
-        this.shared = true;
-        this.groceryListId = paramGroceryListId;
-
-
-      }
-    })
-  }
+  ) { }
 
   loadAllGroceriesLists() {
     // Prevent infinite fetching
@@ -64,15 +46,25 @@ export class GroceriesService {
     })
   }
 
-  getAllGroceries() {
+  getAllGroceriesList() {
     if (this.groceriesLists.length === 0) {
       this.loadAllGroceriesLists();
     }
+    return this.groceriesLists();
+  }
 
-    console.log("getting", this.currentGroceryList()?.groceries);
+  getGroceryList(id: string) {
+    return this.http.get<GroceryList>(`${this.url}/groceryList/${id}`).pipe(
+      map(data => {
+        console.log(data);
+        this.currentGroceryList.set(data);
+        return data;
+      })
+    )
+  }
 
+  getAllGroceries() {
     if (this.currentGroceryList() == null) return;
-
     return this.currentGroceryList()?.groceries;
   }
 
@@ -153,6 +145,17 @@ export class GroceriesService {
     }
   }
 
+  updateGrocery(grocery: Grocery): Observable<Grocery> | void {
+    const groceryList: Grocery[] | undefined = this.currentGroceryList()?.groceries;
+    console.log(groceryList);
+    if (!groceryList) return;
+
+    const index = groceryList?.findIndex(g => g.id === grocery.id);
+    groceryList[index] = grocery;
+    console.log("setting");
+    this.setCurrentGroceryList(groceryList);
+  }
+
   substractOneGrocery(grocery: Grocery): void {
     let day = this.currentDay();  // Current day
     const groceries = this.currentGroceryList()?.groceries;
@@ -178,10 +181,17 @@ export class GroceriesService {
     }
   }
 
-  saveGroceryList(): Observable<Grocery[]> {
+  saveGroceryList(): Observable<Grocery[]> | void {
     const groceries = this.currentGroceryList()?.groceries;
+    const id = this.currentGroceryList()?.id;
+
+    if (!groceries || !id) return;
+
     return this.http.post<Grocery[]>(
-      `${this.url}/grocerylist/save-groceries-list`, groceries
+      `${this.url}/grocerylist/save-groceries-list`, {
+      groceries,
+      id: id
+    }
     );
   }
 

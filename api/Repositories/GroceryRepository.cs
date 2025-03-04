@@ -27,11 +27,8 @@ namespace api.Repositories
         public async Task<Grocery?> CreateAsync(Grocery grocery)
         {
             var groceryList = await _context.GroceryLists.FindAsync(grocery.GroceryListId);
-            if (groceryList == null)
-            {;
-                return null;
-            }
-
+            if (groceryList == null) return null;
+ 
             var category = await _context.Categories.FindAsync(grocery.CategoryId);
             if (category == null)
             {
@@ -45,18 +42,21 @@ namespace api.Repositories
 
         public async Task<Grocery?> GetByIdAsync(int id, string? userId)
         {
-            if (userId == null)
-            {
-                return null;
-            }
+            if (userId == null) return null;
 
             var grocery = await _context.Groceries
                 .Include(x => x.GroceryList)
                 .FirstOrDefaultAsync(x => x.Id == id);
 
-            if (grocery == null || grocery?.GroceryList?.UserId != userId)
+            if (grocery == null) return null;
+
+            var groceryList = grocery.GroceryList;
+
+            if (groceryList != null && groceryList.UserId != userId)
             {
-                return null;
+                var groceryListMember = await _context.GroceryListMembers
+                    .FirstOrDefaultAsync(x => x.UserId == userId && x.GroceryListId == groceryList.Id);
+                if (groceryListMember == null) return null;
             }
 
             return grocery;
@@ -66,10 +66,7 @@ namespace api.Repositories
         {
             var grocery = await this.GetByIdAsync(id, userId);
 
-            if (grocery == null)
-            {
-                return null;
-            }
+            if (grocery == null) return null;
 
             _context.Groceries.Remove(grocery);
             await _context.SaveChangesAsync();
@@ -77,7 +74,9 @@ namespace api.Repositories
             return grocery;
         }
 
-        public async Task<Grocery?> UpdateAsync(int id, string? userId, UpdateGroceryDto groceryDto)
+        public async Task<Grocery?> UpdateAsync(
+            int id, string? userId, UpdateGroceryDto groceryDto
+        )
         {
             var grocery = await this.GetByIdAsync(id, userId);
 

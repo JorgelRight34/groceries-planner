@@ -6,7 +6,7 @@
 <!-- Modal -->
 <app-modal [title]="'Your grocery lists'" [isOpen]="isModalOpen()" [width]="'50dvw'" (hideModal)="hideModal()">
     <app-create-grocery-list />
-    <div class="d-flex flex-wrap gap-5 align-items-center justify-content-center">
+    <div class="d-flex flex-wrap gap-5 align-items-center justify-content-center fade-in-animation">
         @for (list of groceryLists() ; track list.id)
         {
         <div class="grocery-list border shadow-sm rounded-3 p-3 w-lg-100 mt-3">

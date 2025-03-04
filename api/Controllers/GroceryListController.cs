@@ -18,18 +18,15 @@ namespace api.Controllers
         private readonly IGroceryListRepository _groceryListRepository;
         private readonly IGroceryRepository _groceryRepository;
         private readonly IViewRendererService _viewRendererService;
-        private readonly IGroceryListService _groceryListService;
 
         public GroceryListController(
             IGroceryListRepository groceryListRepository, 
             IGroceryRepository groceryRepository,
-            IViewRendererService viewRendererService,
-            IGroceryListService groceryListService
+            IViewRendererService viewRendererService
         )
         {
             _groceryListRepository = groceryListRepository;
             _groceryRepository = groceryRepository;
-            _groceryListService = groceryListService;
             _viewRendererService = viewRendererService;
         }
 
@@ -43,21 +40,31 @@ namespace api.Controllers
             return Ok(lists);
         }
 
+        [HttpGet("{id:guid}")]
+        [Authorize]
+        public async Task<IActionResult> GetById([FromRoute] Guid id)
+        {
+            var username = User.GetUsername();
+            if (username == null) return Unauthorized();
+
+            var groceryList = await _groceryListRepository.GetByIdAsync(id, username);
+            if (groceryList == null) return BadRequest();
+        
+
+            return Ok(groceryList);
+        }
+
 
         [HttpPost]
         [Authorize]
-        public async Task<IActionResult> Post([FromBody] CreateGroceryListDto groceryListDto)
+        public async Task<IActionResult> Post(
+            [FromBody] CreateGroceryListDto groceryListDto
+        )
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest();
-            }
+            if (!ModelState.IsValid) return BadRequest();
 
             var userId = User.GetUsername();
-            if (userId == null)
-            {
-                return Unauthorized();
-            }
+            if (userId == null) return Unauthorized();
 
             var groceryList = await _groceryListRepository.CreateAsync(
                 userId,
@@ -67,9 +74,11 @@ namespace api.Controllers
             return Ok(groceryList);
         }
 
-        [HttpPut("{id:int}")]
+        [HttpPut("{id:guid}")]
         [Authorize]
-        public async Task<IActionResult> Put([FromRoute] Guid id, [FromBody] UpdateGroceryListDto groceryListDto)
+        public async Task<IActionResult> Put(
+            [FromRoute] Guid id, [FromBody] UpdateGroceryListDto groceryListDto
+        )
         {
             if (!ModelState.IsValid)
             {
@@ -77,14 +86,13 @@ namespace api.Controllers
             }
 
             var userId = User.GetUsername();
+            if (userId == null) return Unauthorized();
+
             var groceryList = await _groceryListRepository.UpdateAsync(
                     id, userId, groceryListDto
             );
 
-            if (groceryList == null)
-            {
-                return NotFound();
-            }
+            if (groceryList == null) return NotFound();
 
             return Ok(groceryList);
         }
@@ -96,37 +104,28 @@ namespace api.Controllers
             var userId = User.GetUsername();
             var groceryList = await _groceryListRepository.DeleteAsync(userId, id);
 
-            if (groceryList == null)
-            {
-                return NotFound();
-            }
+            if (groceryList == null) return NotFound();
 
             return NoContent();
         }
 
         [HttpPost("save-groceries-list")]
         [Authorize]
-        public async Task<IActionResult> SaveGroceriesList([FromBody] Grocery[] groceries)
+        public async Task<IActionResult> SaveGroceriesList(
+            [FromBody] SaveGroceryListDto saveGroceryListDto
+        )
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
+            if (!ModelState.IsValid) return BadRequest(ModelState);
+            
 
             var userId = User.GetUsername();
+            if (userId == null) return Unauthorized();
 
-            foreach (var grocery in groceries)
-            {
-                var groceryDto = grocery.ToUpdateGroceryDto();
-                var updatedGrocery = await _groceryRepository.UpdateAsync(
-                    grocery.Id, userId, groceryDto
-                );
+            var groceryList = await _groceryListRepository.UpdateAllGroceriesAsync(
+                userId, saveGroceryListDto.Id, saveGroceryListDto.Groceries
+            );
 
-                if (updatedGrocery == null)
-                {
-                    return NotFound();
-                }
-            }
+            if (groceryList == null) return NotFound();
 
             return NoContent();
         }
@@ -156,28 +155,6 @@ namespace api.Controllers
             byte[] pdfBytes = Pdf.From(htmlContent).Content();
 
             return File(pdfBytes, "application/pdf", "document.pdf");
-        }
-
-        [HttpGet("add-member/{groceryListId:Guid}")]
-        [Authorize]
-        public async Task<IActionResult> AddMember([FromRoute] Guid groceryListId)
-        {
-            if (!ModelState.IsValid) return BadRequest();
-
-            var username = User.GetUsername();
-
-            if (username == null) return BadRequest();
-
-            var groceryList = await _groceryListService.AddMemberAsync(
-                username, groceryListId
-            );
-
-            if (groceryList == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(groceryList);
         }
     }
 }

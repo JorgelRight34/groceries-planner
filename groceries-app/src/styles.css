@@ -59,6 +59,12 @@ body {
     background-color: var(--bg-color);
 }
 
+.fade-in-animation {
+    animation-duration: .6s;
+    animation-fill-mode: backwards;
+    animation-name: fadeIn;
+}
+
 input.ng-invalid.ng-touched {
     border: 2px solid red;
     background-color: #ffe6e6; /* Light red background */

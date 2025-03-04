@@ -91,12 +91,12 @@ builder.Services.AddAuthentication(options =>
     };
 });
 
+// Injections
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 builder.Services.AddScoped<IGroceryRepository, GroceryRepository>();
 builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddScoped<IGroceryListRepository, GroceryListRepository>();
-builder.Services.AddScoped<IGroceryListService, GroceryListService>();
-builder.Services.AddSingleton<IViewRendererService, ViewRendererService>();
+builder.Services.AddScoped<IViewRendererService, ViewRendererService>();
 
 // Singletons for Razor pages
 builder.Services.AddSingleton<ICompositeViewEngine, CompositeViewEngine>();

@@ -15,9 +15,14 @@ export class SavePlanComponent {
 
   handleSavePlan() {
     this.isFetching.set(true);  // Start loading spinner
-    this.groceriesService.saveGroceryList().subscribe(() => {
-      this.isFetching.set(false); // Stop loading spinner
-      this.toastr.success("Plan saved successfully", "Plan saved!")
+    this.groceriesService.saveGroceryList()?.subscribe({
+      next: () => {
+        this.isFetching.set(false); // Stop loading spinner
+        this.toastr.success("Plan saved successfully", "Plan saved!")
+      },
+      error: () => {
+        this.toastr.error("Oops!", "An error has ocurred.")
+      }
     });
   }
 }

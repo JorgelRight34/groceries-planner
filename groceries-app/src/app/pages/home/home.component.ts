@@ -6,11 +6,12 @@ import { GroceriesService } from '../../services/groceries.service';
 import { NavbarSmComponent } from '../../components/navbar-sm/navbar-sm.component';
 import { CommonModule } from '@angular/common';
 import { HeaderComponent } from '../../components/header/header.component';
-import { AddGroceryButtonComponent } from '../../components/add-grocery-button/add-grocery-button.component';
-import { SavePlanComponent } from '../../components/save-plan/save-plan.component';
 import { GroceryComponent } from '../../components/grocery/grocery.component';
 import { NavbarComponent } from '../../components/navbar/navbar.component';
 import { ReceiptComponent } from '../../components/receipt/receipt.component';
+import { ActivatedRoute } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
+import { sharedQueryParameterGroceryListId } from '../../../lib/constants';
 
 @Component({
   selector: 'app-home',
@@ -36,7 +37,26 @@ export class HomeComponent {
   )
   hasFetched = computed(() => this.groceriesService.hasAlreadyFetched())
 
-  constructor(private groceriesService: GroceriesService) { }
+  constructor(
+    private route: ActivatedRoute,
+    private groceriesService: GroceriesService,
+    private toastr: ToastrService
+  ) { }
+
+  ngOnInit() {
+    // Check if viewing a specific grocery list, may it be owned by user or shared
+    const groceryListId = this.route.snapshot.queryParams[sharedQueryParameterGroceryListId];
+    if (groceryListId) {
+      // Get grocery list
+      this.groceriesService.getGroceryList(groceryListId).subscribe({
+        error: (err) => {
+          if (err.status === 404) {
+            this.toastr.error('Oops!', 'List not found.')
+          }
+        }
+      })
+    }
+  }
 
   changeCurrentSection(section: string): void {
     // For mobile users to navigate between sections

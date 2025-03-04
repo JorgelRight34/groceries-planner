@@ -6,6 +6,8 @@ import { CreateGroceryListComponent } from '../create-grocery-list/create-grocer
 import { EditGroceryListButtonComponent } from '../edit-grocery-list-button/edit-grocery-list-button.component';
 import { CommonModule } from '@angular/common';
 import { ToastrService } from 'ngx-toastr';
+import { ActivatedRoute } from '@angular/router';
+import { sharedQueryParameterGroceryListId } from '../../../lib/constants';
 
 @Component({
   selector: 'app-grocery-list-selector',
@@ -15,14 +17,28 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class GroceryListSelectorComponent {
   isModalOpen = signal<boolean>(false);
-  groceryLists = computed(() => this.groceriesService.groceriesLists());
+  groceryLists = computed(() => {
+    if (this.isModalOpen()) {
+      // Only fetch all groceries lists if modal is open
+      return this.groceriesService.getAllGroceriesList()
+    }
+    return [];
+  });
   hasFetched = computed(() => this.groceriesService.hasAlreadyFetched());
 
-  constructor(private groceriesService: GroceriesService, private toastr: ToastrService) { }
+  constructor(
+    private route: ActivatedRoute,
+    private groceriesService: GroceriesService,
+    private toastr: ToastrService
+  ) { }
 
   ngOnInit() {
-    if (!this.groceriesService.currentGroceryList()) {
-      this.isModalOpen.set(true);
+    // Only show modal if the it's not a shared grocery list
+    if (!this.route.snapshot.queryParams[sharedQueryParameterGroceryListId]) {
+      // Only show the modal if there's not already a current selected list
+      if (!this.groceriesService.currentGroceryList()) {
+        this.isModalOpen.set(true);
+      }
     }
   }
 
@@ -41,7 +57,9 @@ export class GroceryListSelectorComponent {
   }
 
   selectGroceryList(groceryList: GroceryList): void {
-    this.groceriesService.currentGroceryList.set(groceryList);
+    if (groceryList.id !== this.groceriesService.currentGroceryList()?.id) {
+      this.groceriesService.currentGroceryList.set(groceryList);
+    }
     this.hideModal();
   }
 

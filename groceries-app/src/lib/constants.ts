@@ -2,6 +2,8 @@ import { Day } from "../app/models/day";
 
 export const days: Day[] = ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"]
 
+export const sharedQueryParameterGroceryListId = "groceryListId";
+
 
 export const categories = [
   {

@@ -1,20 +1,23 @@
-<div class="row border mx-0 bg-white rounded grocery shadow-sm mt-3">
+<div class="row border mx-0 bg-white rounded grocery shadow-sm mt-3 fade-in-animation">
   <div class="col-lg-5">
-    <img loading="lazy" [src]="
-        grocery().imageUrl ||
-        'https://supermercadosnacional.com/media/catalog/product/cache/afcac67a0d77755283578b677f040f2b/2/1/2102452-1.jpg'
-      " class="card-img-top border-bottom" [alt]="grocery().name" />
+    <img loading="lazy" [src]="grocery().imageUrl" class="card-img-top border-bottom" [alt]="grocery().name" />
   </div>
   <div class="col-lg-7 border-start position-relative">
-    <span class="d-none d-lg-flex delete-button rounded-circle border hover" (click)="handleDelete()">
-      X
+    <!-- Edit btn -->
+    <span class="d-none d-lg-flex delete-button rounded-circle bg-accent border hover material-symbols-outlined fs-6"
+      (click)="openEditForm()">
+      edit
     </span>
+
+    <!-- Body -->
     <div class="p-3" style="height: 50%">
       <h6 class="card-title text-truncate">{{ grocery().name }}</h6>
       <div class="d-flex align-items-center">
         <span class="text-muted">{{ grocery().cost | currency }}</span>
       </div>
     </div>
+
+    <!-- Options -->
     <div class="row" style="height: 50%">
       <div class="col-5 d-flex align-items-center justify-content-center option" (click)="addGrocery()">
         <button class="btn rounded-pill px-3 mx-auto bg-accent w-100 fw-bold">+</button>
@@ -28,5 +31,12 @@
         <button class="btn rounded-pill px-3 mx-auto bg-accent w-100 fw-bold">-</button>
       </div>
     </div>
+
   </div>
 </div>
+
+<app-modal title="Edit grocery" [isOpen]="isModalShowing()" (hideModal)="hideEditForm()" width="50vw">
+  @if (isModalShowing()) {
+  <app-edit-grocery-form [grocery]="grocery()" />
+  }
+</app-modal>
