@@ -19,6 +19,11 @@
     position: absolute;
 }
 
+.row-image {
+    height: 20rem;
+    object-fit: contain;
+}
+
 #img-1 {
     z-index: 1;
     max-height: 90dvh;

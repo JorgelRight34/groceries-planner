@@ -36,8 +36,9 @@
         <!-- Selector between seeing receipt and seeing the list for mobile devices -->
         <div class="d-flex align-items-center d-lg-none me-auto">
           <!-- See receipt button (mobile) -->
-          <span class="d-flex align-items-center" [ngClass]="{'d-none': currentSecondSection() === 'RECEIPT'}">
-            <span class="d-block d-lg-none material-symbols-outlined me-1" (click)="changeSecondSection('RECEIPT')"
+          <span class="d-flex align-items-center" (click)="changeSecondSection('RECEIPT')"
+            [ngClass]="{'d-none': currentSecondSection() === 'RECEIPT'}">
+            <span class="d-block d-lg-none material-symbols-outlined me-1"
               [ngClass]="{'d-none': currentSecondSection() === 'RECEIPT'}">
               receipt_long
             </span>
@@ -45,8 +46,9 @@
           </span>
 
           <!-- See grocery list button (mobile)-->
-          <span class="d-flex align-items-center" [ngClass]="{'d-none': currentSecondSection() === 'LIST'}">
-            <span class="d-block d-lg-none material-symbols-outlined me-1" (click)="changeSecondSection('LIST')">
+          <span class="d-flex align-items-center" (click)="changeSecondSection('LIST')"
+            [ngClass]="{'d-none': currentSecondSection() === 'LIST'}">
+            <span class="d-block d-lg-none material-symbols-outlined me-1">
               edit_calendar
             </span>
             See grocery list
@@ -65,7 +67,7 @@
         <div class="position-relative" [class.d-none]="currentSecondSection() !== 'LIST'">
           <app-groceries-list />
           <!-- Grocery list members gallery -->
-          <div class="position-absolute end-0 top-0 px-lg-3">
+          <div class="d-none d-lg-block position-absolute end-0 top-0 px-lg-3">
             <app-members-gallery />
           </div>
         </div>

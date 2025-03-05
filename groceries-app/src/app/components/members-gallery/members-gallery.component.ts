@@ -9,6 +9,7 @@ import { GroceriesService } from '../../services/groceries.service';
 })
 export class MembersGalleryComponent {
   members = computed(() => this.groceriesService.currentGroceryList()?.members)
+  admin = computed(() => this.groceriesService.currentGroceryList()?.user);
 
   constructor(private groceriesService: GroceriesService) { }
 }

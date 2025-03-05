@@ -13,6 +13,8 @@ export class HighlightInputDirective {
     if (this.highlight()) {
       this.elementRef.nativeElement.classList.add('highlighted-input');
       this.elementRef.nativeElement.classList.add('rounded-3');
+    } else {
+      this.elementRef.nativeElement.classList.remove('highlighted-input');
     }
   })
 }

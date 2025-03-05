@@ -50,6 +50,9 @@ namespace api.Repositories
             var lists = await _context.GroceryLists
                 .Where(x => x.UserId == userId)
                 .Include(x => x.Groceries)
+                .Include(x => x.User)
+                .Include(x => x.Members)
+                  .ThenInclude(x => x.User)
                 .ToListAsync();
 
             return lists;
@@ -60,6 +63,9 @@ namespace api.Repositories
             // Find grocery list
             var groceryList = await _context.GroceryLists
                 .Include(x => x.Groceries)
+                .Include(x => x.User)
+                .Include(x => x.Members)
+                  .ThenInclude(x => x.User)
                 .FirstOrDefaultAsync(x => x.Id == id);
 
             if (groceryList == null) return null;   // Return early if it doesn't exist

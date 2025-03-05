@@ -14,5 +14,6 @@ namespace api.Models
         [ForeignKey("UserId")]
         public AppUser? User { get; set; }   
         public List<Grocery>? Groceries { get; set; }
+        public List<GroceryListMember>? Members { get; set; }
     }
 }

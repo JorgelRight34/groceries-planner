@@ -1,10 +1,15 @@
 <div class="row border mx-0 bg-white rounded grocery shadow-sm mt-3 fade-in-animation">
-  <div class="col-lg-5">
+  <div class="col-lg-5 position-relative">
+    <!-- Edit button for mobile devices -->
+    <span class="d-flex d-lg-none edit-button rounded-circle bg-accent border hover material-symbols-outlined"
+      (click)="openEditForm()">
+      edit
+    </span>
     <img loading="lazy" [src]="grocery().imageUrl" class="card-img-top border-bottom" [alt]="grocery().name" />
   </div>
   <div class="col-lg-7 border-start position-relative">
-    <!-- Edit btn -->
-    <span class="d-none d-lg-flex delete-button rounded-circle bg-accent border hover material-symbols-outlined fs-6"
+    <!-- Edit button -->
+    <span class="d-none d-lg-flex edit-button rounded-circle bg-accent border hover material-symbols-outlined fs-6"
       (click)="openEditForm()">
       edit
     </span>

@@ -13,7 +13,7 @@ img {
     cursor: pointer;
 }
 
-.delete-button {
+.edit-button {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -24,4 +24,11 @@ img {
     position: absolute;
     top: -0.5rem;
     right: -0.5rem;
+}
+
+@media (max-width: 500px) {
+    .edit-button {
+        height: 3rem;
+        width: 3rem;
+    }
 }

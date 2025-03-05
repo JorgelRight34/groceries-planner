@@ -11,6 +11,7 @@ namespace api.Mappers
             {
                 UserName = appUser.UserName,
                 Email = appUser.Email,
+                ProfilePicUrl = appUser.ProfilePicUrl
             };
         }
     }

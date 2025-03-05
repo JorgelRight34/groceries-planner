@@ -19,7 +19,7 @@ export class NavbarComponent {
 
   handleLogout() {
     this.authService.logout();
-    this.router.navigate(['']); // Travel to wildcart route
+    this.router.navigate(['hero']); // Travel to wildcart route
   }
 
   handleChangeCurrentSection(section: string) {

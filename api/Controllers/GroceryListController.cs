@@ -37,7 +37,7 @@ namespace api.Controllers
             var lists = await _groceryListRepository.GetAllAsync(
                 userId
             );
-            return Ok(lists);
+            return Ok(lists?.Select(x => x.ToGroceryListDto()));
         }
 
         [HttpGet("{id:guid}")]
@@ -50,8 +50,8 @@ namespace api.Controllers
             var groceryList = await _groceryListRepository.GetByIdAsync(id, username);
             if (groceryList == null) return BadRequest();
         
-
-            return Ok(groceryList);
+                
+            return Ok(groceryList.ToGroceryListDto());
         }
 
 

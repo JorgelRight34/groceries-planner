@@ -112,15 +112,13 @@ namespace api.Controllers
             );
 
             // If user was not found return unathorized
-            if (user == null)
-            {
-                return Unauthorized();
-            }
+            if (user == null) return Unauthorized();
 
             // Check if passwords match
             var result = await _signInManager.CheckPasswordSignInAsync(
                 user, loginDto.Password, false
             );
+
             //  If password don't match return unauthorized
             if (!result.Succeeded)
             {
@@ -149,13 +147,19 @@ namespace api.Controllers
                 // Get username from token
                 var username = payload.Name?.ToUsernameFromGoogleToken();
                 if (username == null) return BadRequest();
-     
 
                 // Try to fetch an existing user to determine if user is signing up
                 // or logging in
                 var existingUser = await _userManager.FindByNameAsync(username);
                 if (existingUser != null)
                 {
+                    if (existingUser.ProfilePicUrl != payload.Picture)
+                    {
+                        // If user has updated it's google profile pic then
+                        // update the profile pic on the database
+                        existingUser.ProfilePicUrl = payload.Picture;
+                        await _userManager.UpdateAsync(existingUser); 
+                    }
                     // If user is logging in generate token and return
                     return Ok(new
                     {
@@ -169,6 +173,7 @@ namespace api.Controllers
                 {
                     UserName = username,
                     Email = payload.Email,
+                    ProfilePicUrl = payload.Picture
                 };
 
                 var createdUser = await _userManager.CreateAsync(user);

@@ -1,8 +1,10 @@
+<!-- Hero row -->
 <div class="row bg-white mx-0">
-    <div class="col-lg-5 p-lg-5 d-flex align-items-center justify-content-center">
-        <div class="rounded-3 p-3 bg-white">
-            <h1 class="text-accent mb-5">Plan your groceries shopping effectively and shareable</h1>
-            <p class="mb-5">
+    <!-- Left column -->
+    <div class="col-lg-5 p-lg-5 d-flex align-items-center justify-content-center bg-white">
+        <div>
+            <h1 class="text-accent mb-3 mb-lg-5">Plan your groceries shopping effectively and shareable</h1>
+            <p class="mb-3">
                 <b>Effortlessly organize your grocery shopping</b> with our intuitive app. Add your groceries, group
                 them by
                 category, and create a dedicated grocery list for each day. Whether you're planning for the week or just
@@ -10,31 +12,108 @@
                 detailed
                 receipt for easy reference.
             </p>
-            <p class="mb-5">
+            <p class="mb-3 mb-lg-5">
                 With <b>shareable lists</b>, you can collaborate with friends or family and make your grocery shopping a
                 breeze!
             </p>
+            <!-- Login options -->
             <div>
                 <span>Don't have an account yet?</span>&nbsp;<a routerLink="signup">register here!</a>
-                <div class="row mt-3 mx-0">
-                    <div class="col-lg-6 d-flex align-items-center">
-                        <button class="btn btn-success rounded-pill w-100" type="submit" routerLink="/login">
-                            Login
-                        </button>
-                    </div>
-                    <div class="col-lg-6 d-flex align-items-center">
+                <div class="d-flex flex-column justify-content-center mt-3 w-100">
+                    <!-- Normal login -->
+                    <button class="btn btn-success rounded-pill px-5 mb-3" type="submit" routerLink="/login">
+                        Login now!
+                    </button>
+                    <!-- Login with Google -->
+                    <span>
                         <app-google-login-button />
-                    </div>
+                    </span>
                 </div>
             </div>
         </div>
-
     </div>
-    <div class="col-lg-7 bg-app">
+    <!-- Image superposed gallery for desktop -->
+    <div class="d-none d-lg-block col-lg-7 bg-app">
         <div class="hero-photo-gallery position-relative">
-            <img src="grocery-list.jpg" class="shadow-lg rounded-3" id="img-1" />
-            <img src="groceries.jpg" class="shadow-lg rounded-3" id="img-2" />
-            <img src="grocery-lists.jpg" class="shadow-lg rounded-3" id="img-3" />
+            <img src="images/grocery-list.jpg" class="shadow-lg rounded-3" id="img-1" />
+            <img src="images/groceries.jpg" class="shadow-lg rounded-3" id="img-2" />
+            <img src="images/grocery-lists.jpg" class="shadow-lg rounded-3" id="img-3" />
+        </div>
+    </div>
+</div>
+<!-- Second row -->
+<div class="row mx-0">
+    <div class="col-lg-6 p-3 p-lg-5">
+        <img src="images/grocery-list.jpg" class="shadow-lg img-fluid rounded-3" />
+    </div>
+    <div class="col-lg-6 p-3 p-lg-5 d-flex align-items-center">
+        <div class="px-lg-5">
+            <h3 class="text-center text-accent mb-lg-5">Create your grocery list for each day of the week! and share it
+                with anyone to collaborate</h3>
+            <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Natus voluptas dolores delectus labore in.
+                Consequatur tenetur, molestias magni eos veritatis voluptatem provident officia neque voluptatibus
+                obcaecati
+                nemo distinctio sunt alias?</p>
+        </div>
+    </div>
+</div>
+<!-- Third row -->
+<div class="row mx-0 bg-app">
+    <div class="p-3 p-lg-5 px-lg-5 d-flex align-items-center">
+        <div>
+            <h3 class="text-center text-white mb-lg-5">Create a grocery list for each event or purpouse!</h3>
+            <p class="text-white mb-0">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Natus voluptas dolores
+                delectus
+                labore in.
+                Consequatur tenetur, molestias magni eos veritatis voluptatem provident officia neque voluptatibus
+                obcaecati
+                nemo distinctio sunt alias?</p>
+        </div>
+    </div>
+    <div class="p-3 d-flex flex-wrap gap-5 align-items-center justify-content-center">
+        <div>
+            <img src="images/grocery-lists.jpg" class="shadow-lg rounded-3 img-fluid row-image" />
+        </div>
+        <div>
+            <img src="images/add-new-grocery-list.jpg" class="shadow-lg rounded-3 img-fluid row-image" />
+        </div>
+    </div>
+</div>
+<!-- Fourth row -->
+<div class="row pb-5 mx-0">
+    <div class="d-none p-3 p-lg-5 d-flex align-items-center justify-content-center">
+        <img src="images/groceries.jpg" class="shadow-lg img-fluid rounded-3" />
+    </div>
+    <div class="p-3 p-lg-5 d-flex align-items-center">
+        <div class="px-lg-5">
+            <h3 class="text-center text-accent mb-lg-5">Create your grocery list for each day of the week</h3>
+            <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Natus voluptas dolores delectus labore in.
+                Consequatur tenetur, molestias magni eos veritatis voluptatem provident officia neque voluptatibus
+                obcaecati
+                nemo distinctio sunt alias?</p>
+        </div>
+    </div>
+    <div class="p-3 d-flex flex-wrap gap-5 align-items-center justify-content-center">
+        <div>
+            <img src="images/groceries.jpg" class="shadow-lg rounded-3 img-fluid" style="height: 60dvh;" />
+        </div>
+        <div>
+            <img src="images/add-grocery.jpg" class="shadow-lg rounded-3 img-fluid" style="height: 60dvh;" />
+        </div>
+    </div>
+</div>
+<!-- Fifth row -->
+<div class="row bg-white mx-0">
+    <div class="col-lg-6 p-3 p-lg-5">
+        <img src="images/receipt.jpg" class="shadow-lg img-fluid rounded-3" />
+    </div>
+    <div class="col-lg-6 p-3 p-lg-5 d-flex align-items-center">
+        <div class="px-lg-5">
+            <h3 class="text-center text-accent mb-lg-5">Know your receipt!</h3>
+            <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Natus voluptas dolores delectus labore in.
+                Consequatur tenetur, molestias magni eos veritatis voluptatem provident officia neque voluptatibus
+                obcaecati
+                nemo distinctio sunt alias?</p>
         </div>
     </div>
 </div>

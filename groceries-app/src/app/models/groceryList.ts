@@ -6,5 +6,6 @@ export type GroceryList = {
     name: string,
     description: string,
     groceries: Grocery[],
-    members?: User[]
+    members?: User[],
+    user?: User
 }

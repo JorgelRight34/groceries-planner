@@ -37,7 +37,8 @@ export class GroceriesService {
     // Get groceries lists
     this.http.get<Array<GroceryList>>(`${this.url}/grocerylist`).subscribe({
       next: (data) => {
-        this.groceriesLists.set(data)
+        console.log(data);
+        this.groceriesLists.set(data);
         this.hasAlreadyFetched.set(true);
       },
       error: (error) => {

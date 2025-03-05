@@ -8,5 +8,6 @@ namespace api.Dtos.User
         public string? UserName { get; set; }
         [Required]
         public string? Email { get; set; }
+        public string? ProfilePicUrl { get; set; }
     }
 }

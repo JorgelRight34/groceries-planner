@@ -1,6 +1,11 @@
 <div class="d-flex flex-column">
+    @if (admin()) {
+    <!-- Rounded circle image with the photo of the grocery list owner -->
+    <img class="rounded-circle shadow-sm img-fluid mb-5" [src]="admin()?.profilePicUrl" />
+    }
+
     @for (member of members() ; track member.userName) {
     <!-- Rounded circle image with the photo of the grocery list member -->
-    <img class="rounded-circle shadow-sm img-fluid mb-3" [src]="member.profilePicUrl" />
+    <img class="rounded-circle shadow-sm img-fluid mb-5" [src]="member.profilePicUrl" />
     }
 </div>

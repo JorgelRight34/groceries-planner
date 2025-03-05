@@ -37,10 +37,19 @@ export class GroceriesListComponent {
   }
 
   handleChange(grocery: Grocery) {
+    // Check if grocery is already checked
+    const checked = this.checkedGroceries()[grocery.id]
+    const multiplier = checked ? -1 : 1;
+
     // Update total price
     this.totalCheckedPrice.update(
-      prev => prev + grocery.cost * grocery[this.day()]
+      prev => prev + grocery.cost * grocery[this.day()] * multiplier
     );
+
+    if (checked) {
+      this.checkedGroceries.update(prev => ({ ...prev, [grocery.id]: false }));
+      return;
+    }
 
     // Update checked groceries
     this.checkedGroceries.update(prev => {
