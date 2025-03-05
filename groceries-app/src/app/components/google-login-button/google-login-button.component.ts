@@ -35,16 +35,11 @@ export class GoogleLoginButtonComponent {
     });
   }
 
-  handleOnClick() {
-    console.log(this.authService.user());
-  }
-
   handleLogin(token: any) {
     console.log("sending", token);
     // Send google OAuth JWT to API
     this.authService.loginWithGoogle(token.credential).subscribe({
-      next: (data) => {
-        console.log(data);
+      next: () => {
         this.router.navigate(['/planner']);
       },
       error: () => this.toastr.error('Oops!', 'An error has ocurred.')

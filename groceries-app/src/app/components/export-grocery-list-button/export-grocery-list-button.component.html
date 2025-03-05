@@ -1,8 +1,10 @@
 @if (!isFetching()) {
+<!-- If is not fetching show normal button -->
 <span class="material-symbols-outlined hover download-button" (click)="handleDownloadPdf()">
     download
 </span>
 } @else {
+<!-- If fetching show loading button -->
 <div class="d-flex align-items-center justify-content-center">
     <div class="spinner-border text-accent" role="status">
         <span class="visually-hidden">Loading...</span>

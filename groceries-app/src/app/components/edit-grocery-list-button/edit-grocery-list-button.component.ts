@@ -39,13 +39,14 @@ export class EditGroceryListButtonComponent {
 
     const { name, description } = this.form.value;
 
-    if (name && description) {
+    if (name && description) {  // Create new updated GroceryList
       const data: GroceryList = {
         ...this.groceryList(),
         name,
         description
       }
 
+      // Update grocery list
       this.groceriesService.updateGroceryList(data)?.subscribe({
         next: () => {
           this.toastr.success("Updated!", "Updated sucessfully.");
@@ -64,6 +65,7 @@ export class EditGroceryListButtonComponent {
   }
 
   isFormFieldValid(field: string) {
+    // Validate if a given field from form has any error
     return this.form.get(field)?.errors && this.form.get(field)?.touched;
   }
 }

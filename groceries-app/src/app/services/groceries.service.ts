@@ -48,15 +48,16 @@ export class GroceriesService {
 
   getAllGroceriesList() {
     if (this.groceriesLists.length === 0) {
+      // If groceries hasn't been fetched then do it
       this.loadAllGroceriesLists();
     }
     return this.groceriesLists();
   }
 
   getGroceryList(id: string) {
+    // Get specific grocery list, may it be shared or not
     return this.http.get<GroceryList>(`${this.url}/groceryList/${id}`).pipe(
       map(data => {
-        console.log(data);
         this.currentGroceryList.set(data);
         return data;
       })
@@ -146,13 +147,12 @@ export class GroceriesService {
   }
 
   updateGrocery(grocery: Grocery): Observable<Grocery> | void {
+    // Update grocery an leave it at the same index it was previously
     const groceryList: Grocery[] | undefined = this.currentGroceryList()?.groceries;
-    console.log(groceryList);
     if (!groceryList) return;
 
     const index = groceryList?.findIndex(g => g.id === grocery.id);
-    groceryList[index] = grocery;
-    console.log("setting");
+    groceryList[index] = grocery; // Replace grocery for the updated one
     this.setCurrentGroceryList(groceryList);
   }
 
@@ -182,6 +182,7 @@ export class GroceriesService {
   }
 
   saveGroceryList(): Observable<Grocery[]> | void {
+    // Save all changes
     const groceries = this.currentGroceryList()?.groceries;
     const id = this.currentGroceryList()?.id;
 
@@ -208,6 +209,7 @@ export class GroceriesService {
   }
 
   deleteGrocery(groceryId: number) {
+    // Delete a specific grocery
     return this.http.delete(`${this.url}/groceries/${groceryId}`).pipe(
       map(data => {
         this.currentGroceryList.update(prev => {
@@ -219,13 +221,13 @@ export class GroceriesService {
           }
           return prev
         })
-
         return data;
       })
     )
   }
 
   createGroceryList(groceryList: GroceryList): Observable<GroceryList> {
+    // Create a new grocery list
     return this.http.post<GroceryList>(`${this.url}/grocerylist`, groceryList)
       .pipe(
         map(data => {
@@ -237,6 +239,7 @@ export class GroceriesService {
   }
 
   deleteGroceryList(groceryListId: number): Observable<{}> {
+    // Delete a grocery list
     return this.http.delete<{}>(`${this.url}/grocerylist/${groceryListId}`)
       .pipe((data) => {
         // Remove grocery list from array

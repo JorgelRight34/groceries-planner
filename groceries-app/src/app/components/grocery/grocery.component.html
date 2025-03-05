@@ -19,24 +19,28 @@
 
     <!-- Options -->
     <div class="row" style="height: 50%">
+      <!-- Add +1 to the current day of grocery -->
       <div class="col-5 d-flex align-items-center justify-content-center option" (click)="addGrocery()">
         <button class="btn rounded-pill px-3 mx-auto bg-accent w-100 fw-bold">+</button>
       </div>
+      <!-- Render actual quantity of groceries for the selected day -->
       <div class="col-2 d-flex align-items-center justify-content-center">
         <span>
           {{ getGroceryQuantity(grocery()) }}
         </span>
       </div>
+      <!-- Substract -1 to the current day of grocery -->
       <div class="col-5 d-flex align-items-center justify-content-center option" (click)="handleSubstractOneGrocery()">
         <button class="btn rounded-pill px-3 mx-auto bg-accent w-100 fw-bold">-</button>
       </div>
     </div>
-
   </div>
 </div>
 
+<!-- Modal -->
 <app-modal title="Edit grocery" [isOpen]="isModalShowing()" (hideModal)="hideEditForm()" width="50vw">
   @if (isModalShowing()) {
+  <!-- Only render when modal starts to show for better perfomance -->
   <app-edit-grocery-form [grocery]="grocery()" />
   }
 </app-modal>

@@ -79,6 +79,13 @@ export class EditGroceryFormComponent {
     this.groceryCategory.set(null);
   }
 
+
+  handleDelete() {
+    if (confirm("Are you sure you want to delete this grocery?, it won't can be recovered")) {
+      this.groceriesService.deleteGrocery(this.grocery().id).subscribe();
+    }
+  }
+
   validateFormField(field: string): boolean {
     return (this.groceryForm.get(field)?.invalid && this.groceryForm.get(field)?.touched) || false;
   }

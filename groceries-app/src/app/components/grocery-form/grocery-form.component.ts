@@ -44,8 +44,8 @@ export class GroceryFormComponent {
       category: this.groceryCategory(),
       [this.groceriesService.currentDay()]: 1,
     } as Grocery;
-    console.log("subscribing")
 
+    // Add grocery
     this.groceriesService.addGrocery(data)?.subscribe({
       next: () => {
         this.groceryForm.reset();
@@ -55,7 +55,7 @@ export class GroceryFormComponent {
         console.error(err);
         this.toastr.error("Error", "An error has ocurred.")
       }
-    }); // Add grocery
+    });
   }
 
   handleChangeCategory(event: Event) {

@@ -40,12 +40,13 @@ export class CreateGroceryListComponent {
         groceries: []
       }
 
-      this.groceriesService.createGroceryList(data).subscribe(data => console.log(data));
+      // Create grocery list
+      this.groceriesService.createGroceryList(data).subscribe();
     }
   }
 
-
   isFormFieldValid(field: string) {
+    // Validate if a given field from form has any error
     return this.form.get(field)?.errors && this.form.get(field)?.touched;
   }
 }

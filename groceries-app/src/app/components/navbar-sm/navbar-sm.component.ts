@@ -13,6 +13,6 @@ export class NavbarSmComponent {
   currentSection = model<string>();
 
   handleChangeCurrentSection(section: string) {
-    this.currentSection.set(section);
+    this.currentSection.set(section); // Change current section
   }
 }

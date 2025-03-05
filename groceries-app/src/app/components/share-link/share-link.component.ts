@@ -2,6 +2,7 @@ import { Component, computed } from '@angular/core';
 import { GroceriesService } from '../../services/groceries.service';
 import { GroceryList } from '../../models/groceryList';
 import { ToastrService } from 'ngx-toastr';
+import { sharedQueryParameterGroceryListId } from '../../../lib/constants';
 
 @Component({
   selector: 'app-share-link',
@@ -21,10 +22,10 @@ export class ShareLinkComponent {
     if (!this.groceryList()) return;
 
     const origin = window.origin;
-    const link = `${origin}/?shared=true&groceryId=${this.groceryList()?.id}`
+    const link = `${origin}/?${sharedQueryParameterGroceryListId}=${this.groceryList()?.id}`
+
     navigator.clipboard.writeText(link).then(() => {
       this.toastr.success('Link copied on clipboard!', 'Share the link');
     });
-
   }
 }

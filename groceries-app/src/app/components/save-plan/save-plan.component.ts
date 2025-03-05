@@ -14,6 +14,7 @@ export class SavePlanComponent {
   constructor(private groceriesService: GroceriesService, private toastr: ToastrService) { }
 
   handleSavePlan() {
+    // Save plan
     this.isFetching.set(true);  // Start loading spinner
     this.groceriesService.saveGroceryList()?.subscribe({
       next: () => {

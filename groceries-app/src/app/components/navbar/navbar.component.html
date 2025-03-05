@@ -1,27 +1,42 @@
+<!-- Button to switch to the 'RECEIPT' section -->
 <div class="hover-accent d-flex align-items-center justify-content-center p-3 mt-5"
     (click)="handleChangeCurrentSection('RECEIPT')">
+    <!-- Receipt icon that gets highlighted when 'RECEIPT' is the current section -->
     <span class="material-symbols-outlined hover" [class.text-accent]="currentSection() === 'RECEIPT'">
         receipt_long
     </span>
 </div>
+
+<!-- Button to switch to the 'LIST' section -->
 <div class="hover-accent d-flex align-items-center justify-content-center p-3 mt-5"
     (click)="handleChangeCurrentSection('LIST')">
+    <!-- Grocery list icon that gets highlighted when 'LIST' is the current section -->
     <span class="material-symbols-outlined hover" [class.text-accent]="currentSection() === 'LIST'">
         grocery
     </span>
 </div>
+
+<!-- Component to share the grocery list (e.g., via link) -->
 <div class="hover-accent d-flex align-items-center justify-content-center p-3 mt-5">
     <app-share-link />
 </div>
+
+<!-- Button to add a new grocery item -->
 <div class="d-flex align-items-center justify-content-center p-3 mt-5">
     <app-add-grocery-button [text]="'+'" />
 </div>
+
+<!-- Button to export the grocery list (e.g., to PDF or CSV) -->
 <div class="hover-accent d-flex align-items-center justify-content-center p-3 mt-5">
     <app-export-grocery-list-button />
 </div>
+
+<!-- Button to save the grocery plan -->
 <div class="hover-accent d-flex align-items-center justify-content-center p-3 mt-5">
     <app-save-plan />
 </div>
+
+<!-- Logout button -->
 <div class="hover-accent d-flex align-items-center justify-content-center p-3 mt-5">
     <span class="material-symbols-outlined hover">
         logout

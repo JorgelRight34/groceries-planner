@@ -23,8 +23,8 @@ export class GroceriesListComponent {
   endCategories = computed( // Left half of categories
     () => this.categories().slice(this.categoriesHalf())
   );
-  checkedGroceries = signal<Record<number, boolean>>({});
-  totalCheckedPrice = signal<number>(0);
+  checkedGroceries = signal<Record<number, boolean>>({}); // Checked groceries
+  totalCheckedPrice = signal<number>(0);  // Total price of the sum of the price of checked groceries
   day = computed<Day>(() => this.groceriesService.currentDay())
 
   constructor(
@@ -37,9 +37,12 @@ export class GroceriesListComponent {
   }
 
   handleChange(grocery: Grocery) {
+    // Update total price
     this.totalCheckedPrice.update(
       prev => prev + grocery.cost * grocery[this.day()]
     );
+
+    // Update checked groceries
     this.checkedGroceries.update(prev => {
       if (prev) {
         return {

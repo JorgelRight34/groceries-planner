@@ -1,6 +1,11 @@
+<!-- Small screen navbar positioned at the bottom -->
 <div
     class="d-block d-lg-none navbar-sm position-absolute bottom-0 left-0 bg-white border-top d-flex align-items-center w-100">
+
+    <!-- Row containing navigation icons and action buttons -->
     <div class="row mx-0 w-100">
+
+        <!-- Button to switch to 'GROCERIES' section -->
         <div class="col d-flex align-items-center justify-content-center p-3">
             <span (click)="handleChangeCurrentSection('GROCERIES')"
                 [class.active-link]="currentSection() === 'GROCERIES'">
@@ -9,16 +14,22 @@
                 </span>
             </span>
         </div>
-        <div class=" col d-flex align-items-center justify-content-center p-3">
+
+        <!-- Dropdown or selector component for grocery lists -->
+        <div class="col d-flex align-items-center justify-content-center p-3">
             <span>
                 <app-grocery-list-selector />
             </span>
         </div>
+
+        <!-- Button to add a new grocery item -->
         <div class="col d-flex align-items-center justify-content-center p-3">
             <span>
                 <app-add-grocery-button [text]="'+'" />
             </span>
         </div>
+
+        <!-- Button to switch to 'LIST' section -->
         <div class="col d-flex align-items-center justify-content-center p-3">
             <span (click)="handleChangeCurrentSection('LIST')" [class.active-link]="currentSection() === 'LIST'">
                 <span class="material-symbols-outlined text-accent">
@@ -26,10 +37,13 @@
                 </span>
             </span>
         </div>
+
+        <!-- Button to export the grocery list -->
         <div class="col d-flex align-items-center justify-content-center p-3">
             <span>
                 <app-export-grocery-list-button />
             </span>
         </div>
+
     </div>
 </div>

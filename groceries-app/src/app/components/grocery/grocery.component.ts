@@ -34,12 +34,6 @@ export class GroceryComponent {
     this.isModalShowing.set(false)
   }
 
-  handleDelete() {
-    if (confirm("Are you sure you want to delete this grocery?, it won't can be recovered")) {
-      this.groceriesService.deleteGrocery(this.grocery().id).subscribe(data => console.log(data))
-    }
-  }
-
   getGroceryQuantity(grocery: Grocery) {
     return grocery[this.groceriesService.currentDay()];
   }

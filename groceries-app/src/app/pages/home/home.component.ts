@@ -12,6 +12,7 @@ import { ReceiptComponent } from '../../components/receipt/receipt.component';
 import { ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { sharedQueryParameterGroceryListId } from '../../../lib/constants';
+import { MembersGalleryComponent } from '../../components/members-gallery/members-gallery.component';
 
 @Component({
   selector: 'app-home',
@@ -24,7 +25,8 @@ import { sharedQueryParameterGroceryListId } from '../../../lib/constants';
     CategoriesComponent,
     ReceiptComponent,
     NavbarComponent,
-    NavbarSmComponent
+    NavbarSmComponent,
+    MembersGalleryComponent,
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
@@ -64,6 +66,7 @@ export class HomeComponent {
   }
 
   changeSecondSection(section: string): void {
+    // To change from 'LIST' section and 'RECEIPT' section
     this.currentSecondSection.set(section);
   }
 }

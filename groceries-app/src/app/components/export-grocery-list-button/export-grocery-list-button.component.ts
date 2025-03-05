@@ -19,8 +19,14 @@ export class ExportGroceryListComponent {
     if (groceryList) {
       this.isFetching.set(true);  // Start loading spinner
       this.groceriesService.downloadPdf(groceryList).subscribe({
-        next: this.downloadPdf,
-        error: () => this.toastr.error('Oops!', 'An error has ocurred.')
+        next: (data) => {
+          this.isFetching.set(false); // Stop loading button
+          this.downloadPdf(data);
+        },
+        error: () => {
+          this.isFetching.set(false); // Stop loading button
+          this.toastr.error('Oops!', 'An error has ocurred.')
+        }
       });
     }
   }

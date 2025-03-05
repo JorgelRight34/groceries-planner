@@ -1,11 +1,14 @@
+<!-- Conditional rendering based on the isFetching() function -->
 @if (!isFetching()) {
+<!-- Save icon button that triggers handleSavePlan() when clicked -->
 <span class="material-symbols-outlined hover" (click)="handleSavePlan()">
     save
 </span>
 } @else {
+<!-- Loading spinner displayed when isFetching() returns true -->
 <div class="d-flex align-items-center justify-content-center">
     <div class="spinner-border text-accent" role="status">
-        <span class="visually-hidden">Loading...</span>
+        <span class="visually-hidden">Loading...</span> <!-- Accessibility text for screen readers -->
     </div>
 </div>
 }

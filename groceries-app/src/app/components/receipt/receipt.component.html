@@ -1,45 +1,65 @@
+<!-- Receipt container with white background, rounded corners, and padding -->
 <div class="receipt bg-white rounded p-lg-3 mx-auto">
+
+    <!-- Title for the receipt -->
     <h4 class="text-start text-accent mb-5">
         Receipt
     </h4>
+
+    <!-- Table for displaying grocery receipt details -->
     <table class="w-100 rounded-3">
+
+        <!-- Table header with accent-colored background -->
         <thead class="bg-accent">
             <tr>
-                <th></th>
-                <th>Items</th>
-                <th>Cost</th>
+                <th></th> <!-- Empty column for alignment -->
+                <th>Items</th> <!-- Column for grocery items -->
+                <th>Cost</th> <!-- Column for grocery costs -->
             </tr>
         </thead>
+
         <tbody>
+            <!-- Loop through each day in the 'days' array -->
             @for (day of days ; track $index) {
+
+            <!-- Check if there are groceries for this day -->
             @if (data()[day]?.[0]?.groceries?.length > 0) {
             <tr class="day-header">
                 <td class="text-accent">
+                    <!-- Display the day name with title case formatting -->
                     <h5>
                         {{ day | titlecase }}
                     </h5>
                 </td>
-                <td></td>
+                <td></td> <!-- Empty columns for spacing -->
                 <td></td>
             </tr>
             }
 
+            <!-- Loop through grocery categories for this day -->
             @for (category of data()[day] ; track category.name; let lastx = $last) {
+
+            <!-- Loop through groceries within the category -->
             @for (grocery of category.groceries ; track grocery.id) {
             <tr>
+                <!-- Grocery item name with text truncation -->
                 <td class="text-truncate" [class.pb-5]="$last && lastx">{{ grocery.name }}</td>
+                <!-- Amount of grocery used for the specific day -->
                 <td class="text-truncate" [class.pb-5]="$last && lastx">{{ grocery[day] }}</td>
+                <!-- Grocery item cost formatted as currency -->
                 <td class="text-truncate" [class.pb-5]="$last && lastx"><b>{{ grocery.cost | currency }}</b></td>
             </tr>
             }
             }
             }
         </tbody>
+
+        <!-- Table footer displaying total grocery count and total price -->
         <tfoot>
             <tr>
                 <th>Total</th>
-                <th>{{ data().totalGroceries }}</th>
-                <th>{{ data().totalPrice | currency }}</th>
+                <th>{{ data().totalGroceries }}</th> <!-- Total number of groceries -->
+                <th>{{ data().totalPrice | currency }}</th> <!-- Total price formatted as currency -->
             </tr>
         </tfoot>
     </table>

@@ -48,6 +48,7 @@ export class SignupComponent {
   }
 
   isFormFieldInvalid(field: string): boolean {
+    // Validate if a given field from form has any error
     return (this.form.get(field)?.invalid && this.form.get(field)?.touched) || false;
   }
 

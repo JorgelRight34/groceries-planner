@@ -1,27 +1,41 @@
 <div class="home position-relative">
+  <!-- First row -->
   <div class="row mx-0">
     <div class="col-lg-4 p-0 info-column" [ngClass]="{'d-none d-lg-block': currentSection() !== 'GROCERIES'}">
+      <!-- Header -->
       <app-header />
+
+      <!-- Row below the header -->
       <div class="row border mx-0 h-100">
+        <!-- App navbar (vertical on desktop)-->
         <div class="col-lg-2 d-none d-lg-block p-0 border-end">
           <app-navbar [(currentSection)]="currentSecondSection" />
         </div>
+
+        <!-- Groceries (vertical) -->
         <div class="col-lg-10 p-3 p-lg-2 py-lg-3">
+          <!-- Categories select -->
           <div class="header-row mb-3">
             <app-categories />
           </div>
+          <!-- Groceries-->
           <div class="body-row px-3 pb-3">
             @for (grocery of groceries() ; track grocery.id) {
             <app-grocery [grocery]="grocery" />
             }
           </div>
         </div>
+
       </div>
+
     </div>
 
+    <!-- Right column on desktop -->
     <div class="col-lg-8 p-3" [ngClass]="{'d-none d-lg-block': currentSection() !== 'LIST'}">
       <div class="header-row d-flex d-lg-block align-items-center mb-3">
-        <div class="d-flex align-items-center d-lg-none  me-auto">
+        <!-- Selector between seeing receipt and seeing the list for mobile devices -->
+        <div class="d-flex align-items-center d-lg-none me-auto">
+          <!-- See receipt button (mobile) -->
           <span class="d-flex align-items-center" [ngClass]="{'d-none': currentSecondSection() === 'RECEIPT'}">
             <span class="d-block d-lg-none material-symbols-outlined me-1" (click)="changeSecondSection('RECEIPT')"
               [ngClass]="{'d-none': currentSecondSection() === 'RECEIPT'}">
@@ -29,6 +43,8 @@
             </span>
             See receipt
           </span>
+
+          <!-- See grocery list button (mobile)-->
           <span class="d-flex align-items-center" [ngClass]="{'d-none': currentSecondSection() === 'LIST'}">
             <span class="d-block d-lg-none material-symbols-outlined me-1" (click)="changeSecondSection('LIST')">
               edit_calendar
@@ -37,17 +53,32 @@
           </span>
 
         </div>
+
+        <!-- Day select-->
         <app-day-selector />
+
       </div>
+
+      <!-- Body -->
       <div class="body-row">
-        <div [class.d-none]="currentSecondSection() !== 'LIST'">
+        <!-- Grocery list container -->
+        <div class="position-relative" [class.d-none]="currentSecondSection() !== 'LIST'">
           <app-groceries-list />
+          <!-- Grocery list members gallery -->
+          <div class="position-absolute end-0 top-0 px-lg-3">
+            <app-members-gallery />
+          </div>
         </div>
+        <!-- Receipt container -->
         <div [class.d-none]="currentSecondSection() !== 'RECEIPT'">
           <app-receipt />
         </div>
       </div>
+
     </div>
+
   </div>
+
+  <!-- Bottom navbar for mobile devices -->
   <app-navbar-sm [(currentSection)]="currentSection" />
 </div>

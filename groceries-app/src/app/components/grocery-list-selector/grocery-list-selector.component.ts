@@ -58,6 +58,8 @@ export class GroceryListSelectorComponent {
 
   selectGroceryList(groceryList: GroceryList): void {
     if (groceryList.id !== this.groceriesService.currentGroceryList()?.id) {
+      // Avoid reselecting the current grocery list because it will lead to loss of changes
+      // Simply hide the modal giving the ilussion the user selected again
       this.groceriesService.currentGroceryList.set(groceryList);
     }
     this.hideModal();
