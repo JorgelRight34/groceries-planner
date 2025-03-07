@@ -23,7 +23,7 @@ export class LoginComponent {
     private toastr: ToastrService
   ) { }
 
-  handleSubmit(): void {
+  onSubmit(): void {
     if (!this.form.valid) return;
 
     const { username, password } = this.form.value;

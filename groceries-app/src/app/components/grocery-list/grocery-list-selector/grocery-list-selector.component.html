@@ -1,0 +1,50 @@
+<!-- Open modal button -->
+<span class="material-symbols-outlined hover-accent open-button" (click)="onShowModal()">
+    folder_open
+</span>
+
+<!-- Modal -->
+<app-modal [title]="'Your grocery lists'" [isOpen]="isModalOpen()" [width]="'50dvw'" (onHide)="onHideModal()">
+    <app-create-grocery-list />
+    <div class="d-flex flex-wrap gap-5 align-items-center justify-content-center fade-in-animation">
+        @for (list of groceryLists() ; track list.id)
+        {
+        <!-- Grocery list -->
+        <div class="grocery-list border shadow-sm rounded-3 p-3 w-lg-100 mt-3">
+            <!-- Header -->
+            <div class="position-relative mb-3 border-bottom">
+                <h6 class="text-truncate mb-2">{{ list.name }}</h6>
+                <p class="text-truncate mb-3">{{ list.description }}</p>
+                <app-edit-grocery-list-button [groceryList]="list" />
+            </div>
+            <!-- Information -->
+            <div class="d-flex flex-column border-bottom mb-3">
+                <span class="text-muted mb-2">
+                    Items: {{ list?.groceries?.length }}
+                </span>
+                <span class="text-muted mb-3">
+                    Total cost: {{ calculateTotalPrice(list) | currency }}
+                </span>
+            </div>
+            <!-- Select button -->
+            <button class="btn bg-accent rounded-pill w-100" (click)="onSelectGroceryList(list)">
+                Select
+            </button>
+        </div>
+        } @empty {
+        @if (!hasFetched()) {
+        <!-- If hasn't fetched show loading spinner -->
+        <div class="h-100 d-flex align-items-center justify-content-center">
+            <div class="spinner-border text-accent" role="status" style="height: 10rem; width: 10rem;">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+        </div>
+        } @else {
+        <!-- If not fetching and not grocery lists then tell to start creating one -->
+        <div>
+            <h1>Start creating your first list</h1>
+        </div>
+        }
+        }
+    </div>
+</app-modal>

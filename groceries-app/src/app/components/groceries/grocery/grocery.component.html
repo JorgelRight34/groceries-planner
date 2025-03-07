@@ -1,0 +1,51 @@
+<div class="row border mx-0 bg-white rounded grocery shadow-sm mt-3 fade-in-animation">
+  <div class="col-lg-5 position-relative">
+    <!-- Edit button for mobile devices -->
+    <span class="d-flex d-lg-none edit-button rounded-circle bg-accent border hover material-symbols-outlined"
+      (click)="onOpenEditForm()">
+      edit
+    </span>
+    <img loading="lazy" [src]="grocery().imageUrl" class="card-img-top border-bottom" [alt]="grocery().name" />
+  </div>
+  <div class="col-lg-7 border-start position-relative">
+    <!-- Edit button -->
+    <span class="d-none d-lg-flex edit-button rounded-circle bg-accent border hover material-symbols-outlined fs-6"
+      (click)="onOpenEditForm()">
+      edit
+    </span>
+
+    <!-- Body -->
+    <div class="p-3" style="height: 50%">
+      <h6 class="card-title text-truncate">{{ grocery().name }}</h6>
+      <div class="d-flex align-items-center">
+        <span class="text-muted">{{ grocery().cost | currency }}</span>
+      </div>
+    </div>
+
+    <!-- Options -->
+    <div class="row" style="height: 50%">
+      <!-- Add +1 to the current day of grocery -->
+      <div class="col-5 d-flex align-items-center justify-content-center option" (click)="onAddGrocery()">
+        <button class="btn rounded-pill px-3 mx-auto bg-accent w-100 fw-bold">+</button>
+      </div>
+      <!-- Render actual quantity of groceries for the selected day -->
+      <div class="col-2 d-flex align-items-center justify-content-center">
+        <span>
+          {{ getGroceryQuantity(grocery()) }}
+        </span>
+      </div>
+      <!-- Substract -1 to the current day of grocery -->
+      <div class="col-5 d-flex align-items-center justify-content-center option" (click)="handleSubstractOneGrocery()">
+        <button class="btn rounded-pill px-3 mx-auto bg-accent w-100 fw-bold">-</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<app-modal title="Edit grocery" [isOpen]="isModalShowing()" (onHide)="onHideEditForm()" width="50vw">
+  @if (isModalShowing()) {
+  <!-- Only render when modal starts to show for better perfomance -->
+  <app-edit-grocery-form [grocery]="grocery()" />
+  }
+</app-modal>

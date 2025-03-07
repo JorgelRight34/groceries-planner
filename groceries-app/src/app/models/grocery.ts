@@ -1,6 +1,6 @@
 import { Category } from "./category"
 
-export type Grocery = {
+export interface Grocery {
     id: number,
     name: string,
     description: string,

@@ -1,0 +1,9 @@
+<!-- Add grocery button -->
+<button (click)="onToggleModalOpen()" class="rounded-pill border bg-accent w-100 p-2 px-3 hover bold">
+    {{ text() }}
+</button>
+
+<!-- Add grocery modal -->
+<app-modal [isOpen]="isModalOpen()" (onHide)="onHideModal()" [title]="getTitle()" width="75%">
+    <app-add-grocery />
+</app-modal>

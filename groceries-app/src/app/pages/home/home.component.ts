@@ -1,18 +1,18 @@
 import { Component, computed, model, signal } from '@angular/core';
 import { DaySelectorComponent } from '../../components/day-selector/day-selector.component';
 import { CategoriesComponent } from '../../components/categories/categories.component';
-import { GroceriesListComponent } from '../../components/groceries-list/groceries-list.component';
+import { GroceriesListComponent } from '../../components/grocery-list/groceries-list/groceries-list.component';
 import { GroceriesService } from '../../services/groceries.service';
 import { NavbarSmComponent } from '../../components/navbar-sm/navbar-sm.component';
 import { CommonModule } from '@angular/common';
 import { HeaderComponent } from '../../components/header/header.component';
-import { GroceryComponent } from '../../components/grocery/grocery.component';
+import { GroceryComponent } from '../../components/groceries/grocery/grocery.component';
 import { NavbarComponent } from '../../components/navbar/navbar.component';
-import { ReceiptComponent } from '../../components/receipt/receipt.component';
+import { ReceiptComponent } from '../../components/receipts/receipt/receipt.component';
 import { ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { sharedQueryParameterGroceryListId } from '../../../lib/constants';
-import { MembersGalleryComponent } from '../../components/members-gallery/members-gallery.component';
+import { MembersGalleryComponent } from '../../components/grocery-list/members-gallery/members-gallery.component';
 
 @Component({
   selector: 'app-home',
@@ -60,12 +60,12 @@ export class HomeComponent {
     }
   }
 
-  changeCurrentSection(section: string): void {
+  onChangeCurrentSection(section: string): void {
     // For mobile users to navigate between sections
     this.currentSection.set(section);
   }
 
-  changeSecondSection(section: string): void {
+  onChangeSecondSection(section: string): void {
     // To change from 'LIST' section and 'RECEIPT' section
     this.currentSecondSection.set(section);
   }

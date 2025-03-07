@@ -34,7 +34,7 @@ export class SignupComponent {
     private toastr: ToastrService
   ) { }
 
-  handleSubmit(): void {
+  onSubmit(): void {
     if (!this.form.valid) return;
 
     const { username, email, password } = this.form.value;

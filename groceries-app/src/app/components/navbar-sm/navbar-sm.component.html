@@ -7,8 +7,7 @@
 
         <!-- Button to switch to 'GROCERIES' section -->
         <div class="col d-flex align-items-center justify-content-center p-3">
-            <span (click)="handleChangeCurrentSection('GROCERIES')"
-                [class.active-link]="currentSection() === 'GROCERIES'">
+            <span (click)="onCurrentSectionChange('GROCERIES')" [class.active-link]="currentSection() === 'GROCERIES'">
                 <span class="material-symbols-outlined text-accent">
                     grocery
                 </span>
@@ -31,7 +30,7 @@
 
         <!-- Button to switch to 'LIST' section -->
         <div class="col d-flex align-items-center justify-content-center p-3">
-            <span (click)="handleChangeCurrentSection('LIST')" [class.active-link]="currentSection() === 'LIST'">
+            <span (click)="onCurrentSectionChange('LIST')" [class.active-link]="currentSection() === 'LIST'">
                 <span class="material-symbols-outlined text-accent">
                     edit_calendar
                 </span>

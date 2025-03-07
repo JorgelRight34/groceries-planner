@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { GroceryListSelectorComponent } from '../grocery-list-selector/grocery-list-selector.component';
+import { GroceryListSelectorComponent } from '../grocery-list/grocery-list-selector/grocery-list-selector.component';
 
 @Component({
   selector: 'app-header',

@@ -1,5 +1,4 @@
-﻿
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 
 @model api.Dtos.GroceryList.ExportGroceryListDto
 
@@ -10,54 +9,114 @@
 }
 
 <html>
-    <head>
-        <title>Grocery list</title>
-            <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous" />
-        <style>
-            h1 {
-                color: #2e8b57;
-            }
 
-            html {
-                font-family: "Arial";
-            }
+<head>
+  <title>Grocery list</title>
+  <style>
+    body {
+      font-family: "Arial", sans-serif;
+      margin: 0;
+      padding: 20px;
+      background-color: #f8f9fa;
+      border: 5px solid #2e8b57;
+      box-sizing: border-box;
+    }
 
-            .day-container {
-                display: flex;
-                justify-content: center;
-                flex-direction: row;
-                flex-wrap: wrap;
-                gap: 20px;
-            }
+    h1 {
+      color: #2e8b57;
+      text-align: center;
+      margin-bottom: 20px;
+    }
 
-        </style>
-    </head>
-    <body>
-        @foreach(var property in Model.GetType().GetProperties())
-{
-    <h1 class="mb-3">@property.Name</h1>
-    <div class="day-container mb-5">    
-        @{
-           var categories = property.GetValue(Model, null);
-        }   
-        @if (categories is IEnumerable<api.Dtos.Category.ExportCategoryDto> exportGroceryDtos)
-        {   
-            @foreach(var category in exportGroceryDtos)
-            {
-                <h2>@category.Name</h2>
-                <ul class="mb-3 border" style="margin-bottom: 10px;">
-                    @foreach(var grocery in category.Groceries)
-                    {
-                        <li class="text-white">
-                            <input type="checkbox" />
- @grocery.Name</li>
-                    }
-                </ul>
-            }
-        }    
-    </div>
-}
-    </body>
+    .day-container {
+      margin-bottom: 40px;
+    }
 
+    .day-container h2 {
+      color: #2e8b57;
+      font-size: 1.5rem;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    .category-container {
+      background-color: #ffffff;
+      border: 1px solid #dee2e6;
+      border-radius: 5px;
+      padding: 15px;
+      margin-bottom: 20px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .category-container h3 {
+      color: #495057;
+      font-size: 1.25rem;
+      margin-bottom: 10px;
+    }
+
+    .category-container ul {
+      list-style-type: none;
+      padding: 0;
+    }
+
+    .category-container li {
+      background-color: #2e8b57;
+      color: #ffffff;
+      padding: 10px;
+      margin-bottom: 5px;
+      border-radius: 3px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .category-container li input[type="checkbox"] {
+      margin-right: 10px;
+    }
+
+    .grocery-info {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+    }
+
+    .grocery-info span {
+      margin-left: 10px;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>Grocery List</h1>
+  @foreach (var property in Model.GetType().GetProperties())
+  {
+    var categories = property.GetValue(Model, null);
+
+    @if (categories is IEnumerable<api.Dtos.Category.ExportCategoryDto> exportGroceryDtos && exportGroceryDtos.Any())
+    {
+      <div class="day-container">
+        <h2>@property.Name</h2>
+        @foreach (var category in exportGroceryDtos)
+        {
+          <div class="category-container">
+            <h3>@category.Name</h3>
+            <ul>
+              @foreach (var grocery in category.Groceries)
+              {
+                <li>
+                  <div class="grocery-info">
+                    <span><input type="checkbox" /> @grocery.Name</span>
+                    <span>Quantity: @grocery.GetType().GetProperty(property.Name).GetValue(grocery)</span>
+                    <span>Cost: $@grocery.Cost</span>
+                  </div>
+                </li>
+              }
+            </ul>
+          </div>
+        }
+      </div>
+    }
+  }
+</body>
 
 </html>

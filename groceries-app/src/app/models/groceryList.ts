@@ -1,7 +1,7 @@
 import { Grocery } from "./grocery"
 import { User } from "./user"
 
-export type GroceryList = {
+export interface GroceryList {
     id: number | undefined,
     name: string,
     description: string,

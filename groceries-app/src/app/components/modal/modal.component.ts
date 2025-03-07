@@ -12,14 +12,14 @@ export class ModalComponent {
   isOpen = input<boolean>(false);
   width = input<string>('auto');
   height = input<string>('auto');
-  hideModal = output();
+  onHide = output();
   isThisOpen = false;
 
   ngOnInit() {
     this.isThisOpen = this.isOpen();
   }
 
-  handleHideModal() : void {
-    this.hideModal.emit();
+  handleHideModal(): void {
+    this.onHide.emit();
   }
 }
