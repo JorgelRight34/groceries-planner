@@ -10,7 +10,7 @@ namespace api.Repositories
     public class GroceryListRepository : IGroceryListRepository
     {
         private readonly ApplicationDbContext _context;
- 
+
         public GroceryListRepository(ApplicationDbContext context)
         {
             _context = context;
@@ -40,7 +40,7 @@ namespace api.Repositories
 
             _context.GroceryLists.Remove(groceryList);
             await _context.SaveChangesAsync();
-            return groceryList; 
+            return groceryList;
         }
 
         public async Task<IEnumerable<GroceryList>?> GetAllAsync(string? userId)
@@ -122,7 +122,7 @@ namespace api.Repositories
 
                 await _context.SaveChangesAsync();
             }
-        
+
             return groceryList;
         }
 
@@ -133,7 +133,7 @@ namespace api.Repositories
             var groceryList = await _context.GroceryLists
                 .Include(x => x.Groceries)
                 .FirstOrDefaultAsync(x => x.Id == id);
-            
+
             if (groceryList == null || userId != groceryList.UserId) return null;
 
             groceryList.Name = groceryListDto.Name;

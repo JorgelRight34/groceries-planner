@@ -20,7 +20,7 @@ namespace api.Controllers
         private readonly IViewRendererService _viewRendererService;
 
         public GroceryListController(
-            IGroceryListRepository groceryListRepository, 
+            IGroceryListRepository groceryListRepository,
             IGroceryRepository groceryRepository,
             IViewRendererService viewRendererService
         )
@@ -48,9 +48,9 @@ namespace api.Controllers
             if (username == null) return Unauthorized();
 
             var groceryList = await _groceryListRepository.GetByIdAsync(id, username);
-            if (groceryList == null) return BadRequest();
-        
-                
+            if (groceryList == null) return NotFound();
+
+
             return Ok(groceryList.ToGroceryListDto());
         }
 
@@ -116,7 +116,7 @@ namespace api.Controllers
         )
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
-            
+
 
             var userId = User.GetUsername();
             if (userId == null) return Unauthorized();
@@ -145,12 +145,13 @@ namespace api.Controllers
                 htmlContent = await _viewRendererService.RenderAsync(
                     "/Views/Templates/GroceryList.cshtml", groceryList
                 );
-            } catch (Exception ex)
+            }
+            catch (Exception ex)
             {
                 Console.WriteLine(ex);
                 return StatusCode(500);
             }
-          
+
 
             byte[] pdfBytes = Pdf.From(htmlContent).Content();
 

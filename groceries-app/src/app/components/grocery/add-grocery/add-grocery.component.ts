@@ -5,6 +5,8 @@ import { GroceryComponent } from '../grocery/grocery.component';
 import { CommonModule } from '@angular/common';
 
 import { GroceryFormComponent } from '../grocery-form/grocery-form.component';
+import { ToastrService } from 'ngx-toastr';
+import { Grocery } from '../../../models/grocery';
 
 @Component({
   selector: 'app-add-grocery',
@@ -18,10 +20,24 @@ export class AddGroceryComponent {
 
   constructor(
     private groceriesService: GroceriesService,
+    private toastr: ToastrService
   ) { }
 
   setCurrentSection(section: string) {
     // For mobile users to change between sections
     this.currentSection.set(section);
+  }
+
+  onFormSubmit(event: Grocery | null) {
+    if (!event) { return }
+    // Add grocery
+    this.groceriesService.addGrocery(event)?.subscribe({
+      next: () => {
+        this.toastr.success("Created", "Grocery succesfully added.");
+      },
+      error: (err) => {
+        this.toastr.error("Error", "An error has ocurred.")
+      }
+    });
   }
 }

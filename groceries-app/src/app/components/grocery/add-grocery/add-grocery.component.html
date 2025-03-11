@@ -13,7 +13,7 @@
 <div class="row mx-0">
     <!-- Grocery form -->
     <div class="col-lg-6 d-flex align-items-center" [ngClass]="{'d-none d-lg-block': currentSection() !== 'ADD'}">
-        <app-grocery-form />
+        <app-grocery-form (formSubmit)="onFormSubmit($event)" />
     </div>
     <!-- Existing groceries selector -->
     <div class="d-none d-lg-block col-lg-6" [ngClass]="{'d-none d-lg-block': currentSection() !== 'CHOOSE'}">

@@ -129,6 +129,7 @@ export class GroceriesService {
         groceryListId: this.currentGroceryList()?.id,
         [day]: 1 // Start with 1 on day
       }
+      console.log(data);
       const { category, ...newData } = data;
 
       return this.http.post<Grocery>(`${this.url}/groceries`, newData)

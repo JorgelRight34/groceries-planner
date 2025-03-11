@@ -31,7 +31,7 @@
 
     <!-- Url input -->
     <div class="mb-3">
-        <label class="form-label" for="url">Url</label>
+        <label class="form-label" for="url">URL</label>
         <input class="form-control" name="url" id="url" formControlName="url" />
     </div>
 
@@ -52,8 +52,11 @@
         <!-- category select -->
         <select name="category" id="category" class="form-select shadow-sm" (change)="onCategoryChange($event)"
             required>
+            <option>---</option>
             @for (category of categories(); track category.id) {
-            <option [value]="category.id">
+            @let categoryId = grocery()?.categoryId; <!-- Default categoryId is the initial category of the grocery -->
+            <option [value]="category.id"
+                [selected]="category.id === categoryId && this.groceryCategory()?.id === categoryId">
                 {{ category.name }}
             </option>
             }

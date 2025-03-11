@@ -6,6 +6,7 @@ using api.Repositories;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
+
 namespace api.Controllers
 {
     [ApiController]
@@ -30,7 +31,7 @@ namespace api.Controllers
         public async Task<IActionResult> GetById([FromRoute] int id)
         {
             var userId = User.GetUsername();
-            var data = await _groceryRepository.GetByIdAsync(id, userId);
+            var data = await _groceryRepository.GetByIdAsync(id, userId!);
 
             if (data == null)
             {
@@ -81,7 +82,7 @@ namespace api.Controllers
             var grocery = await _groceryRepository.UpdateAsync(
                 id, userId, groceryDto
             );
-            
+
             if (grocery == null)
             {
                 return NotFound();
@@ -96,7 +97,7 @@ namespace api.Controllers
         {
             var userId = User.GetUsername();
             var grocery = await _groceryRepository.DeleteAsync(id, userId);
-            
+
             if (grocery == null)
             {
                 return NotFound();

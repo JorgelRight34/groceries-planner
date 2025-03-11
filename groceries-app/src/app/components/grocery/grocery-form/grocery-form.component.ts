@@ -1,4 +1,4 @@
-import { Component, computed, signal } from '@angular/core';
+import { Component, computed, input, output, signal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Category } from '../../../models/category';
 import { GroceriesService } from '../../../services/groceries.service';
@@ -14,14 +14,10 @@ import { ToastrService } from 'ngx-toastr';
   styleUrl: './grocery-form-component.css'
 })
 export class GroceryFormComponent {
-  groceryForm = new FormGroup({
-    name: new FormControl<string>('', Validators.required),
-    description: new FormControl<string>('', Validators.required),
-    url: new FormControl<string>(''),
-    imageUrl: new FormControl<string>(''),
-    cost: new FormControl<number>(0, Validators.required),
-    category: new FormControl<string>('', Validators.required),
-  });
+  grocery = input<Grocery | null>();
+  formSubmit = output<Grocery | null>();
+  groceryForm!: FormGroup;
+
   categories = computed(() => this.categoriesService.getAllCategories());
   groceryCategory = signal<Category | null>(null);  // Category of the grocery to be posted
   currentSection = signal<string>('ADD');
@@ -32,9 +28,32 @@ export class GroceryFormComponent {
     private toastr: ToastrService,
   ) { }
 
+  ngOnInit() {
+    const categoryId = this.grocery()?.categoryId;
+    if (categoryId) {
+      let foundCategory = this.categoriesService.findCategoryById(categoryId);
+      if (foundCategory) {
+        this.groceryCategory.set(foundCategory);
+      }
+    }
+
+    this.groceryForm = new FormGroup({
+      name: new FormControl<string>(this.grocery()?.name || '', Validators.required),
+      description: new FormControl<string>(this.grocery()?.description || '', Validators.required),
+      url: new FormControl<string>(this.grocery()?.url || ''),
+      imageUrl: new FormControl<string>(this.grocery()?.imageUrl || ''),
+      cost: new FormControl<number>(this.grocery()?.cost || 0, Validators.required),
+    });
+  }
+
   onSubmit(): void {
     if (!this.groceryForm.valid) {
       this.toastr.error("Invalid form", "Please fill all the fields.");
+      return
+    }
+
+    if (!this.groceryCategory()) {
+      this.toastr.error("Please select a category.");
       return
     }
 
@@ -45,16 +64,8 @@ export class GroceryFormComponent {
       [this.groceriesService.currentDay()]: 1,
     } as Grocery;
 
-    // Add grocery
-    this.groceriesService.addGrocery(data)?.subscribe({
-      next: () => {
-        this.groceryForm.reset();
-        this.toastr.success("Created", "Grocery succesfully added.");
-      },
-      error: (err) => {
-        this.toastr.error("Error", "An error has ocurred.")
-      }
-    });
+    this.formSubmit.emit(data);
+    this.groceryForm.reset();
   }
 
   onCategoryChange(event: Event) {

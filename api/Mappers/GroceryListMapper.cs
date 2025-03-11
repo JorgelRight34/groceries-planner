@@ -10,6 +10,7 @@ namespace api.Mappers
         {
             return new GroceryListDto
             {
+                Id = groceryList.Id,
                 Name = groceryList.Name,
                 Description = groceryList.Description,
                 User = groceryList.User?.ToUserDto(),

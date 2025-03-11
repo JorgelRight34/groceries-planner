@@ -4,6 +4,15 @@ img {
     object-fit: contain;
 }
 
+.day {
+    width: 47%;
+}
+
+a {
+    text-decoration: none;
+    color: var(--accent-color);
+}
+
 .grocery button {
     background: var(--accent-color);
     color: #fff;
@@ -18,8 +27,8 @@ img {
     justify-content: center;
     align-items: center;
     background-color: #fff;
-    height: 1.5rem;
-    width: 1.5rem;
+    height: 3rem;
+    width: 3rem;
     color: var(--accent-color);
     position: absolute;
     top: -0.5rem;
@@ -30,5 +39,9 @@ img {
     .edit-button {
         height: 3rem;
         width: 3rem;
+    }
+
+    .day {
+        width: 100%;
     }
 }

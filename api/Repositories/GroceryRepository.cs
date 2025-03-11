@@ -27,11 +27,16 @@ namespace api.Repositories
         public async Task<Grocery?> CreateAsync(Grocery grocery)
         {
             var groceryList = await _context.GroceryLists.FindAsync(grocery.GroceryListId);
-            if (groceryList == null) return null;
- 
+            if (groceryList == null)
+            {
+                Console.WriteLine($"------------grocery list is null id {grocery.GroceryListId}-------------");
+                return null;
+            }
+
             var category = await _context.Categories.FindAsync(grocery.CategoryId);
             if (category == null)
             {
+                Console.WriteLine("------------category is null-------------");
                 return null;
             }
 

@@ -1,18 +1,18 @@
-<div class="row border mx-0 bg-white rounded grocery shadow-sm mt-3 fade-in-animation">
+<div class="row border mx-0 bg-white rounded grocery shadow-sm mt-3 fade-in-animation" (click)="onOpenEditForm($event)">
   <div class="col-lg-5 position-relative">
     <!-- Edit button for mobile devices -->
-    <span class="d-flex d-lg-none edit-button rounded-circle bg-accent border hover material-symbols-outlined"
-      (click)="onOpenEditForm()">
-      edit
-    </span>
+    <a [href]="grocery().url" target="_blank"
+      class="d-flex d-lg-none edit-button rounded-circle bg-accent border hover material-symbols-outlined">
+      open_in_new
+    </a>
     <img loading="lazy" [src]="grocery().imageUrl" class="card-img-top border-bottom" [alt]="grocery().name" />
   </div>
   <div class="col-lg-7 border-start position-relative">
     <!-- Edit button -->
-    <span class="d-none d-lg-flex edit-button rounded-circle bg-accent border hover material-symbols-outlined fs-6"
-      (click)="onOpenEditForm()">
-      edit
-    </span>
+    <a [href]="grocery().url" target="_blank"
+      class="d-none d-lg-flex edit-button rounded-circle bg-accent border hover material-symbols-outlined">
+      open_in_new
+    </a>
 
     <!-- Body -->
     <div class="p-3" style="height: 50%">
@@ -25,7 +25,7 @@
     <!-- Options -->
     <div class="row" style="height: 50%">
       <!-- Add +1 to the current day of grocery -->
-      <div class="col-5 d-flex align-items-center justify-content-center option" (click)="onAddGrocery()">
+      <div class="col-5 d-flex align-items-center justify-content-center option" (click)="onAddGrocery($event)">
         <button class="btn rounded-pill px-3 mx-auto bg-accent w-100 fw-bold">+</button>
       </div>
       <!-- Render actual quantity of groceries for the selected day -->
@@ -35,17 +35,41 @@
         </span>
       </div>
       <!-- Substract -1 to the current day of grocery -->
-      <div class="col-5 d-flex align-items-center justify-content-center option" (click)="handleSubstractOneGrocery()">
+      <div class="col-5 d-flex align-items-center justify-content-center option"
+        (click)="handleSubstractOneGrocery($event)">
         <button class="btn rounded-pill px-3 mx-auto bg-accent w-100 fw-bold">-</button>
       </div>
     </div>
   </div>
 </div>
 
-<!-- Modal -->
+<!-- Edit Modal -->
 <app-modal title="Edit grocery" [isOpen]="isModalShowing()" (onHide)="onHideEditForm()" width="50vw">
   @if (isModalShowing()) {
   <!-- Only render when modal starts to show for better perfomance -->
-  <app-edit-grocery-form [grocery]="grocery()" />
+  <div class="row mx-0">
+    <div class="col-lg-6">
+      <app-grocery-form [grocery]="grocery()" (formSubmit)="onEditFormSubmit($event)" />
+    </div>
+    <div class="col-lg-6">
+      <div class="d-flex justify-content-center mb-3">
+        <img [src]="grocery().imageUrl" class="img-fluid border rounded-3" [alt]="grocery().name" />
+      </div>
+
+      <div class="d-flex flex-wrap justify-content-center gap-3 border-top pt-3">
+        @for (day of days; track day) {
+        <div class="border rounded-3 day py-2 px-3 shadow-sm">
+          <span class=" fw-semibold text-accent">{{ day | titlecase }}</span>:
+          <span class="text-muted">{{ grocery()[day] }}</span>
+        </div>
+        }
+        <div class="border rounded-3 day py-2 px-3 shadow-sm">
+          <span class="fw-semibold text-accent">Week</span>:
+          <span class="text-muted">{{ getWeekQuantity() }}</span>
+        </div>
+        <button class="btn btn-delete" (click)="handleDelete()">Delete</button>
+      </div>
+    </div>
+  </div>
   }
 </app-modal>
