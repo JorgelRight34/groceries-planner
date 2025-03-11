@@ -11,12 +11,10 @@ export class LoadingBarProgressService {
   constructor() { }
 
   show() {
-    console.log("showing")
     this.isLoading.next(true);
   }
 
   hide() {
-    console.log("falsing")
     this.isLoading.next(false);
   }
 

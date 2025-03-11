@@ -4,11 +4,12 @@ import { Grocery } from '../../../models/grocery';
 import { CategoriesService } from '../../../services/categories.service';
 import { CommonModule } from '@angular/common';
 import { HighlightInputDirective } from '../../../directives/highlight-input.directive';
+import { PopoverModule } from 'ngx-bootstrap/popover';
 import { Day } from '../../../models/day';
 
 @Component({
   selector: 'app-groceries-list',
-  imports: [CommonModule, HighlightInputDirective],
+  imports: [CommonModule, HighlightInputDirective, PopoverModule],
   templateUrl: './groceries-list.component.html',
   styleUrl: './groceries-list.component.css'
 })

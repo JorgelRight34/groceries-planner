@@ -1,7 +1,9 @@
-import { Component, input, model } from '@angular/core';
-import { AddGroceryButtonComponent } from '../groceries/add-grocery-button/add-grocery-button.component';
-import { GroceryListSelectorComponent } from '../grocery-list/grocery-list-selector/grocery-list-selector.component';
-import { ExportGroceryListComponent } from '../grocery-list/export-grocery-list-button/export-grocery-list-button.component';
+import { Component, model } from '@angular/core';
+
+import { AddGroceryButtonComponent } from '../../grocery/add-grocery-button/add-grocery-button.component';;
+import { ExportGroceryListComponent } from '../../grocery-list/export-grocery-list-button/export-grocery-list-button.component';
+import { GroceryListSelectorComponent } from '../../grocery-list/grocery-list-selector/grocery-list-selector.component';
+
 
 @Component({
   selector: 'app-navbar-sm',

@@ -7,7 +7,7 @@ import { map } from 'rxjs';
   providedIn: 'root'
 })
 export class AuthService {
-  private apiUrl = `https://localhost:7240/auth`;
+  private apiUrl = `http://localhost:5152/auth`;
   user = signal<User | null>(null);
 
   constructor(private http: HttpClient) { }

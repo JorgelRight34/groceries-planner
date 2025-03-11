@@ -62,18 +62,18 @@
       </div>
 
       <!-- Body -->
-      <div class="body-row">
+      <div class="body-row position-relative">
         <!-- Grocery list container -->
-        <div class="position-relative" [class.d-none]="currentSecondSection() !== 'LIST'">
+        <div [class.d-none]="currentSecondSection() !== 'LIST'">
           <app-groceries-list />
-          <!-- Grocery list members gallery -->
-          <div class="d-none d-lg-block position-absolute end-0 top-0 px-lg-3">
-            <app-members-gallery />
-          </div>
         </div>
         <!-- Receipt container -->
         <div [class.d-none]="currentSecondSection() !== 'RECEIPT'">
           <app-receipt />
+        </div>
+        <!-- Grocery list members gallery -->
+        <div class="d-none d-lg-block position-absolute end-0 top-0 px-lg-3">
+          <app-members-gallery />
         </div>
       </div>
 

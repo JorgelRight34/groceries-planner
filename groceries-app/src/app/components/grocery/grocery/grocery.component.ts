@@ -2,7 +2,7 @@ import { Component, input, signal } from '@angular/core';
 import { Grocery } from '../../../models/grocery';
 import { CommonModule } from '@angular/common';
 import { GroceriesService } from '../../../services/groceries.service';
-import { ModalComponent } from '../../modal/modal.component';
+import { ModalComponent } from '../../shared/modal/modal.component';
 import { EditGroceryFormComponent } from "../edit-grocery-form/edit-grocery-form.component";
 
 @Component({

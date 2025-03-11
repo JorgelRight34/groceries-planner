@@ -9,6 +9,22 @@
     height: auto;
 }
 
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.grocery-label:hover + .grocery-widget[data-grocery] {
+    visibility: visible;
+}
+
+.grocery-widget {
+    z-index: 9999;
+    visibility: hidden;
+    position: absolute;
+    top: -20px;
+}
+
 @media (max-width: 500px) {
     .groceries-list {
         width: 100%;

@@ -1,5 +1,5 @@
 import { Component, computed, input, signal } from '@angular/core';
-import { ModalComponent } from '../../modal/modal.component';
+import { ModalComponent } from '../../shared/modal/modal.component';
 import { AddGroceryComponent } from '../add-grocery/add-grocery.component';
 import { GroceriesService } from '../../../services/groceries.service';
 

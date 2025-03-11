@@ -6,7 +6,7 @@ import { Category } from '../models/category';
   providedIn: 'root'
 })
 export class CategoriesService {
-  private url = 'https://localhost:7240/categories'
+  private url = 'http://localhost:5152/categories'
   hasFetched = signal<boolean>(false);
   currentCategory = signal<Category | null>(null);
   categories = signal<Category[]>([]);

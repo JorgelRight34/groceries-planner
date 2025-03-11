@@ -1,7 +1,7 @@
 import { Component, input, signal } from '@angular/core';
 import { GroceriesService } from '../../../services/groceries.service';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { ModalComponent } from '../../modal/modal.component';
+import { ModalComponent } from '../../shared/modal/modal.component';
 import { GroceryList } from '../../../models/groceryList';
 import { ToastrService } from 'ngx-toastr';
 

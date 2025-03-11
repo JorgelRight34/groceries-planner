@@ -11,13 +11,23 @@
                 <!-- Groceries list -->
                 <ul>
                     @for (grocery of getCategoryGroceries(category.id) ; track grocery.id) {
-                    <li class="d-flex align-items-center" appHighlightInput
+                    <li class="d-flex align-items-center position-relative" appHighlightInput
                         [highlight]="checkedGroceries()[grocery.id] || false">
                         <input class="me-1 mb-0" id="{{ grocery.id }}" type="checkbox"
                             (change)="onGroceryChange(grocery)" />
-                        <label class="mb-0" for="{{ grocery.id }}">
-                            {{ grocery.name }} ({{ grocery[day()] }})
+                        <label class="grocery-label text-truncate mb-0" for="{{ grocery.id }}">
+                            ({{ grocery[day()] }}) {{ grocery.name }}
                         </label>
+                        <span class="material-symbols-outlined" [popover]="popTemplate">
+                            info
+                        </span>
+                        <ng-template #popTemplate>
+                            <div class="popover">
+                                <div class="popover-body">
+                                    <p class="mb-0">{{ grocery.description }}</p>
+                                </div>
+                            </div>
+                        </ng-template>
                     </li>
                     } @empty {
                     <li>---</li>
@@ -36,10 +46,10 @@
                 <!-- Groceries list -->
                 <ul class="list-unstyled">
                     @for (grocery of getCategoryGroceries(category.id) ; track grocery.id) {
-                    <li class="ps-3" appHighlightInput [highlight]="checkedGroceries()[grocery.id] || false">
+                    <li appHighlightInput [highlight]="checkedGroceries()[grocery.id] || false">
                         <input class="me-1" id="{{ grocery.id }}" type="checkbox" (change)="onGroceryChange(grocery)" />
-                        <label for="{{ grocery.id }}">
-                            {{ grocery.name }} ({{ grocery[day()] }})
+                        <label class="text-truncate" for="{{ grocery.id }}">
+                            ({{ grocery[day()] }}) {{ grocery.name }}
                         </label>
                     </li>
                     } @empty {

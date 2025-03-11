@@ -1,31 +1,28 @@
-import { Component, computed, model, signal } from '@angular/core';
+import { Component, computed, model } from '@angular/core';
 import { DaySelectorComponent } from '../../components/day-selector/day-selector.component';
 import { CategoriesComponent } from '../../components/categories/categories.component';
 import { GroceriesListComponent } from '../../components/grocery-list/groceries-list/groceries-list.component';
 import { GroceriesService } from '../../services/groceries.service';
-import { NavbarSmComponent } from '../../components/navbar-sm/navbar-sm.component';
+
 import { CommonModule } from '@angular/common';
-import { HeaderComponent } from '../../components/header/header.component';
-import { GroceryComponent } from '../../components/groceries/grocery/grocery.component';
-import { NavbarComponent } from '../../components/navbar/navbar.component';
 import { ReceiptComponent } from '../../components/receipts/receipt/receipt.component';
 import { ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { sharedQueryParameterGroceryListId } from '../../../lib/constants';
 import { MembersGalleryComponent } from '../../components/grocery-list/members-gallery/members-gallery.component';
+import { GroceryComponent } from '../../components/grocery/grocery/grocery.component';
+import { SharedModule } from '../../components/shared/shared.module';
 
 @Component({
   selector: 'app-home',
   imports: [
     GroceriesListComponent,
     GroceryComponent,
-    HeaderComponent,
     CommonModule,
     DaySelectorComponent,
     CategoriesComponent,
     ReceiptComponent,
-    NavbarComponent,
-    NavbarSmComponent,
+    SharedModule,
     MembersGalleryComponent,
   ],
   templateUrl: './home.component.html',

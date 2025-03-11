@@ -8,13 +8,12 @@ import { map, Observable, of } from 'rxjs';
 import { Category } from '../models/category';
 import { days } from '../../lib/constants';
 import { ToastrService } from 'ngx-toastr';
-import { ActivatedRoute } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
 })
 export class GroceriesService {
-  private url = `https://localhost:7240`;
+  private url = `http://localhost:5152`;
   groceriesLists = signal<Array<GroceryList>>([]);  // All lists of plans
   hasAlreadyFetched = signal<boolean>(false);
   groceriesHistory: Grocery[] = []; // All groceries that have been created

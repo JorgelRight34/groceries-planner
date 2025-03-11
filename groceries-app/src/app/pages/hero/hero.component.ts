@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { GoogleLoginButtonComponent } from '../../components/google-login-button/google-login-button.component';
+import { GoogleLoginButtonComponent } from '../../components/shared/google-login-button/google-login-button.component';
 
 @Component({
   selector: 'app-hero',

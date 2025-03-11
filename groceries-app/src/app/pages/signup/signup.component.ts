@@ -4,7 +4,7 @@ import { AuthService } from '../../services/auth.service';
 import { Router, RouterModule } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { CommonModule } from '@angular/common';
-import { GoogleLoginButtonComponent } from '../../components/google-login-button/google-login-button.component';
+import { GoogleLoginButtonComponent } from '../../components/shared/google-login-button/google-login-button.component';
 
 @Component({
   selector: 'app-signup',
